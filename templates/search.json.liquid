@@ -1,0 +1,58 @@
+{% comment %}
+This file needs to be created in your templates. Create a template for search and name it to json.
+The final file name would be search.json.liquid
+{% endcomment %}
+{% layout none %}
+{% comment %} Inspired by: http://ecommerce.shopify.com/c/ecommerce-design/t/diy-implementing-autocomplete-with-search-144104 {% endcomment %}
+{% paginate search.results by 3 %}
+ {% capture output %}
+ {% for result in search.results %}
+        {% assign index = forloop.index0 %}
+        {% assign resultURL = result.url %}
+        {% assign unisex = "false"%}
+
+
+
+        {% if result.images[0].alt contains "Packshot" %} 
+        {% assign thumbURL =  result.images[1] | product_img_url: '500x'%}  
+        {%else%} 
+        {% assign thumbURL =  result.images[0] | product_img_url: '500x'%}  
+        {%endif%}
+
+
+        {% if image.alt contains "Front" %}
+        {% assign index = forloop.index0 %}
+        {% assign found_image = true %}
+      {% endif %}
+
+
+      
+      {% for image in result.images %}
+      {% if image.alt contains "Women" and image.alt contains "Front" and result.tags contains "UNISEX" %}
+      
+            {% assign index = forloop.index0 %}
+            {% assign women =  result.images[index] | product_img_url: '500x' %}  
+
+      {%endif%}
+   {% endfor %}
+
+   {% if result.tags contains "UNISEX" %}
+         {%assign unisex = "true"%}
+   {% endif%}
+
+     
+
+
+        {"title":"{{ result.title | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+        "thumb_women":"{{ women | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+        "unisex":"{{ unisex | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+           "url":"{{ result.url   | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+         "thumb":"{{ thumbURL     | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+         "price":"{{ result.price    | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' | money }}",
+            "id":{{result.id}} }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+{% endcapture %}
+
+{% comment %} Output the json object {% endcomment %}
+{"results_total":{{paginate.items}},"results":[{{ output | strip_newlines }}]}
+{% endpaginate %}

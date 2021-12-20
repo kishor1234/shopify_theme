@@ -1,0 +1,417 @@
+<div id="mobile-fullpage">
+{% for block in section.blocks %}  
+<div class="more-view-wrapper section{% if forloop.index == 1 %} active{% endif %}" style="margin-top:0" id="wc-section{{ forloop.index }}">  
+  <div class="mobile-slider">
+    {%- if block.settings.image_01 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_01 }}">
+        <div class="mobile-section-overlay {{ block.settings.image_01_overlay }}"></div>
+        <img class="lazy blur" src="{{ block.settings.image_01 | img_url: 'master' }}" data-src="{{ block.settings.image_01 | img_url: 'master' }}"  alt="image_01">
+      </a>  
+      
+      <div class="mobile-section-text-overlay">
+        {%- if block.settings.desc_clock != blank -%}
+          <div class="mobile-clock">{{ block.settings.desc_clock }}</div>
+        {%- endif -%}
+      {%- if block.settings.mobile_desc_01 != blank -%}
+      <p class="mobile-section-desc {{ block.settings.mobile_desc_color_01 }} {{ block.settings.mobile_desc_fontweight_01 }}">{{ block.settings.mobile_desc_01 }}</p>
+      {%- endif -%}
+      {%- if block.settings.btn_link_01 != blank and block.settings.btn_text_01 != blank -%}
+      <a href="{{ block.settings.btn_link_01 }}" class="btn {{ block.settings.button_color_01 }}">{{ block.settings.btn_text_01 }}</a>
+      {%- endif -%}
+      {%- if block.settings.second_btn_link_01 != blank and block.settings.second_btn_text_01 != blank -%}
+      <a href="{{ block.settings.second_btn_link_01 }}" class="btn {{ block.settings.button_color_01 }} second-button-mobile-section">{{ block.settings.second_btn_text_01 }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_02 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_02 }}">
+        <div class="mobile-section-overlay {{ block.settings.image_02_overlay }}"></div>
+        <img class="lazy blur" src="{{ block.settings.image_02 | img_url: 'master' }}" data-src="{{ block.settings.image_02 | img_url: 'master' }}"  alt="image_02">
+      </a>  
+      {%- if block.settings.btn_link_02 != blank and block.settings.btn_text_02 != blank -%}
+      <div class="mobile-section-text-overlay">
+        <a href="{{ block.settings.btn_link_02 }}" class="btn {{ block.settings.button_color_02 }}">{{ block.settings.btn_text_02 }}</a>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_03 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_03 }}">
+        <div class="mobile-section-overlay {{ block.settings.image_03_overlay }}"></div>
+        <img class="lazy blur" src="{{ block.settings.image_03 | img_url: 'master' }}" data-src="{{ block.settings.image_03 | img_url: 'master' }}"  alt="image_03">
+      </a>  
+      {%- if block.settings.btn_link_03 != blank and block.settings.btn_text_03 != blank -%}
+      <div class="mobile-section-text-overlay">
+      <a href="{{ block.settings.btn_link_03 }}" class="btn {{ block.settings.button_color_03 }}">{{ block.settings.btn_text_03 }}</a>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_04 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_04 }}">
+        <div class="mobile-section-overlay {{ block.settings.image_04_overlay }}"></div>
+        <img class="lazy blur" src="{{ block.settings.image_04 | img_url: 'master' }}" data-src="{{ block.settings.image_04 | img_url: 'master' }}"  alt="image_04">
+      </a>  
+      {%- if block.settings.btn_link_04 != blank and block.settings.btn_text_04 != blank -%}
+      <div class="mobile-section-text-overlay">
+      <a href="{{ block.settings.btn_link_04 }}" class="btn {{ block.settings.button_color_04 }}">{{ block.settings.btn_text_04 }}</a>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_05 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_05 }}">
+        <div class="mobile-section-overlay {{ block.settings.image_05_overlay }}"></div>
+        <img class="lazy blur" src="{{ block.settings.image_05 | img_url: 'master' }}" data-src="{{ block.settings.image_05 | img_url: 'master' }}"  alt="image_05">
+      </a>  
+      {%- if block.settings.btn_link_05 != blank and block.settings.btn_text_05 != blank -%}
+      <div class="mobile-section-text-overlay">
+      <a href="{{ block.settings.btn_link_05 }}" class="btn {{ block.settings.button_color_05 }}">{{ block.settings.btn_text_05 }}</a>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+  </div>
+</div>
+{%endfor%}
+   
+</div>
+{%- comment -%}
+<script type="text/javascript">
+  //using document ready...
+  $(document).ready(function(){
+
+    if($(window).width() <= 768){
+      //initialising fullpage.js in the jQuery way
+    $('#mobile-fullpage').fullpage({
+      //sectionsColor: ['#ff5f45', '#0798ec', '#fc6c7c', '#fec401'],
+      //menu: '#myMenu',
+      //anchors: ['section0', 'section1', 'section2', 'section3']
+    });
+    };
+    
+  });
+</script>
+{%- endcomment -%}
+
+<style>
+.mobile-section-overlay.disable{opacity:0;display:none;}
+.mobile-section-overlay.enable {opacity: 0.5;position: absolute;left: 0;right: 0;top: 0;bottom: 0;background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgb(0,0,0,1));z-index: 1;}
+.mobile-section-text-overlay {z-index:2;position:relative;}
+</style>
+
+{% schema %}
+ {
+  "name": "Mobile Homepage Sections",
+	"max_blocks": 999,
+
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Section",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_01",
+          "label": "Image 01"
+        },
+        {
+          "type": "select",
+          "id": "image_01_overlay",
+          "options": [
+            {
+             "value": "enable",
+             "label": "Enable"
+            },
+            {
+             "value": "disable",
+             "label": "Disable"
+            }
+          ],
+          "label": "Image Gradient Overlay"
+        },
+        {
+          "type": "text",
+          "id": "mobile_desc_01",
+          "label": "Title 01"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_clock",
+          "label": "Clock on Banner"
+        },
+        {
+          "type": "select",
+          "id": "mobile_desc_color_01",
+          "options": [
+            {
+             "value": "black",
+             "label": "Black"
+            },
+            {
+             "value": "white",
+             "label": "White"
+            }
+          ],
+          "label": "Desc Color 01"
+        },
+        {
+          "type": "select",
+          "id": "mobile_desc_fontweight_01",
+          "options": [
+            {
+             "value": "normal",
+             "label": "Normal"
+            },
+            {
+             "value": "bold",
+             "label": "Bold"
+            }
+          ],
+          "label": "Desc Font Weight"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_01",
+          "label": "Button Text 01"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_01",
+          "label": "Button Link 01"
+        },
+        {
+          "type": "text",
+          "id": "second_btn_text_01",
+          "label": "Second Button Text 01"
+        },
+        {
+          "type": "url",
+          "id": "second_btn_link_01",
+          "label": "Second Button Link 01"
+        },
+        {
+          "type": "select",
+          "id": "button_color_01",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 01"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_02",
+          "label": "Image 02"
+        },
+        {
+          "type": "select",
+          "id": "image_02_overlay",
+          "options": [
+            {
+             "value": "enable",
+             "label": "Enable"
+            },
+            {
+             "value": "disable",
+             "label": "Disable"
+            }
+          ],
+          "label": "Image Gradient Overlay"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_02",
+          "label": "Button Text 02"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link 02"
+        },
+        {
+          "type": "select",
+          "id": "button_color_02",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 02"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_03",
+          "label": "Image 03"
+        },
+        {
+          "type": "select",
+          "id": "image_03_overlay",
+          "options": [
+            {
+             "value": "enable",
+             "label": "Enable"
+            },
+            {
+             "value": "disable",
+             "label": "Disable"
+            }
+          ],
+          "label": "Image Gradient Overlay"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_03",
+          "label": "Button Text 03"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_03",
+          "label": "Button Link 03"
+        },
+        {
+          "type": "select",
+          "id": "button_color_03",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 03"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_04",
+          "label": "Image 04"
+        },
+        {
+          "type": "select",
+          "id": "image_04_overlay",
+          "options": [
+            {
+             "value": "enable",
+             "label": "Enable"
+            },
+            {
+             "value": "disable",
+             "label": "Disable"
+            }
+          ],
+          "label": "Image Gradient Overlay"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_04",
+          "label": "Button Text 04"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_04",
+          "label": "Button Link 04"
+        },
+        {
+          "type": "select",
+          "id": "button_color_04",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 04"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_05",
+          "label": "Image 05"
+        },
+        {
+          "type": "select",
+          "id": "image_05_overlay",
+          "options": [
+            {
+             "value": "enable",
+             "label": "Enable"
+            },
+            {
+             "value": "disable",
+             "label": "Disable"
+            }
+          ],
+          "label": "Image Gradient Overlay"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_05",
+          "label": "Button Text 05"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_05",
+          "label": "Button Link 05"
+        },
+        {
+          "type": "select",
+          "id": "button_color_05",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 05"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+  .mobile-clock {
+    color: #FFF;
+    position: absolute;
+    bottom: 290px;
+    /* margin: auto 43%; */
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+}
+.banner-h3 {
+  font-weight: 600;
+}
+</style>

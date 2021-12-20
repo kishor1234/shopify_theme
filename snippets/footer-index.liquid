@@ -1,0 +1,130 @@
+<footer class="site-footer footer-index" role="contentinfo" style="margin-top: 15px;">
+  <div class="container">
+    <div class="footer-top"> 
+      <div class="row">
+        <div class="footer-content">
+          <div class="col-footer">Subscribe to our newsletter and we'll keep you updated 
+
+            <a class="signup-link" href="#newsmodal" data-toggle="modal" data-target="#myModal"><span class="footer-signup">Sign Up</span></a>
+
+
+            <div class="modal fade" id="myModal" role="dialog" style="margin-top:20px !important;">
+              <div class="modal-dialog" style="width:450px;margin-top:20px !important;">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="width:100%;margin-top:-50px!important;">
+                  <div class="modal-header" style="border:none!important;height:45px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body" style="margin-top:-15px;">
+                    <div class="klaviyo-form-YepngL"></div> 
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-footer" style="float:right;">
+            <ul>
+              <li><a href="https://uk.dailypaperclothing.com/pages/about-us">About</a></li>
+              <li class="toggle-sub-nav">
+                <a href="#stores">Stores</a>
+              </li>
+              <li><a href="https://uk.dailypaperclothing.com/pages/contact-us">Contact</a></li>
+              <li><a href="https://uk.dailypaperclothing.com/pages/faq">FAQ</a></li>
+			
+              <li><a href="https://uk.dailypaperclothing.com/pages/shipping">Shipping</a></li>
+
+              <li><a href="https://uk.dailypaperclothing.com/pages/returns">Return Policy</a></li>
+
+              <li><a href="https://uk.dailypaperclothing.com/pages/payments">Payments</a></li>
+
+              <li class="toggle-sub-nav"><a href="#policy">Policy</a></li>
+
+              <li><a href="https://uk.dailypaperclothing.com/pages/careers">Careers</a></li>
+            </ul>
+              <div class="footer-collapse">
+              <div class="stores" id="stores">
+                <div><a href="https://uk.dailypaperclothing.com/pages/daily-paper-london-flagship-store">14-16 Great Pulteney<br>London, W1F 9ND<br>United Kingdom</a></div>
+                <div><a href="https://uk.dailypaperclothing.com/pages/daily-paper-amsterdam-flagship-store">Bilderdijkstraat 131<br> 1053 KN, Amsterdam<br> The Netherlands</a></div>
+                <div><a href="https://uk.dailypaperclothing.com/pages/daily-paper-nyc-flagship-store">18 Delancey St.<br>New York, NY. 10002<br>United States</a></div>
+              </div>
+
+              <div class="policy" id="policy">
+                <div><a href="https://uk.dailypaperclothing.com/pages/terms-of-service">Terms of Service</a></div>
+                <div><a href="https://uk.dailypaperclothing.com/pages/returns">Return Policy</a></div>
+                <div><a href="https://uk.dailypaperclothing.com/pages/privacy-policy">Privacy Policy</a></div>
+                <div><a href="https://uk.dailypaperclothing.com/pages/warranty">Warranty</a></div>
+                <div><a href="https://uk.dailypaperclothing.com/pages/disclaimer">Disclaimer</a></div>
+
+                <br>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="row" style="padding-top: 40px;">
+          <div class="footer-content" style="padding-top: 40px;">
+            <div class="col-footer" style="padding: 40px 52px 0;">Daily Paper Holding B.V. is the holder of several Daily Paper® trademarks. These trademarks may not be used by third parties without permission of Daily Paper Holding B.V.</div>
+          </div>
+        </div>
+        
+        <div class="col-1" style="text-align: center; margin: 40px 0 50px 0; padding: 0;">
+          <h1 class="service-title social">
+            <a href="https://www.instagram.com/dailypaper/" target="_blank" onclick="window.open(this.href,'_blank');return false;">
+              <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/Ig_Icon_1.png?v=1622732376"></a>
+            <a href="https://www.facebook.com/Dailypaper/" target="_blank" onclick="window.open(this.href,'_blank');return false;"> 
+              <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/Fb_Icon_1.png?v=1622732250"></a>
+            <a href="https://www.youtube.com/channel/UCa4TSxPJEZB9NGxhnm1uWjQ" target="_blank" onclick="window.open(this.href,'_blank');return false;">
+              <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/ytb_icon_1.png?v=1622732647">
+            </a>
+            <a href="https://www.twitter.com/dailypaper" target="_blank" onclick="window.open(this.href,'_blank');return false;">
+              <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/twtr_icon_1.png?v=1622732432"></a>
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer-content">
+          <div class="col-footer"><br></div>
+      
+         </div>
+    </div>      
+  </div>
+
+</footer>
+<script>
+  $('footer .signup-link').on('click', function(){
+    $('#newsmodal.modal').css({'display':'block'});
+  });
+  $('.modal-content .close').on('click', function(){
+    $('#newsmodal.modal').css({'display':'none'});
+    $('.modal-backdrop').removeClass('in');
+    $('#myModal').hide();
+    $('body').removeClass('modal-open');
+  });  
+  $(document).on('keydown', function(event) {
+       if (event.key == "Escape") {
+           $('body').removeClass('modal-open');
+       }
+   });
+  $('.dp-new-collapse').click(function(){ 
+    $(this).children().text(function(i,old){
+      return old=='+' ?  '-' : '+';
+    });
+    //$(this).parents('.dp-information').find('.collapse').toggle();
+  });
+  $('.sub > .dp-new-collapse').click(function(){ 
+    $('.dp-information').toggleClass('footer-grey');
+    $('.sub > .dp-new-collapse').toggleClass('footer-grey');
+    $('.sub > div > a').toggleClass('footer-grey');
+    $(this).toggleClass("footer-black");
+    var href = $(this).attr('href');
+    $(href).toggleClass("footer-black");
+  });
+  if($(window).width() <= 767){
+    $('#home-footer').html('');
+  }
+</script>

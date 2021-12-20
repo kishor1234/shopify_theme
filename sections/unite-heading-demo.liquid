@@ -1,0 +1,69 @@
+<!-- HERO HEADING -->
+<section class="flex-grid" style="height:95vh;">
+  <div class="col"><img class="img-flex" src="{{section.settings.hero-image | img_url: 'master' }}" alt="Unite"></div>
+  <div class="col custom-flex">
+    <div class="wrap">
+      <div class="header-title">{{ section.settings.hero-title}}</div>
+      <div class="summary">{{ section.settings.hero-desc}}</div>
+    </div>
+    <div class="dp-hub-arrow">
+      <a href="#info">
+        <img width="10px" src="https://cdn.shopify.com/s/files/1/0617/1881/files/arrow_2x.png?v=1586423449" alt="">
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- INFORMATION -->
+<section id="info" class="flex-grid" style="height:80vh;">
+  <div class="col custom-flex">
+    <div class="wrap" style="max-width:605px !important">
+      <div class="summary info">
+        {{section.settings.info-desc}}
+        <br>
+        {%if block.settings.button-text != "" %}
+        <a href="https://dailypaperclothing.com/{{section.settings.button-link}}" target="_blank"><button class="button"> {{section.settings.button-text}}</button></a>
+        {%endif%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Heading",
+  "settings": [
+  {
+    "type": "image_picker",
+    "id": "hero-image",
+    "label": "Hero Image (big image top)"
+  },
+    {
+      "id": "hero-title",
+      "type": "text",
+      "label": "Hero Title",
+      "default": "Hero Title"
+    },{
+      "id": "hero-desc",
+      "type": "richtext",
+      "label": "Hero Description",
+      "default": "<p>Hero Description</p>"
+    },{
+      "id": "info-desc",
+      "type": "richtext",
+      "label": "Information",
+      "default": "<p>Information</p>"
+    },{
+      "id": "button-text",
+      "type": "text",
+      "label": "Button text",
+      "default": "Button text",
+      "info": "If button text is empty it won't show."
+    },{
+      "id": "button-link",
+      "type": "url",
+      "label": "Button link"
+    }
+  ]
+}
+{% endschema %}

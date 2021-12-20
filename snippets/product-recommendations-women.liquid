@@ -1,0 +1,107 @@
+<div class="product-recommendations-women" data-product-id="{{ product.id }}" data-limit="80">
+  <section class="related-products 3">
+    {% if settings.related_products_title != '' %}
+      {% if settings.enable_multilang %}
+        <h2 class="lang1">{{ settings.related_products_title | split: '|' | first }}</h2>
+        <h2 class="lang2">{{ settings.related_products_title | split: '|' | last }}</h2>
+      {% else %}
+      	<h2>{{ settings.related_products_title | split: '|' | first }}</h2>
+      {% endif %}
+    {% endif %}
+    <div class="products-grid row owl-carousel">
+      {%assign women = 0 %}
+      {%- for product in recommendations.products -%}
+        {%unless product.tags contains 'Accessories' %}
+          {%if product.tags contains 'Women' %}
+            {% assign women = women | plus: 1 %}
+            {%if women > 0 %}
+              <div class="{% if settings.product_image_border %}grid-item-border{% endif %}{% if settings.product_image_crop %} crop_image{% else %} no_crop_image{% endif %} grid-item col-xs-6 col-sm-4 {% if product_grid == 3 %}col-md-3{% endif %} col-lg-3">
+                {%include 'product-grid-item-dp-women' %}
+              </div>
+            {%endif%}
+          {%endif%}
+        {%endunless%}
+      {%- endfor -%}
+      {%if women < 4%}
+      {% for product in collections.women-all.products limit:3%}
+        <div class=" {% if settings.product_image_border %}grid-item-border{% endif %}{% if settings.product_image_crop %} crop_image{% else %} no_crop_image{% endif %} grid-item col-xs-6 col-sm-4 {% if product_grid == 3 %}col-md-3{% endif %} col-lg-3">
+          {% include 'product-grid-item-dp-women' %}
+        </div>
+      {%endfor%}
+      {%endif%}
+    </div>
+  </section>
+</div>
+<script>
+var loadProductRecommendationsIntoSection = function() {
+  setTimeout(function(){
+  // Look for an element with class 'product-recommendations'
+  var productRecommendationsSection = document.querySelector(".product-recommendations-women");
+  if (productRecommendationsSection === null) { return; }
+  // Read product id from data attribute
+  var productId = productRecommendationsSection.dataset.productId;
+  // Read limit from data attribute
+  var limit = productRecommendationsSection.dataset.limit;
+  // Build request URL
+  var requestUrl = "/recommendations/products?section_id=product-recommendations-women&limit="+limit+"&product_id="+productId;
+  // Create request and submit it using Ajax
+  var request = new XMLHttpRequest();
+  request.open("GET", requestUrl);
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 300) {
+
+      var container = document.createElement("span");
+      container.innerHTML = request.response;
+      console.log(container)
+      productRecommendationsSection.parentElement.innerHTML = container.querySelector(".product-recommendations-women").innerHTML;
+
+      new WOW().init({offset:50});
+
+      var owl = $('.related-products .products-grid');
+      owl.owlCarousel({
+        navigation: true,
+        items: 4,
+        center: true,
+        itemsDesktop: [1200, 3],
+        itemsTablet: [767, 3],
+        itemsTabletSmall: [721, 2],
+      itemsMobile: [540, 2],
+      itemsMobileSmall: [480, 2],
+        afterInit: function () {
+          owl.find('.owl-wrapper').each(function () {
+              var w = $(this).width() / 2;
+              $(this).width(w);
+              $(this).css('margin', '0 auto');
+          });
+      },
+      afterUpdate: function () {
+          owl.find('.owl-wrapper').each(function () {
+              var w = $(this).width() / 2;
+              $(this).width(w);
+              $(this).css('margin', '0 auto');
+          });
+      }   
+      });
+
+      $('.related-products .products-grid').owlCarousel('refresh');
+      
+    }
+  };
+  request.send();
+  }, 1000);
+};
+
+
+
+// If your section has theme settings, the theme editor
+// reloads the section as you edit those settings. When that happens, the
+// recommendations need to be fetched again.
+// See https://help.shopify.com/en/themes/development/sections/integration-with-theme-editor
+document.addEventListener("shopify:section:load", function(event) {
+  if (event.detail.sectionId === "product-recommendations-women") {
+    loadProductRecommendationsIntoSection();
+  }
+});
+// Fetching the recommendations on page load
+loadProductRecommendationsIntoSection();
+</script>

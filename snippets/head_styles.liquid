@@ -1,0 +1,14 @@
+{{ 'bootstrap.min.scss.css' | asset_url | stylesheet_tag }}
+<link rel="preload" href="{{ 'theme-styles.scss.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'theme-styles.scss.css' | asset_url }}" media="print" onload="this.media='all'"></noscript>
+<link rel="stylesheet" href="{{ 'theme-styles-setting.scss.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="preload" href="{{ 'component.scss.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'component.scss.css' | asset_url }}"media="print" onload="this.media='all'"></noscript>
+<link rel="stylesheet" href="{{ 'owl.carousel.scss.css' | asset_url }}" media="print" onload="this.media='all'">
+{% if template == 'product' or product.title contains "Gift"%}
+<link rel="stylesheet" href="{{ 'selectize.bootstrap3.scss.css' | asset_url }}" media="print" onload="this.media='all'">
+{% endif %}
+{{ 'custom-stylesheet.scss.css' | asset_url | stylesheet_tag}}
+{% if settings.enable_retina %}
+<link rel="stylesheet" href="{{ 'retina-responsive.css' | asset_url }}" media="print" onload="this.media='all'">
+{% endif %}

@@ -1,0 +1,107 @@
+<section class="index-section" style="display:flex;height:100vh !important;background:#ccc !important;"> 
+  {% if section.settings.two-col-reverse == false %}
+  <div style="height:100%;width:100%;background:#fff;color:#000;position:relative;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center">
+    <div class="dp-title-index" style="max-width:500px;margin-top:20px;">
+    </div>
+    <div class="dp-description-index">
+      <p style="font-size:16px;font-weight:800;">  {{ section.settings.two-col-title }}</p>
+      <p style="font-size:14px;max-width:460px;line-height:1.2;"> 
+        {{ section.settings.two-col-desc }}
+      </p>
+      {% if section.settings.two-col-button-text != "" %}
+      <div class="button-box" style="margin-left:-5px;margin-top:20px;">
+        <a href="  {{ section.settings.two-col-button-link }}">
+          <div class="button-big black">
+            {{ section.settings.two-col-button-text }}
+          </div>
+        </a>
+      </div>
+      {%endif%}
+    </div>
+  </div>
+  <div class="dp-image-section" style="background: url({{ section.settings.two-col-image | img_url: 'master' }});    background-size:100% !important;">
+  </div>
+  <div class="button-container" style="margin-left:265px;margin-top:120px;">
+  </div>
+  {%else%}
+  <div class="dp-image-section" style="background: url({{ section.settings.two-col-image | img_url: 'master' }});    background-size:100% !important;"> 
+  </div>
+  <div class="button-container" style="margin-left:265px;margin-top:120px;">      
+  </div>
+  <div style="height:100%;width:100%;background:#fff;color:#000;position:relative;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center">
+    <div class="dp-title-index" style="max-width:500px;margin-top:20px;"></div>
+    <div class="dp-description-index">
+      <p style="font-size:16px;font-weight:800;">  {{ section.settings.two-col-title }}</p>
+      <p style="font-size:14px;max-width:460px;line-height:1.2;"> 
+        {{ section.settings.two-col-desc }}
+      </p>
+      {% if section.settings.two-col-button-text != "" %}
+      <div class="button-box" style="margin-left:-5px;margin-top:20px;">
+        <a href="  {{ section.settings.two-col-button-link }}">
+          <div class="button-big black">
+            {{ section.settings.two-col-button-text }}
+          </div>
+        </a>
+      </div>
+      {%endif%}
+    </div>
+  </div>
+  {%endif%}
+</section>
+{% schema %}
+{
+  "name": "2 Column Section",
+
+      "settings": [
+       
+  		{
+        "type": "header",
+        "content": "2 Columns"
+      },
+  	{
+        "type": "checkbox",
+        "id": "two-col-reverse",
+        "label": "Reverse",
+        "info": "If this is checked it will put the images of the specific section on the left side and text left.",
+        "default": false
+      },
+  		{
+        "type": "image_picker",
+        "id": "two-col-image",
+        "label": "Image"
+      	},
+        {
+          "id": "two-col-title",
+          "type": "text",
+          "label": "Section Title",
+          "default": "Section Title 1"
+        },
+        {
+          "id": "two-col-desc",
+          "type": "html",
+          "label": "Section Description 1",
+          "default": "<p>Section Description 1</p>"
+        },
+		{
+            "id": "two-col-button-text",
+            "type": "text",
+            "label": "Button text",
+            "default": "Button text",
+            "info": "If button text is empty it won't show."
+          },
+  			{
+            "id": "two-col-button-link",
+            "type": "url",
+            "label": "Button link"
+          }
+		
+      ],
+  "presets": [
+    {
+      "name": "2 Column Section",
+      "category": "Show one column with text and one with image."
+    }
+  ]
+    } 
+
+{% endschema %}

@@ -1,0 +1,844 @@
+<header class="site-header" role="banner" style="z-index:999; top:0px;">
+  <div class="header-bottom">
+    <div class="container">
+      <div class="header-mobile">
+        <div class="menu-block visible-phone">
+        <div class="nav-search on">{% include 'icon-search' %}</div>
+          
+         <div class="top-header mobile-cart-wc">
+  
+              <div class="wrapper-top-cart">
+                <p class="top-cart">
+                  {%- comment -%}
+                  <a href="javascript:void(0)" id="cartToggle">
+                    {%- include 'icon-cart' -%}
+                    <span class="first" {% if settings.enable_multilang %}data-translate="cart.general.shopping_cart"
+                          {% endif %}>{{ 'cart.general.shopping_cart' | t }}</span>
+                    <span id="cartCount"><span class="cart_t">{{ cart.item_count }}</span></span>
+                  </a>
+                  {%- endcomment -%}
+                  <a href="/cart" id="cartToggle">
+                    {%- include 'icon-cart' -%}
+                    <span class="first" {% if settings.enable_multilang %}data-translate="cart.general.shopping_cart"
+                          {% endif %}>{{ 'cart.general.shopping_cart' | t }}</span>
+                    <span id="cartCount"><span class="cart_t">{{ cart.item_count }}</span></span>
+                  </a>
+                </p>
+                {%- comment -%}
+                <div id="dropdown-cart" class="mobile-cart-drawer" style="display:none">
+                  <div class="no-items">
+                    <p>{{ 'cart.general.empty' | t }}</p>
+                    <p class="text-continue"><a href="javascript:void(0)"
+                                                {% if settings.enable_multilang %}data-translate="cart.ajax_cart.continue_shopping"
+                                                {% endif %}>{{ 'cart.ajax_cart.continue_shopping' | t }}</a></p>
+                  </div>
+                  <div class="has-items">
+                    <ol class="mini-products-list">
+                      {%- assign product = all_products[settings.ping_item] -%}
+                      {% for item in cart.items %}
+                      {%- assign item_handle = item.url | split: '?variant' | first -%}
+                      {%- if item_handle == product.url -%}
+                      {%- assign pin_item = true -%}
+                      {%- endif -%}
+                      <li class="item" id="cart-item-{{item.id}}">
+                        <a href="{{item.url}}" class="product-image">
+                          <img src="{{ item.image | product_img_url: 'master' }}" alt="{{item.title}}" style="max-width:98px; max-height:115px">
+                        </a>
+                        <div class="product-details">
+                          <a href="javascript:void(0)" title="{{ 'cart.general.remove' | t }}" class="btn-remove">X</a>
+                          <p class="product-name">
+                            <a href="{{item.url}}">
+                              {% if settings.enable_multilang %}
+                                <span class="lang1">{{ item.product.title | split: '|' | first }}</span>
+                                <span class="lang2">{{ item.product.title | split: '|' | last }}</span>
+                              {% else %}
+                              	{{ item.product.title | split: '|' | first }}
+                              {% endif %}
+                            </a>
+                          </p>
+                          <div class="option">
+                            {% if item.product.variants.size != 0 %}
+                              {% unless item.variant.title contains 'Default' %}
+                              	<small>{{ item.variant.title }}</small>
+                              {% endunless %}
+                            {% endif %}
+                          </div>
+                          {%if item.final_price == 0 %}
+                          	<div class="cart-collateral"><span class="price">Free</span></div>
+                          {%else%}
+                            {% if item.product.compare_at_price > item.price %}
+                              <span class="compare-price">{{ item.product.compare_at_price_max | money }}</span>
+                              <span class="price on-sale" itemprop="price">{{ item.price | money }}</span>
+                            {% else %}
+                            <div class="cart-collateral"><span class="price">{{ item.original_price | money }}</span> {%if cart.item_count == 1 and item.product.title == 'Unite Pin'%}
+                              <span style="font-weight:500;">-  Add another product and get this item for free during checkout</span>
+                              {%endif%}
+                            </div>
+                            {%endif%}
+                          {%endif%}
+                        </div>
+                      </li>
+                      {% endfor %}
+                    </ol>   
+                    {%- if pin_item -%}
+                    <script>
+                      $(window).on('load', function(){
+                      $('.ping-item-text').addClass('ping-item-main-text-none');
+                      });
+                    </script>
+                    {%- endif -%}
+                    <div> 
+                    </div>
+                    <div class="summary">
+                      <p class="total">
+                        <span class="label"><span {% if settings.enable_multilang %}data-translate="cart.label.total"{% endif %}>{{ 'cart.label.total' | t }}</span></span>
+                        <span class="price">{{cart.total_price | money}}</span>
+                      </p>
+                    </div>
+                    {%- if settings.cart_ping_item and settings.cart_ping_item_text != blank -%}                    
+                    <div class="ping-item-text">
+                    <p><a href="javascript:void(0)">{{ settings.cart_ping_item_text }}</a></p>                    
+                    <div class="ping-item-section">
+                      <div class="ping-item-part">
+                        <div class="ping-item-image">
+                          <figure><a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" title="{{ product.title }}" /></a></figure>
+                        </div>
+                        <div class="ping-item-desc">
+                          <h2><a href="{{ product.url }}">{{ product.title }}</a></h2>
+                            <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form" class="pin-cart-form">
+                            <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                              <button type="submit" name="add" class="btn" id="product-add-to-cart-pin">Add - {{ product.price | money }}</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    </div>                   
+                    {%- endif -%}
+                    <div class="securepayments"><img src="{{ 'Payment-option.jpg' | asset_url }}"></div>
+                    <div class="actions">
+                      <button class="btn" onclick="window.location='/checkout'"
+                              {% if settings.enable_multilang %}data-translate="cart.general.checkout"{% endif %}>{{ 'cart.general.checkout' | t }}</button>
+                    </div>
+                    {% if settings.cart_text_enable %}<div class="cart-text"><span>{{ settings.cart_text }}</span></div>{% comment %}<div class="cart-text"><span style="padding-top:15px;">Items in the cart are not reserverd and might sell out quickly</span></div>{% endcomment %}{% endif %}
+                  </div>
+                </div>
+                {%- endcomment -%}
+              </div>
+            </div>
+          <!-- start Navigation Mobile  -->
+          <div id="showLeftPush">{%- include 'icon-hamburger' -%}</div>
+        </div><!-- end Navigation Mobile  -->
+      </div>
+      <div class="header-panel-top {% if settings.enable_multilang %}has-multilang{% endif %}">
+        <div class="nav-search on">{% include 'search-bar' %}</div>
+        <div class="currency">{% include 'new-currency-picker' %}</div>
+        {% if settings.enable_multilang %}
+        <div class="lang-block">
+          <select id="lang-switcher">
+            <option value="1">{{ settings.lange_1 }}d</option>
+            <option value="2">{{ settings.lange_2 }}</option>
+          </select>
+        </div>
+        <script>
+          translator.updateLangSwitcher();
+          jQuery('#lang-switcher').selectize();
+        </script>
+        {% endif %}
+        {% if settings.display_header_text_order and settings.header_text_order != blank %}
+          {% if settings.enable_multilang %}
+            <p class="text_order lang1">{{ settings.header_text_order | split: '|' | first }}</p>
+            <p class="text_order lang2">{{ settings.header_text_order | split: '|' | last }}</p>
+          {% else %}
+          	<p class="text_order">{{ settings.header_text_order | split: '|' | first }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="header-panel">
+        <div class="row">
+          <h1 class="header-logo col-xs-12 col-sm-4">
+            <a href="/">
+              {% if template == 'index' %}
+                {%unless template contains 'unite' %}
+                  <img src="{{ 'logo-2---black.png' | file_img_url: 'master' }}">
+                {%endunless%}
+
+              {% elsif page.handle == 'daily-paper-x-puma-2' %}
+              	<img src="{{ 'logo-white.png' | file_img_url: 'master' }}">
+              {% elsif template contains 'unite' %}
+              	<img src="{{ 'dp-unite-logo.png' | file_img_url: 'master' }}">
+              {% else %}
+              	{{ 'logo-2---black.png' | file_img_url: 'master' | img_tag: shop.name }}
+              {% endif %}
+
+              {% if settings.enable_retina %}
+                {% if template == 'index' %}
+                  <img src="{{ 'logo-2---black.png' | file_img_url: 'master' }}">
+                {% elsif page.handle == 'daily-paper-x-puma-2' %}
+                  <img src="{{ 'logo-white.png' | file_img_url: 'master' }}">
+                {% elsif template contains 'unite' %}
+                  <img  src="{{ 'dp-unite-logo-2x.png' | file_img_url: 'master' }}">
+                {% else %}
+                  <img src="{{ 'logo-2---black.png' | file_img_url: 'master' }}">
+                {% endif %}
+              {% endif %}
+            </a>
+          </h1>
+          <div class="header-panel-bottom col-xs-12 col-sm-8">
+            
+            <div class="header-panel-right-wrap">
+              {% if settings.display_header_free_shipping and settings.header_free_shipping != blank %}
+              {% if settings.enable_multilang %}
+              <p class="free_shipping lang1">{{ settings.header_free_shipping | split: '|' | first }}</p>
+              <p class="free_shipping lang2">{{ settings.header_free_shipping | split: '|' | last }}</p>
+              {% else %}
+              <p class="free_shipping">{{ settings.header_free_shipping | split: '|' | first }}</p>
+              {% endif %}
+              {% endif %}
+              <div class="top-header desktop-cart-wc">
+                <div class="wrapper-top-cart">
+                  <p class="top-cart">                    
+                    <a href="/cart" id="cartToggle">
+                      <span class="first" {% if settings.enable_multilang %}data-translate="cart.general.shopping_cart"
+                            {% endif %}>Bag</span>
+                      <span id="cartCount">(<span class="cart_t">{{ cart.item_count }}</span>)</span>
+                    </a>
+                  </p>
+                  <div id="dropdown-cart" class="desktop-cart-drawer" style="display:none">
+                    <div class="no-items">
+                      <p>{{ 'cart.general.empty' | t }}</p>
+                      <p class="text-continue"><a href="javascript:void(0)"
+                                                  {% if settings.enable_multilang %}data-translate="cart.ajax_cart.continue_shopping"
+                                                  {% endif %}>{{ 'cart.ajax_cart.continue_shopping' | t }}</a></p>
+                    </div>
+                    <div class="has-items">
+                      <ol class="mini-products-list">
+                        {%- assign product = all_products[settings.ping_item] -%}
+                        {% for item in cart.items %}
+                        {%- assign item_handle = item.url | split: '?variant' | first -%}
+                        {%- if item_handle == product.url -%}
+                        {%- assign pin_item = true -%}
+                        {%- endif -%}
+                        <li class="item" id="cart-item-{{item.id}}">
+                          <a href="{{item.url}}" class="product-image">
+                            <img src="{{ item.image | product_img_url: 'master' }}" alt="{{item.title}}"
+                                 style="max-width:98px; max-height:115px">
+                          </a>
+                          <div class="product-details">
+                            <a href="javascript:void(0)" title="{{ 'cart.general.remove' | t }}" class="btn-remove">X</a>
+                            <p class="product-name">
+                              <a href="{{item.url}}">
+                                {% if settings.enable_multilang %}
+                                <span class="lang1">{{ item.product.title | split: '|' | first }}</span>
+                                <span class="lang2">{{ item.product.title | split: '|' | last }}</span>
+                                {% else %}
+                                {{ item.product.title | split: '|' | first }}
+                                {% endif %}
+                              </a>
+                            </p>
+                            <div class="option">
+                              {% if item.product.variants.size != 0 %}
+                              {% unless item.variant.title contains 'Default' %}
+                              <small>{{ item.variant.title }}</small>
+                              {% endunless %}
+                              {% endif %}
+                            </div>
+                            {%if item.final_price == 0 %}
+                            <div class="cart-collateral"><span class="price">Free</span></div>
+                            {%else%}
+                            {% if item.product.compare_at_price > item.price %}
+                            <span class="compare-price">{{ item.product.compare_at_price_max | money }}</span>
+                            <span class="price on-sale" itemprop="price">{{ item.price | money }}</span>
+                            {% else %}
+                            <div class="cart-collateral"><span class="price">{{ item.original_price | money }}</span> {%if cart.item_count == 1 and item.product.title == 'Unite Pin'%}
+                              <span style="font-weight:500;">-  Add another product and get this item for free during checkout</span>
+                              {%endif%}
+                            </div>
+                            {%endif%}
+                            {%endif%}
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ol>   
+                      {%- if pin_item -%}
+                      <script>
+                        $(window).on('load', function(){
+                          $('.ping-item-text').addClass('ping-item-main-text-none');
+                        });
+                      </script>
+                      {%- endif -%}
+                      <div class="summary">
+                        <p class="total">
+                          <span class="label"><span {% if settings.enable_multilang %}data-translate="cart.label.total"{% endif %}>{{ 'cart.label.total' | t }}</span></span>
+                          <span class="price">{{cart.total_price | money}}</span>
+                        </p>
+                      </div>
+                      {%- if settings.cart_ping_item and settings.cart_ping_item_text != blank -%}                    
+                      <div class="ping-item-text">
+                        <p><a href="javascript:void(0)">{{ settings.cart_ping_item_text }}</a></p>                    
+                        <div class="ping-item-section">
+                          <div class="ping-item-part">
+                            <div class="ping-item-image">
+                              <figure><a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}" title="{{ product.title }}" /></a></figure>
+                            </div>
+                            <div class="ping-item-desc">
+                              <h2><a href="{{ product.url }}">{{ product.title }}</a></h2>
+                              <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form" class="pin-cart-form">
+                                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                                <button type="submit" name="add" class="btn" id="product-add-to-cart-pin">Add - {{ product.price | money }}</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>                   
+                      {%- endif -%}
+<!--                       <div class="securepayments"><img src="{{ 'Payment-option.jpg' | asset_url }}"></div> -->
+                      <div class="securepayments"><img src="https://cdn.shopify.com/s/files/1/1600/4375/t/2/assets/paymentsmethods.jpg"></div>
+
+                      <div class="actions actions-cart">
+                        <button class="btn" onclick="window.location='/cart'"
+                                {% if settings.enable_multilang %}data-translate="cart.general.view_cart"{% endif %}>{{ 'cart.general.view_cart' | t }}</button>
+                      </div> 
+                      
+                      <div class="actions">
+                        <button class="btn" onclick="window.location='/checkout'"
+                                {% if settings.enable_multilang %}data-translate="cart.general.checkout"{% endif %}>{{ 'cart.general.checkout' | t }}</button>
+                      </div>
+                      {% if settings.cart_text_enable %}<div class="cart-text"><span>{{ settings.cart_text }}</span></div>{% comment %}<div class="cart-text"><span style="padding-top:15px;">Items in the cart are not reserverd and might sell out quickly</span></div>{% endcomment %}{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- End Top Header -->
+              
+              {% if collection.handle contains 'archive' %}
+              {% include 'customer_links3' %}
+              {% else %}
+              {% include 'customer_links' %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="nav-search on">{% include 'search-bar' %}</div>
+        </div>
+      </div>
+    </div>
+    <nav class="nav-bar" role="navigation">      
+      <div class="header-logo-fix">
+        <a href="/"><img src="{{ 'logo-dp.png' | file_img_url }}" alt="logo-fix"></a>
+      </div>
+    
+      <div class="container"> 
+        <span class="menu-close-wc">{%- include 'icon-close' -%}</span>
+        {% include 'site-nav' %}
+        {% if collection.handle contains 'archive' %}
+          {% include 'site-nav-mobile-archive' %}
+        {% else %}
+          {% include 'site-nav-mobile' %}
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+</header>
+{% if settings.enable_multilang %}
+<script>
+  translator.doTranslate(".site-header");
+</script>
+{% endif %}
+
+<script>
+  $(document).ready(function(e) {
+    if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
+    {
+
+    }
+    else if(navigator.userAgent.indexOf("Chrome") != -1 )
+    {
+
+
+    }
+    else if(navigator.userAgent.indexOf("Safari") != -1)
+    {
+      $('body').addClass('safari-wc');
+    }
+    else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+    {
+
+    }
+    else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+    {
+
+    }  
+    else 
+    {
+    }
+  });
+
+  $(window).on('load',function() {  
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }
+
+    var lang_t = $('.lang-wc li a.weglot-link--active').text();
+    $('.lang-select-text-wc').text(lang_t);
+    $('#cbp-spmenu-s1 ul.lang-block li a').on('click', function(){
+      var this_t = $(this).text();
+      $('header.site-header .mobile-menu-lng-wc ul.lang-block li').each(function(){
+        var a_link = $(this).find('a').text();   
+        if(this_t == 'DE'){
+          localStorage.setItem('wglang', 'de');
+          $('html').attr('lang','de');
+        }else{
+          localStorage.setItem('wglang', 'en');
+          $('html').attr('lang','en');
+        }
+      });
+    });*/
+    if($('#shopify-section-desktop-banner .dp-banner').length){
+      $('header.site-header').addClass('site-topbar-true');
+    }
+  });
+
+
+  $(document).ready(function(){    
+
+
+    $(document).on('click', '.lang-wc li a', function(){
+      setTimeout(function(){
+        var lang_t = $('.lang-wc li a.weglot-link--active').text();
+        $('.lang-select-text-wc').text(lang_t);
+        $('.lang-wc').hide();
+      }, 500);
+    });
+
+    $('.lang-select-wc').on('click', function(){
+      $('.lang-wc').toggle();
+      return false;
+    });
+
+
+    $(document).on('change', '.mobile-menu-part .currency', function(){
+      var cur = $(this).find('option:selected').text();
+      $('.header-panel-bottom .currency.cur-wc-search option').each(function(){
+        var cur_t = $(this).text();
+        if(cur == cur_t){
+          $(this).prop('selected', 'true');
+          $(this).trigger('change');
+        }
+      });
+    });
+    $(document).on('change', '.mobile-search-bar .currency', function(){
+      var cur = $(this).find('option:selected').text();
+      $('.header-panel-bottom .currency.cur-wc-search option').each(function(){
+        var cur_t = $(this).text();
+        if(cur == cur_t){
+          $(this).prop('selected', 'true');
+          $(this).trigger('change');
+        }
+      });
+    });
+  });
+  if($(window).width() <= 768){
+    $('.desktop-cart-drawer').html('');
+    var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }
+  }else{
+    $('.mobile-cart-drawer').html('');
+    $('.service-megamenu-wc').hover(function(){
+      $('.mobile-menu-part .mobile-menu-ul').removeClass('mobile-menu-ul-show');
+      $(this).find('.mobile-menu-part .mobile-menu-ul').addClass('mobile-menu-ul-show');
+      var main_t = $(this).find('a span').data('id').trim();
+      $('.mobile-menu-ul li.mobile-mega-li').each(function(){
+        var sub_main_t = $(this).find('>a').attr('data-text');//.trim();         
+        if(main_t == sub_main_t){          
+          $(this).addClass('mobile-mega-li-show');                    
+          $(this).find('mobile-mega-ul').addClass('mobile-menu-ul-show');          
+          setTimeout(function(){            
+            var head_menu_height = $('.mobile-mega-li-show .mobile-menu-ul-show').innerHeight();
+            var head_main_menu_h = $('.mobile-menu-ul').innerHeight();
+            var total_h = head_menu_height - head_main_menu_h;
+            //$('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+            var height_1 = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+            var height_2 = $('.mobile-mega-li-show .mobile-mega-ul').innerHeight();
+            var height_3 = height_2 - height_1;
+            if(height_3<288){
+              height_3=324;
+            }
+            //console.log(height_3);
+            $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':height_3+'px'});
+          }, 100);
+        }else{
+          $(this).removeClass('mobile-mega-li-show');                    
+          $(this).find('mobile-mega-ul').removeClass('mobile-menu-ul-show');
+        }
+
+      });
+
+    });
+    $('.service-megamenu-wc').click(function(){
+      $('.mobile-menu-part .mobile-menu-ul').removeClass('mobile-menu-ul-show');
+      $(this).find('.mobile-menu-part .mobile-menu-ul').addClass('mobile-menu-ul-show');
+      var main_t = $(this).find('a span').data('id').trim();
+      $('.mobile-menu-ul li.mobile-mega-li').each(function(){
+        var sub_main_t = $(this).find('>a').attr('data-text');//.trim(); 
+
+        if(main_t == sub_main_t){          
+          $(this).addClass('mobile-mega-li-show');                    
+          $(this).find('mobile-mega-ul').addClass('mobile-menu-ul-show');
+
+          setTimeout(function(){            
+            var head_menu_height = $('.mobile-mega-li-show .mobile-menu-ul-show').innerHeight();
+            var head_main_menu_h = $('.mobile-menu-ul').innerHeight();
+            var total_h = head_menu_height - head_main_menu_h;
+            if(total_h<288){
+               total_h=324;
+             }
+            $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+          }, 10);
+        }else{
+          $(this).removeClass('mobile-mega-li-show');                    
+          $(this).find('mobile-mega-ul').removeClass('mobile-menu-ul-show');
+        }
+
+      });
+
+    });
+    var head_menu_height = $('.mobile-menu-part .mobile-menu-ul .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+  }  
+  $(document).on('click', '.ping-item-text a', function(){
+    $(this).parents('p').addClass('ping-item-text-none');
+    $(this).parents('.ping-item-text').find('.ping-item-section').addClass('ping-item-section-show');
+  });
+  $(document).on('click', '.nav-search', function(){
+    $('body').addClass('cbp-spmenu-push-toright');
+    $('body').addClass('only-serch-show-wc');
+    $('.cbp-spmenu').addClass('cbp-spmenu-open');
+  });
+  $(document).on('click', '.only-serch-show-wc .menu-close-wc', function(e){
+    $('body').removeClass('cbp-spmenu-push-toright');
+    $('body').removeClass('only-serch-show-wc');
+    $('.cbp-spmenu').removeClass('cbp-spmenu-open');
+  });
+  $(document).on('click', '.menu-close-wc', function(e){
+    $('body').removeClass('cbp-spmenu-push-toright');
+    $('.cbp-spmenu').removeClass('cbp-spmenu-open');
+  });
+  $(document).on('click', '#showLeftPush', function(e){
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    if($(window).width() <= 768){  
+      setTimeout(function(){
+        var elemTop = $('.mobile-main-menu-part-wc').height() + 53;
+      $('.wc_lang_list').css('top',elemTop+'px');
+        }, 400);
+    }
+  }); 
+  
+  $(document).on('click', '.mobile-menu-ul > li.mobile-mega-li a.wc_toggle_link', function(e){
+    var tabId = $(this).attr('href');
+    if($(this).hasClass('wc_in_active')){
+        $(this).addClass('wc_in_active');
+      $(tabId).show();
+      
+      }else{
+        $('.mobile-menu-ul > li.mobile-mega-li a.wc_toggle_link').removeClass('wc_in_active');
+        $('.mobile-main-menu-tab-wc .mobile-main-menu-tab-wrap-wc').removeClass('wc_in_show');
+         $(this).addClass('wc_in_active');
+         $(tabId).addClass('wc_in_show');
+      }
+    /*if($(window).width() <= 768){
+        var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+        $('.wc_lang_list').css('top',elemTop+'px');
+      }*/
+    return false;
+  });
+    $(document).on('click', '.mobile-menu-ul > li.mobile-mega-li', function(e){
+    e.preventDefault();
+      if($(window).width() >= 768){
+    if($(this).hasClass('mobile-mega-li-show')){       
+    }else{    
+      var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+      var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+      var total_h = head_menu_height -head_main_menu_h;
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+      if($(this).hasClass('mobile-mega-li-show')){
+        $(this).addClass('mobile-mega-li-show');
+        $(this).parents('.mobile-menu-ul').removeClass('mobile-menu-ul-show');
+      }else{
+        $('.mobile-mega-li').removeClass('mobile-mega-li-show');
+        $(this).addClass('mobile-mega-li-show');
+        $(this).parents('.mobile-menu-ul').addClass('mobile-menu-ul-show');
+      }
+      var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+      var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+      var total_h = head_menu_height -head_main_menu_h;
+      if(total_h > 0){
+        $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+      }else{
+        $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+      }
+      /*if($(window).width() <= 768){
+        var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+        $('.wc_lang_list').css('top',elemTop+'px');
+      }*/
+    }
+      }
+  });
+ 
+    {%- comment -%}
+  $(document).on('click', '.mobile-menu-ul > li.mobile-mega-li', function(e){
+    e.preventDefault();
+    if($(this).hasClass('mobile-mega-li-show')){       
+    }else{    
+      var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+      var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+      var total_h = head_menu_height -head_main_menu_h;
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+      if($(this).hasClass('mobile-mega-li-show')){
+        $(this).addClass('mobile-mega-li-show');
+        $(this).parents('.mobile-menu-ul').removeClass('mobile-menu-ul-show');
+      }else{
+        $('.mobile-mega-li').removeClass('mobile-mega-li-show');
+        $(this).addClass('mobile-mega-li-show');
+        $(this).parents('.mobile-menu-ul').addClass('mobile-menu-ul-show');
+      }
+      var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+      var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+      var total_h = head_menu_height -head_main_menu_h;
+      if(total_h > 0){
+        $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+      }else{
+        $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+      }
+      /*if($(window).width() <= 768){
+        var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+        $('.wc_lang_list').css('top',elemTop+'px');
+      }*/
+    }
+  });
+ {%- endcomment -%}
+  
+  $(document).on('click', '.mobile-menu-ul > li.mobile-mega-li li', function(e){
+    return false;
+  });
+  $(document).on('click', '.mobile-menu-ul > li.mobile-mega-li li', function(e){
+    var link = $(this).find('a').attr('href');
+    window.location.href = link;
+  });
+  $(document).on('click', '.mobile-bottom-mega-li .sub-menu-wc-link', function(e){
+    e.preventDefault();
+    if($(this).parents('.mobile-menu-part').hasClass('mobile-bottom-mega-popup-show')){
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show');     
+    }else{
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+      $(this).parents('.mobile-menu-part').addClass('mobile-bottom-mega-popup-show');
+    }
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+
+  $(document).on('click', '.mobile-bottom-account-li a', function(e){
+    e.preventDefault();
+    if($(this).parents('.mobile-menu-part').hasClass('mobile-bottom-account-popup-show')){
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show');     
+    }else{
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+      $(this).parents('.mobile-menu-part').addClass('mobile-bottom-account-popup-show');
+    }
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+
+  
+  
+  
+  $(document).on('click', '.stores-mobile-li', function(e){
+    e.preventDefault();
+    if($(this).parents('.mobile-menu-part').hasClass('mobile-stores-popup-show')){
+      $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+    }else{
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+      $(this).parents('.mobile-menu-part').addClass('mobile-stores-popup-show');
+    }
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+   /* if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+  
+  $(document).on('click', '.newsletter-mobile-li', function(e){
+    e.preventDefault();
+    if($(this).parents('.mobile-menu-part').hasClass('mobile-newsletter-popup-show')){
+      $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+    }else{
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+      $(this).parents('.mobile-menu-part').addClass('mobile-newsletter-popup-show');
+    }
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+
+  $(document).on('click', '.register-mobile-li', function(e){
+    e.preventDefault();
+    if($(this).parents('.mobile-menu-part').hasClass('mobile-register-popup-show')){
+      $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+    }else{   
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+      $(this).parents('.mobile-menu-part').addClass('mobile-register-popup-show');
+    }
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+
+  $(document).on('click', '.login-mobile-li', function(e){
+    e.preventDefault();
+    if($(this).parents('.mobile-menu-part').hasClass('mobile-login-popup-show')){
+      $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+    }else{
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show'); 
+      $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+      $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show'); 
+      $(this).parents('.mobile-menu-part').addClass('mobile-login-popup-show');
+    }
+    /*var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+  $(document).on('click', '.mobile-back-to-cat', function(e){
+    e.preventDefault();
+    $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-mega-popup-show');
+    $(this).parents('.mobile-menu-part').removeClass('mobile-bottom-account-popup-show');
+    $(this).parents('.mobile-menu-part').removeClass('mobile-newsletter-popup-show');
+    $(this).parents('.mobile-menu-part').removeClass('mobile-register-popup-show');
+    $(this).parents('.mobile-menu-part').removeClass('mobile-login-popup-show');
+    $(this).parents('.mobile-menu-part').removeClass('mobile-stores-popup-show');
+   /* var head_menu_height = $('.mobile-menu-ul-show .mobile-mega-li-show .mobile-mega-ul').innerHeight();
+    var head_main_menu_h = $('.mobile-menu-ul.mobile-menu-ul-show').innerHeight();
+    var total_h = head_menu_height -head_main_menu_h;
+    if(total_h > 0){
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':total_h+'px'});
+    }else{
+      $('.mobile-menu-part .mobile-menu-ul').css({'margin-bottom':'0px'});
+    }*/
+    /*if($(window).width() <= 768){
+      var elemTop = $('#cbp-spmenu-s1 .mobile-menu-lng-wc').offset().top;
+      $('.wc_lang_list').css('top',elemTop+'px');
+    }*/
+  });
+
+
+  /*
+    Show/hide the recover password form when requested.
+    I'd suggest using some CSS3 transitions to make this change look cool,
+    but this gets the job done for now.
+  */
+  function showRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'block';
+    document.getElementById('customer_login').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'none';
+    document.getElementById('customer_login').style.display = 'block';
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+  document.getElementById('resetSuccess').style.display = 'block';
+  {% endif %}
+</script>

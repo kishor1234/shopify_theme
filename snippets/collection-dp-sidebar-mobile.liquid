@@ -1,0 +1,95 @@
+{% comment %}
+Refined tags
+{% endcomment %}
+{% if current_tags == blank %}
+{% assign has_refined = false %}
+{% else %}
+{% assign has_refined = true %} 
+{% endif %}
+  
+  
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><h4 class="panel-title">Filter<span>/</span></h4></a>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="sidebar-custom sidebar-tag size">
+          {% assign tags = settings.shop_by_tags_3_list_tags | split: ',' %}
+          <div class="widget-content">
+            <ul>
+              {% for t in tags %}
+              {% assign tag = t | strip %}
+              {% assign tag_value = tag | handleize %}      
+              {% if current_tags contains tag %}
+              <li>
+                {% if settings.enable_multilang %}
+                <input type="checkbox" class="lang1" value="{{ tag_value | split: '|' | first }}" checked/>
+                <label class="lang1">{{ tag | split: '|' | first }}</label>
+                <input type="checkbox" class="lang2" value="{{ tag_value | split: '|' | last }}" checked/>
+                <label class="lang2">{{ tag | split: '|' | last }}</label>
+                {% else %}
+                <input type="checkbox" value="{{ tag_value | split: '|' | first }}" checked/>
+                <label>{{ tag | split: '|' | first }}</label>
+                {% endif %}
+              </li>
+              {% else %}
+              {% if collection.tags contains tag %} 
+              <li>
+                {% if settings.enable_multilang %}
+                <input type="checkbox" class="lang1" value="{{ tag_value | split: '|' | first }}"/>
+                <label class="lang1">{{ tag | split: '|' | first }}</label>
+                <input type="checkbox" class="lang2" value="{{ tag_value | split: '|' | last }}"/>
+                <label class="lang2">{{ tag | split: '|' | last }}</label>
+                {% else %}
+                <input type="checkbox" value="{{ tag_value | split: '|' | first }}"/>
+                <label>{{ tag | split: '|' | first }}</label>
+                {% endif %}
+              </li>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+          {% assign tags = settings.shop_by_tags_2_list_tags | split: ',' %}
+          <div class="widget-content">
+            <ul>
+              {% for t in tags %}
+              {% assign tag = t | strip %}
+              {% assign tag_value = tag | handleize %}      
+              {% if current_tags contains tag %}
+              <li>
+                {% if settings.enable_multilang %}
+                <input type="checkbox" class="lang1" value="{{ tag_value | split: '|' | first }}" checked/>
+                <label class="lang1">{{ tag | split: '|' | first }}</label>
+                <input type="checkbox" class="lang2" value="{{ tag_value | split: '|' | last }}" checked/>
+                <label class="lang2">{{ tag | split: '|' | last }}</label>
+                {% else %}
+                <input type="checkbox" value="{{ tag_value | split: '|' | first }}" checked/>
+                <label>{{ tag | split: '|' | first }}</label>
+                {% endif %}
+              </li>
+              {% else %}
+              {% if collection.tags contains tag %} 
+              <li>
+                {% if settings.enable_multilang %}
+                <input type="checkbox" class="lang1" value="{{ tag_value | split: '|' | first }}"/>
+                <label class="lang1">{{ tag | split: '|' | first }}</label>
+                <input type="checkbox" class="lang2" value="{{ tag_value | split: '|' | last }}"/>
+                <label class="lang2">{{ tag | split: '|' | last }}</label>
+                {% else %}
+                <input type="checkbox" value="{{ tag_value | split: '|' | first }}"/>
+                <label>{{ tag | split: '|' | first }}</label>
+                {% endif %}
+              </li>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<section class="main-slideshow">
+  <div class="flexslider">
+    <ul class="slides">
+      {% for block in section.blocks %}  
+        {% if block.settings.mobile-global-show == false %}
+          <li class="slide">
+            <div id="country-message"> 
+              <div id="{{ block.settings.mobile-country-code }}">{{ block.settings.mobile-country-text }}</div>
+            </div>
+          </li>
+        {%else%}
+          <li class="slide">
+            globaal
+          </li>
+        {%endif%}
+      {% endfor %}
+      <li class="slide">Return your item within 30 days and get a full refund</li>
+    </ul>
+  </div>
+</section>
+{% schema %}
+ {
+  "name": "Mobile Textslider",
+	"max_blocks": 999,
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Section",
+      "settings": [
+  		{
+        "type": "checkbox",
+        "id": "mobile-global-show",
+        "label": "Global",
+        "info": "Showing to every country in the world.",
+        "default": false
+      	},
+		{
+            "id": "mobile-country-code",
+            "type": "text",
+            "label": "Country Code",
+            "placeholder": "NL"
+          },{
+            "id": "mobile-country-text",
+            "type": "text",
+            "label": "Banner Text",
+            "placeholder": "Welcome to Daily Paper!",
+            "info": "Text for mobile slider"
+          }
+      ]
+    }
+  ]
+}
+{% endschema %}

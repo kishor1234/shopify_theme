@@ -1,0 +1,201 @@
+<div id="fullpage" class="landing-desktop-section"> 
+
+<p style="text-align: center;"><img class="width_for_big_screen_cus" src="https://cdn.shopify.com/s/files/1/0617/1881/files/Bril-S1610-Ivory_Front-Shopify.png?v=1625050892" alt="" /></p>
+<div class="desktop_banner_content1">
+    <h2>DAILY PAPER x KOMONO
+</h2>
+    <a class="komonoscroll" href="javascript:void(0)">View Products</a>
+  </div>
+  
+  <div class="desktop_banner_bottom_content_cus">
+    <h2>DAILY PAPER x KOMONO
+</h2>
+    <p>DAILY PAPER x KOMONO team up for their second limited edition eyewear just in time for the summer. The exclusive unisex design is available in Black or Ivory with a smoke coloured len. The sleek, rectangular shaped sunglasses feature an artisanal lace design inspired by our SS21 Future Roots Collection</p>
+  </div>
+
+
+{%- assign Slider = "Desktop" -%}
+
+<div id="section_Resort_C" class="index-section section kmono_carausel">   
+    <div class="landing-product-list">
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["daily-paper-x-komono"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Komono-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+  
+      <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ Slider }}').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 4,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+  
+<p style="text-align: center;5px;margin-right: 5px;margin-left: 5px;"><img class="width_for_big_screen_cus" src="https://cdn.shopify.com/s/files/1/0617/1881/files/Studio-Session-1674-copy.png?v=1625051201" alt="" /></p>
+  <div class="desktop_banner_content2">
+    <h2>DAILY PAPER x KOMONO
+</h2>
+
+  </div>
+</div>
+
+
+<div id="mobile-fullpage" class="landing-mobile-section">
+
+<p style="margin-top: 60px;text-align: center;"><img class="mobile_banner_image" src="https://cdn.shopify.com/s/files/1/0617/1881/files/Mask_Group_1.png?v=1625053344" alt="" /></p>
+  <div class="mobile_banner_content1">
+    <h2>DAILY PAPER x KOMONO
+</h2>
+    <a class="komonoscroll_mobile" href="javascript:void(0)">View Products</a>
+  </div>
+  
+    <div class="mobile_banner_bottom_content_cus">
+    <h2>DAILY PAPER x KOMONO</h2>
+    <p>DAILY PAPER x KOMONO team up for their second limited edition eyewear just in time for the summer. The exclusive unisex design is available in Black or Ivory with a smoke coloured len. The sleek, rectangular shaped sunglasses feature an artisanal lace design inspired by our SS21 Future Roots Collection</p>
+  </div>
+
+  
+  {%- assign Slider = "mobile" -%}
+
+  <div id="products_scrroll" class="index-section section">   
+    <div class="landing-product-list" >
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["daily-paper-x-komono"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Komono-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+  
+  
+      <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ Slider }}').slick({
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 2,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+
+<p><br></p>
+
+  
+<p></p>
+<p style="text-align: center;"><img class="banner_image_mobile2" src="https://cdn.shopify.com/s/files/1/0617/1881/files/Studio-Session-1674-copy_8b5d7d1f-9fa7-4339-ac73-35f25f57a8bf.png?v=1625053554" alt="" /></p>
+   <div class="mobile_banner_content2">
+    <h2>DAILY PAPER x KOMONO</h2>
+
+  </div>
+
+
+</div>
+
+  
+<script>
+  
+  function MatchHeight() {
+  }
+
+  //Functions that run when all HTML is loaded
+  $(document).ready(function() {
+    MatchHeight(); 
+    
+    $(".komonoscroll").click(function() {
+      $('html, body').animate({
+        scrollTop: $("#section_Resort_C").offset().top
+      }, 1000);
+    });
+    
+  });
+  
+</script>
+
+<script>
+  
+  function MatchHeight() {
+  }
+
+  //Functions that run when all HTML is loaded
+  $(document).ready(function() {
+    MatchHeight(); 
+    
+    $(".komonoscroll_mobile").click(function() {
+      $('html, body').animate({
+        scrollTop: $("#products_scrroll").offset().top
+      }, 100);
+    });
+    
+  });
+  
+</script>
+
+{% comment %}
+{%- section 'collection-template' -%}{% endcomment %}

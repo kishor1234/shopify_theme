@@ -1,0 +1,94 @@
+{% if template == "index" and settings.display_slideshow %}
+<section class="main-slideshow">
+  <div class="flexslider">
+    <ul class="slides">
+      {% capture slideheadingSize %}slide_heading_size{% endcapture %}
+      {% capture slideheadingColor %}slide_heading_color{% endcapture %}
+      {% capture slidetextSize %}slide_text_size{% endcapture %}
+      {% capture slidetextColor %}slide_text_color{% endcapture %}
+      {% for i in (1..10) %}
+        {% capture display_slideshow %}display_slideshow_{{ i }}{% endcapture %}
+        {% capture video %}video_{{ i }}{% endcapture %}
+        {% capture slide %}slideshow_{{ i }}.jpg{% endcapture %}
+        {% capture link %}image_{{ i }}_link{% endcapture %}
+        {% capture alt %}image_{{ i }}_alt{% endcapture %}
+        {% capture slideheading %}slide-heading_{{ i }}{% endcapture %}
+        {% capture slideheadingsize %}slide_heading_size_{{ i }}{% endcapture %}
+        {% capture slideheadingcolor %}slide_heading_color_{{ i }}{% endcapture %}
+        {% capture slidetextsize %}slide_text_size_{{ i }}{% endcapture %}
+        {% capture slidetextcolor %}slide_text_color_{{ i }}{% endcapture %}
+        {% capture slidetext %}slide-text_{{ i }}{% endcapture %}
+        {% capture buttontext %}button-text_{{ i }}{% endcapture %}
+        {% capture text_align_slide %}text_align_slide_{{ i }}{% endcapture %}
+        {% if settings[display_slideshow] != 'none' %}
+        <li class="slide{% if settings[display_slideshow] == 'video' %} video{% endif %}">
+          {% if settings[display_slideshow] == 'video' %}
+            {{ settings[video] }}
+          {% else %}
+            <img src="{{ slide | asset_url }}" data-url="{{ settings[link] }}" class="slide-img" alt="{{ settings[alt] }}" />
+            <div class="responsiveimage">
+              <img src="https://cdn.shopify.com/s/files/1/0617/1881/t/14/assets/Daily-Paper-206-copy2.jpg?90691531069696575">
+            </div>
+          {% endif %}
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div><!-- /.flexslider -->
+</section> <!-- /#slideshow.row -->
+<script>
+$(function() {
+	var slider, // Global slider value to force playing and pausing by direct access of the slider control
+		canSlide = true; // Global switch to monitor video state
+			// Watch for changes on the player
+			player.addEventListener("onStateChange", function(state){
+				switch(state.data)
+				{
+					// If the user is playing a video, stop the slider
+					case YT.PlayerState.PLAYING:
+						slider.flexslider("stop");
+						canSlide = false;
+						break;
+					// The video is no longer player, give the go-ahead to start the slider back up
+					case YT.PlayerState.ENDED:
+					case YT.PlayerState.PAUSED:
+						slider.flexslider("play");
+						canSlide = true;
+						break;
+				}
+			});
+			$(this).data('player', player);
+		});
+	}
+	// Setup the slider control
+	slider = $(".flexslider")
+		.flexslider({
+	    	animation: "{{ settings.slideshow_transition }}",
+			easing: "swing",
+			slideshowSpeed: {{ settings.slideshow_speed }},
+			animationSpeed: 900,
+			pauseOnHover: false,
+			pauseOnAction: true,
+			touch: true,
+			video: true,
+			controlNav: true,
+			directionNav: true,
+			keyboardNav: true,
+			{% if settings.slideshow_transition == "slide" %}
+			animationLoop: false,
+			{% endif %}
+			slideshow: true,
+			useCSS: false,
+	    	// Before you go to change slides, make sure you can!
+	    	before: function(){			    		
+	    		if(!canSlide)
+	    			slider.flexslider("stop");
+	    	}
+		});
+    jQuery('.flexslider li img').click(function(){
+      var url = jQuery(this).attr('data-url');
+      if (url.length > 0) {window.location.href = url;}
+    });
+});
+</script>
+{% endif %}

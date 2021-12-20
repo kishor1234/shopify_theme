@@ -1,0 +1,293 @@
+{%- if settings.display_megamenu -%}
+{%- assign items_list = settings.megamenu_items | split:"," | strip | downcase -%}
+{%- endif -%}
+
+<ul class="customer-links2">
+  {%- for link in linklists.new-main-menu.links -%}
+  {%- assign i = forloop.index | downcase -%}
+  {%- assign cat = link.title | downcase -%}
+    {%- assign PreSale = "Y"  -%}
+  {%- assign IsSalePage = "Y"  -%}
+  
+  {%- if collection.title  contains 'Sale' -%}
+	{%- assign IsSalePage = "Y"  -%}
+  {%- endif -%}
+
+  {%- if PreSale == 'Y' and link.title == 'Sale' and IsSalePage == 'N' -%}
+
+  
+  
+  {%-   else  -%}
+  
+  
+  <li {% if linklists[link.handle] != empty %}class="{% if cat contains 'sale' %}sale-menu sale-service-megamenu-wc {% endif %}dropdown {% if settings.display_megamenu and items_list contains cat %}service-megamenu-wc {% endif %}{% if settings.display_megamenu and items_list contains cat %}mega-menu{% endif %}"{% else %}class="{% if cat contains 'sale' %}sale-menu {% endif %}{% if settings.display_megamenu and items_list contains cat %}service-megamenu-wc {% endif %}"{% endif %}>
+    <a href="{{ link.url }}" class="{% if link.active %}current{% endif %} {% if link.url contains 'sale' %}sale-link{% endif %}">
+  
+
+      
+      
+      {%- if link.handle == 'stores' -%}
+      <img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/1047751_15x15.png?v=1616501415" alt="" />
+      <span data-id="CurrentLocal">EU + INT</span>
+      
+       {%- else -%}
+      <span data-id="{% if cat contains 'sale' %}Sale Men{% else %}{{ link.title | split: '|' | first }}{% endif %}">
+        {%- if settings.enable_multilang -%}
+        <span class="lang1">{{ link.title | split: '|' | first }}</span>
+        <span class="lang2">{{ link.title | split: '|' | last }}</span>
+        {%- else -%}
+        {{ link.title | split: '|' | first }}
+        {%- endif -%}
+      </span>
+       {%- endif -%}
+      {%- if linklists[link.handle] != empty and settings.show_dropdown_arrow -%}<span class="icon-dropdown"></span>{%- endif -%}
+    </a> 	
+    {%- if settings.display_megamenu and items_list contains cat -%}
+    {%- if cat == 'service' -%}
+    {%- if settings.title_01 != blank or settings.email_title != blank or settings.email_link != blank or settings.phone_title != blank or settings.phone_no != blank or settings.address != blank or settings.title_02 != blank or settings.menu_02 != blank or settings.title_03 != blank or settings.menu_03 != blank -%}
+    <div class="service-dropdown-wc">
+      <ul>
+        {%- if settings.title_01 != blank -%}
+        <li class="title">{{ settings.title_01 }}</li>
+        {%- endif -%}
+        {%- if settings.email_title != blank and settings.email_link != blank -%}
+        <li><span>Email us</span><a href="mailto:{{ settings.email_link }}">{{ settings.email_title }}</a></li>
+        {%- endif -%}
+        {%- if settings.phone_title != blank and settings.phone_no != blank -%}
+        <li><span>Call us</span><a href="tel:{{ settings.phone_no }}">{{ settings.phone_title }}</a></li>
+        {%- endif -%}
+        {%- if settings.address != blank -%}
+        <li><span>{{ settings.address }}</span></li>
+        {%- endif -%}
+        {%- if settings.title_02 != blank -%}
+        <li class="title">{{ settings.title_02 }}</li>
+        {%- endif -%}
+        {%- for service_menu_01 in linklists[settings.menu_02].links -%}
+        <li><a href="{{ service_menu_01.url }}">{{ service_menu_01.title }}</a></li>
+        {%- endfor -%}
+        {%- if settings.title_03 != blank -%}
+        <li class="title">{{ settings.title_03 }}</li>
+        {%- endif -%}
+        {%- for service_menu_02 in linklists[settings.menu_03].links -%}
+        <li><a href="{{ service_menu_02.url }}">{{ service_menu_02.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+    {%- endif -%}
+    
+        {%- elsif cat == 'stores' -%}
+    
+    <div class="service-dropdown-wc">
+      <ul>
+        {%- for service_menu_02 in linklists[settings.menu_04].links -%}
+        
+      {%- if service_menu_02.url == '#TitleNoLink' -%}
+               <li class="title">{{ service_menu_02.title }}</li>
+        <!-- code change to hide germany : by ashwini -->
+        {%- elsif service_menu_02.title == 'Germany' -%}
+               
+        {%- else -%}
+         <!-- code change to hide germany : by ashwini -->       
+                <li ><a href="{{ service_menu_02.url }}">{{ service_menu_02.title }}</a></li>
+        {%- endif -%}  
+        
+
+        {%- endfor -%}
+      </ul>
+    </div>
+    
+   	{%- elsif cat == 'collections' -%}
+    <div class="service-dropdown-wc">
+      <ul>
+        <li class="title"></li>
+        {%- for service_menu_02 in linklists["collections-dropdown-menu"].links -%}
+        <li ><a href="{{ service_menu_02.url }}">{{ service_menu_02.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div> 
+    
+    
+    {%- elsif cat == 'men' -%}
+    <div class="mobile-menu-part">
+      <ul class="mobile-menu-ul">
+        {%- assign mobile_link = linklists[settings.men_mobile_menu] -%}
+        {%- for m_link in mobile_link.links -%}
+        {%- if m_link.links != blank -%}
+        {%- assign title_handle = m_link.title | handle -%}
+        <li class="mobile-mega-li {% if title_handle == 'men' %}mobile-mega-li-show{% endif %}"><a href="{{ m_link.url }}" data-text="{{ m_link.title }}">{{ m_link.title }}</a>
+          <ul class="mobile-mega-ul {% if title_handle == 'men' %}mobile-menu-ul-show{% endif %}">
+            {%- for m_sub_link in m_link.links-%}
+            <li><a href="{{ m_sub_link.url }}">{{ m_sub_link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+        {%- else -%}
+        <li><a href="{{ m_link.url }}">{{ m_link.title }}</a></li>
+        {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <ul class="mobile-bottom-ul">
+        <li><a href="/account">Account</a> </li>
+        <li><a href="/pages/faq">Service</a></li>
+        <li id="news-btn"> <div id="newsbtn" class="newsbtn" onclick="show()" style="cursor:pointer;">Newsletter </div> </li>
+        <li>
+          {%- form 'currency' -%}
+          <select class="currency" name="currency">
+            {%- for currency in shop.enabled_currencies -%}
+            {%- if currency == cart.currency -%}
+            <option selected="true" label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+            {%- else -%}
+            <option label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+            {%- endif -%}
+            {%- endfor -%}
+          </select>
+          {%- endform -%}
+        </li>
+      </ul>
+    </div>
+    
+    {%- elsif cat == 'women' -%}
+    <div class="mobile-menu-part">
+      <ul class="mobile-menu-ul">
+        {%- assign mobile_link = linklists[settings.women_mobile_menu] -%}
+        {%- for m_link in mobile_link.links -%}
+        {%- if m_link.links != blank -%}
+        {%- assign title_handle = m_link.title | handle -%}
+        <li class="mobile-mega-li {% if title_handle == 'women' %}mobile-mega-li-show{% endif %}"><a href="{{ m_link.url }}" data-text="{{ m_link.title }}">{{ m_link.title }}</a>
+          <ul class="mobile-mega-ul {% if title_handle == 'women' %}mobile-menu-ul-show{% endif %}">
+            {%- for m_sub_link in m_link.links-%}
+            <li><a href="{{ m_sub_link.url }}">{{ m_sub_link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+        {%- else -%}
+        <li><a href="{{ m_link.url }}">{{ m_link.title }}</a></li>
+        {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <ul class="mobile-bottom-ul">
+        <li><a href="/account">Account</a> </li>
+        <li><a href="/pages/faq">Service</a></li>
+        <li id="news-btn"> <div id="newsbtn" class="newsbtn" onclick="show()" style="cursor:pointer;">Newsletter </div> </li>
+        <li>
+          {%- form 'currency' -%}
+          <select class="currency" name="currency">
+            {%- for currency in shop.enabled_currencies -%}
+            {%- if currency == cart.currency -%}
+            <option selected="true" label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+            {%- else -%}
+            <option label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+            {%- endif -%}
+            {%- endfor -%}
+          </select>
+          {%- endform -%}
+        </li>
+      </ul>
+    </div>
+    
+    {%- elsif cat == 'sale' -%}
+    <div class="mobile-menu-part">
+      <ul class="mobile-menu-ul sale-menu">
+        {%- assign mobile_link = linklists[settings.sale_mobile_menu] -%}
+        {%- for m_link in mobile_link.links -%}
+        {%- if m_link.links != blank -%}
+        {%- assign title_handle = m_link.title | handle -%}
+        <li class="mobile-mega-li {% if title_handle == 'sale men' %}mobile-mega-li-show{% endif %}"><a href="{{ m_link.url }}" data-text="{{ m_link.title }}">{{ m_link.title }}</a>
+          <ul class="mobile-mega-ul {% if title_handle == 'sale men' %}mobile-menu-ul-show{% endif %}">
+            {%- for m_sub_link in m_link.links-%}
+            <li><a href="{{ m_sub_link.url }}">{{ m_sub_link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+        {%- else -%}
+        {%- if m_link.title == 'Sale Kids' -%}
+        
+        {%- else -%}
+        <li><a href="{{ m_link.url }}">{{ m_link.title }}</a></li>
+        {%- endif -%}
+        {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <ul class="mobile-bottom-ul">
+        <li><a href="/account">Account</a> </li>
+        <li><a href="/pages/faq">Service</a></li>
+        <li id="news-btn"> <div id="newsbtn" class="newsbtn" onclick="show()" style="cursor:pointer;">Newsletter </div> </li>
+        <li>
+          {%- form 'currency' -%}
+          <select class="currency" name="currency">
+            {%- for currency in shop.enabled_currencies -%}
+            {%- if currency == cart.currency -%}
+            <option selected="true" label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+            {%- else -%}
+            <option label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+            {%- endif -%}
+            {%- endfor -%}
+          </select>
+          {%- endform -%}
+        </li>
+      </ul>
+    </div>
+   
+    {%- else -%}    
+    <div class="site-nav-dropdown">
+      {%- include 'mega-menu' -%}
+    </div>      
+    {%- endif -%}
+    {%- else -%}
+    <ul class="site-nav-dropdown">
+      {%- for childlink in linklists[link.handle].links -%}
+      <li {% if linklists[childlink.handle] != empty %}class="dropdown"{% endif %}>
+        <a href="{{ childlink.url }}" class="{% if childlink.active %}current{% endif %}">
+          <span>
+            {%- if settings.enable_multilang -%}
+            <span class="lang1">{{ childlink.title | split: '|' | first }}</span>
+            <span class="lang2">{{ childlink.title | split: '|' | last }}</span>
+            {%- else -%}
+            {{ childlink.title | split: '|' | first }}
+            {%- endif -%}
+          </span>
+          {%- if linklists[childlink.handle] != empty and settings.show_dropdown_arrow -%}<span class="icon-dropdown"></span>{%- endif -%}
+        </a>
+        <ul class="site-nav-dropdown">
+          {%- for childlink2 in linklists.[childlink.handle].links -%}
+          <li {% if linklists[childlink2.handle] != empty %}class="dropdown"{% endif %}>
+            <a href="{{ childlink2.url }}" class="{% if childlink2.active %}current{% endif %}">
+              <span>
+                {%- if settings.enable_multilang -%}
+                <span class="lang1">{{ childlink2.title | split: '|' | first }}</span>
+                <span class="lang2">{{ childlink2.title | split: '|' | last }}</span>
+                {%- else -%}
+                {{ childlink2.title | split: '|' | first }}
+                {%- endif -%}
+              </span>
+              {%- if linklists[childlink2.handle] != empty and settings.show_dropdown_arrow -%}<span class="icon-dropdown"></span>{%- endif -%}
+            </a>
+            <ul class="site-nav-dropdown">
+              {%- for childlink3 in linklists.[childlink2.handle].links -%}
+              <li>
+                <a href="{{ childlink3.url }}" class="{% if link.active %}current{% endif %}">
+                  <span>
+                    {%- if settings.enable_multilang -%}
+                    <span class="lang1">{{ childlink3.title | split: '|' | first }}</span>
+                    <span class="lang2">{{ childlink3.title | split: '|' | last }}</span>
+                    {%- else -%}
+                    {{ childlink3.title | split: '|' | first }}
+                    {%- endif -%}
+                  </span>
+                </a>
+              </li>
+              {%- endfor -%}
+            </ul>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </li>
+      {%- endfor -%}
+    </ul>
+    {%- endif -%}
+  </li>
+  
+  
+    {%- endif -%}
+  {%- endfor -%}
+</ul>

@@ -1,0 +1,17 @@
+
+{% assign handle = collection.title %} {% case handle %}
+{% when 'Wekafore' %}
+    {%-section 'collection-banner'-%}
+    {%- section 'collection-template-wekafore' -%}
+{% when 'Daily Paper x Street Dreams' %}
+    {%-section 'collection-banner-street'-%}
+<div class="mobile-banner">
+  {%- section 'collection-template-wekafore' -%}
+</div>
+<div class="desktop-banner">
+  {%- section 'collection-template' -%}
+</div>
+        
+{% else %}
+       {%- section 'collection-template' -%}
+{% endcase %}

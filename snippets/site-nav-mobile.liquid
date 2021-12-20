@@ -1,0 +1,254 @@
+<div class="mobile-search-currency">
+  <span class="menu-close-wc">{%- include 'icon-close' -%}</span>
+  <div class="mobile-search-bar">
+    {%- include 'search-bar-mobile' -%}
+  </div> 
+</div>
+<div class="mobile-menu-part 99">
+  {%- assign mobile_link = linklists[settings.mobile_menu] -%}
+  {%- for m_link in mobile_link.links -%}
+  {%- if m_link.links != blank -%}
+  {%- for m_sub_link in m_link.links-%}
+  {%- if m_sub_link.active -%}{%- assign sub_link = true -%}{%- assign sub_title = m_link.title -%}{%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+  {%- endfor -%} 
+  <div class="mobile-main-menu-part-wc">
+  <ul class="mobile-menu-ul {% if sub_link %}mobile-menu-ul-show{% endif %}">    
+  
+          {%- for m_link in mobile_link.links -%}
+    
+  {%- assign PreSale = "Y"  -%}
+  {%- assign IsSalePage = "Y"  -%}
+     {%- assign IsSaleLink = "N"  -%}
+  
+  {%- if collection.title  contains 'Sale'   -%}
+	{%- assign IsSalePage = "Y"  -%}
+  {%- endif -%}
+    
+     {%- if m_link.title  contains 'Sale'   -%}
+	{%- assign IsSaleLink = "Y"  -%}
+  {%- endif -%}
+ 
+
+  {%- if PreSale == 'Y' and IsSaleLink == 'Y' and IsSalePage == 'N' -%}
+
+  
+  
+  {%-   else  -%}
+    
+    
+    {%- if m_link.links != blank -%}    
+    <li data-handle="{{ m_link.title | handle }}" class="mobile-mega-li {% if m_link.active %}active{% endif %} {% comment %}{% if sub_link and sub_title == m_link.title %}mobile-mega-li-show sub-link-active{% endif %}{% endcomment %} {% if m_link.url contains 'sale' %}sale-mob-menu{% endif %}">
+      <a href="#wc_mobile_{{ m_link.title | handle }}" class="sub-menu-wc-link wc_toggle_link {% if sub_link and sub_title == m_link.title %}wc_in_active{% endif %}">{{ m_link.title }}</a>
+     {%- comment -%}
+      <ul class="mobile-mega-ul">
+        {%- for m_sub_link in m_link.links-%}
+        <li class="{% if m_sub_link.active %}active{% endif %} {% if m_link.url contains 'sale' %}sale-mob-menu{% endif %}"><a href="{{ m_sub_link.url }}">{{ m_sub_link.title }}.</a></li>
+        {%- endfor -%}
+      </ul>
+      {%- endcomment -%}
+    </li>
+    {%- else -%}
+        {%- if m_link.title == 'Sale Kids' -%}
+        
+        {%- else -%}
+    <li class="{% if m_sub_link.active %}active{% endif %} {% if m_link.url contains 'sale' %}sale-mob-menu{% endif %}"><a href="{{ m_link.url }}">{{ m_link.title }}</a></li>
+    {%- endif -%}
+      {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+    <div class="mobile-main-menu-tab-wc">
+        {%- for m_link in mobile_link.links -%}
+    {%- if m_link.links != blank -%}    
+    <div id="wc_mobile_{{ m_link.title | handle }}" class="mobile-main-menu-tab-wrap-wc {% if sub_link and sub_title == m_link.title %}wc_in_show{% endif %}">     
+      <ul class="mobile-mega-ul">
+        <!--2 level dropdown for sale by kishor-->
+        {%- for m_sub_link in m_link.links -%}
+        <li id="ctitle" data2="false" data="#{{ m_sub_link.title | replace: ' ','-' }}" test="{{m_sub_link.url}}" class="{% if m_sub_link.active %}active{% endif %}">
+          {%-if m_sub_link.links != blank -%}
+              <a href="#" {% if m_sub_link.url contains 'sale' %}style="color:red;"{% endif %}>{{ m_sub_link.title }}</a>
+              <ul id="{{ m_sub_link.title | replace: ' ','-' }}" class="mobile-mega-ul hide-ul">
+                {%- for m_sub_sub_link in m_sub_link.links -%}
+                  <li test="{{m_sub_sub_link.url}}" class="{% if m_sub_sub_link.active %}active{% endif %}"><a href="{{ m_sub_sub_link.url }}" {% if m_sub_sub_link.url contains 'sale' %}style="color:red;"{% endif %}>{{ m_sub_sub_link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+          {%-else-%}
+          <a href="{{ m_sub_link.url }}" {% if m_sub_link.url contains 'sale' %}style="color:red;"{% endif %}>{{ m_sub_link.title }}</a>
+          
+          {%-endif-%}
+             
+        </li>
+        {%- endfor -%}
+        <!--2 level dropdown for sale by kishor-->
+      </ul>
+    </div>
+    {%- endif -%}
+    
+    {%- endfor -%}
+    </div>
+  </div>
+  <ul class="mobile-back-to-cat"><li><a href="javascript:void(0)">Back to categories</a></li></ul>
+  {%- assign mobile_bottom_link = linklists[settings.mobile_bottom_menu] -%}
+  <ul class="mobile-bottom-ul">
+    <li class="mobile-bottom-account-li"><a href="javascript:void(0)">Account</a>
+      <ul class="mobile-bottom-account-ul">
+        <li class="login-mobile-li"><a href="javascript:void(0)">Login</a></li>
+        <li class="register-mobile-li"><a href="javascript:void(0)">Register</a></li>
+      </ul>
+    </li>
+    {%- for m_b_link in mobile_bottom_link.links -%}
+    {%- if m_b_link.links != blank -%}
+    <li class="mobile-bottom-mega-li"><a href="{{ m_b_link.url }}" class="sub-menu-wc-link">{{ m_b_link.title }}</a>
+      <ul class="mobile-bottom-mega-ul">
+        {%- for m_b_sub_link in m_b_link.links -%}
+        <li><a href="{{ m_b_sub_link.url }}">{{ m_b_sub_link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </li>
+    {%- else -%}
+    <li><a href="{{ m_b_link.url }}">{{ m_b_link.title }}</a></li>
+    {%- endif -%}
+    {%- endfor -%}
+    <li class="newsletter-mobile-li"><a href="javascript:void(0)">Newsletter</a></li>
+    <li>
+      {%- form 'currency' -%}
+      <select class="currency" name="currency">
+        {%- for currency in shop.enabled_currencies -%}
+        {%- if currency == cart.currency -%}
+        <option selected="true" label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+        {%- else -%}
+        <option label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+        {%- endif -%}
+        {%- endfor -%}
+      </select>
+      {%- endform -%}
+    </li>
+
+      
+  <li class="stores-mobile-li"><a href="javascript:void(0)"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/1047751_15x15.png?v=1616501415" alt="" />World Wide</a></li>
+
+  </ul>
+
+
+  
+  
+  <div class="mobile-popup-newsletter-part">
+    <div class="mobile-popup-newsletter">
+      {%- if settings.mobile_newsletter_title != blank -%}
+      <h4>{{ settings.mobile_newsletter_title }} news</h4>
+      {%- endif -%}
+      <div style="padding-top:15px;" class="klaviyo-form-YepngL"></div>
+    </div>
+  </div>
+  
+  <div class="mobile-popup-stores-part">
+    <div class="mobile-popup-stores">
+      <ul class="mobile-menu-ul " style="margin-bottom: 0px;">
+      {%- assign mobile_link = linklists["store-dropdown-menu"] -%}
+      {%- for m_link in mobile_link.links -%}
+        <!-- code change to hide germany : by ashwini -->
+        {%- if m_link.title != 'Germany' -%} 
+    
+            {%- if m_link.url == '#TitleNoLink' -%}
+               <li class="title">{{ m_link.title }}</li>
+        {%- else -%}
+                <li><a href="{{ m_link.url }}">{{ m_link.title }}</a></li>
+        {%- endif -%}  
+      <!-- code change to hide germany : by ashwini -->
+  {%- endif -%} 
+    {%- endfor -%}
+        </ul>
+    </div>
+  </div>
+  
+  <div class="mobile-popup-login-part">{% form 'customer_login' %}
+    <input type="email" value="" placeholder="Email" name="customer[email]" id="customer_email" {% if form.errors contains "email" %}class="error"{% endif %} >
+    {% if form.password_needed %}
+    <input type="password" value="" placeholder="Password" name="customer[password]" id="customer_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+    {% endif %}
+    <p><input type="submit" {% if settings.enable_multilang %}data-translate="customer.login.login"{%endif%} class="btn" value="{{ 'customer.login.login' | t }}">
+      <a href="#" onclick="showRecoverPasswordForm();return false;" {% if settings.enable_multilang %}data-translate="customer.login.forgot_password"{%endif%} class="forgot-pass-wc">{{ 'customer.login.forgot_password' | t }}</a>
+    </p>
+    {% endform %}
+
+    <div id="recover_password" style="display: none;">
+      <h1 class="service-title">{% if settings.enable_multilang %}data-translate="customer.recover_password.title"{%endif%}{{ 'customer.recover_password.title' | t }}</h1>
+
+      {% form 'recover_customer_password' %}
+      {{ form.errors | default_errors }}
+
+      {% if form.posted_successfully? %}
+      {% assign resetPassword = true %}
+      {% endif %}
+      <input type="email" value="" name="email" id="recover-email" {% if settings.enable_multilang %}data-translate="customer.recover_password.email" translate-item="placeholder" {%endif%} placeholder="{{ 'customer.recover_password.email' | t }}" >
+
+      <p><input type="submit" class="btn" {% if settings.enable_multilang %}data-translate="customer.recover_password.submit"{%endif%} value="{{ 'customer.recover_password.submit' | t }}">
+        <a href="#" onclick="hideRecoverPasswordForm();return false;" {% if settings.enable_multilang %}data-translate="customer.recover_password.cancel"{%endif%} class="btn">{{ 'customer.recover_password.cancel' | t }}</a>
+      </p>
+      {% endform %}</div></div>
+  <div class="mobile-popup-register-part">
+    {% form 'create_customer' %}
+    {% include 'form-errors-custom' %}
+
+    <div class="col-xs-3" style="padding:0 6px 0 0">
+      <div id="title">
+        <select id="title" name="customer[note][Demographic]" required class="form-control--1">
+          <option disabled selected value="">Title</option>
+          <option value="Male">Mr</option>
+          <option value="Female">Ms</option>
+        </select>
+      </div>
+    </div>
+    <div id="firstname" class="col-xs-4" style="padding:0 6px">
+      <input type="text" value="" placeholder="First Name" name="customer[first_name]" id="firstname" {% if form.errors contains "first_name" %}class="error"{% endif %}  >
+    </div>
+
+    <div id="lastname" class="col-xs-5" style="padding:0 0 0 6px">
+      <input type="text" value="" placeholder="Last Name" name="customer[last_name]" id="lastname" {% if form.errors contains "last_name" %}class="error"{% endif %}  >
+    </div>
+
+    <div id="email">
+      <input type="email" value="" placeholder="Email" name="customer[email]" id="email" {% if form.errors contains "email" %}class="error"{% endif %}  >
+    </div>
+
+    <div id="create_password">
+      <input type="password" value="" placeholder="Password" name="customer[password]" id="create_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+    </div>
+
+    <div class="dp-email-marketing">
+      <input type="hidden" name="customer[accepts_marketing]" value="" />
+      <input type="checkbox" name="customer[accepts_marketing]" value="checked" />
+      <span>Sign me up for the newsletter</span>
+      <p style="display:inline-block;"><input type="submit" {% if settings.enable_multilang %}data-translate="customer.register.submit"{%endif%} value="Register" class="btn"></p>
+    </div>
+    {% endform %}
+  </div>
+</div>
+<!--2 level dropdown for sale by kishor-->
+<style>
+  .hide-ul{
+    display:none;
+    margin-left:10px;
+  }
+</style>
+<script>
+  $("document").ready(function(){
+    $("li#ctitle").click(function(){
+      var data2=$(this).attr("data2");
+      var data=$(this).attr("data");
+      if(data2==="true"){
+        $(this).attr("data2","false");
+        $("ul"+data).hide();
+      }else{
+        $(this).attr("data2","true");
+        $("ul"+data).show();
+      }
+      
+      
+    });
+  });
+ // $('.wrapper-container header .header-bottom .nav-bar .container .mobile-menu-lng-wc').html('');
+</script>
+<!--2 level dropdown for sale by kishor-->

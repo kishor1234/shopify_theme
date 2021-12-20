@@ -1,0 +1,198 @@
+{%if section.settings.background-video ==  true %}
+  {%if section.settings.sale-theme == false %}
+  <section class="index-section" style="z-index:900; position:relative !important;display:flex;height:95vh !important;"> 
+    <video autoplay muted loop class="video-foreground">
+      <source src="{{ section.settings.video-name |asset_url }}" type="video/mp4">
+    </video>
+    <a href="/collections/sale" alt="Daily Paper Sale" style="text-align:center;z-index:9999;align-self:center;width:200px;margin:0 auto;text-decoration: none;">
+      <span style="display:block;text-align:center;   text-align:center;
+                   color:#fff;
+                   font-weight:700;
+                   font-size:15px;margin-top:-35px;">   
+        {{ section.settings.big-text }}
+        <br>
+      </span></a>
+    {% if section.settings.big-button-text != "" %}
+    <div style="position:absolute;left:-50px;bottom:80px;z-index:9999;">
+      <div class="button-box">
+        <a href=" {{ section.settings.big-button-link }}">
+          <div class="button-big men-dp black" style="width:200px;padding:12px;">
+            {{ section.settings.big-button-text }}
+          </div>
+        </a>
+      </div>
+    </div>
+    {%endif%}
+    <div style="position:absolute;right:50px;bottom:5px;z-index:9999;">
+      <a href="#section1">
+        <div class="arrow-down" style="cursor:pointer;">
+          <span class="arrow-right"></span>
+        </div>
+      </a>
+    </div>
+  </section>
+  {%else%}
+  <section class="index-section" style="z-index:900; position:relative !important;display:flex;height:95vh !important;"> 
+    <video autoplay muted loop class="video-foreground">
+      <source src="{{ section.settings.video-name | asset_url }}" type="video/mp4">
+    </video>
+    <a href="/collections/sale" alt="Daily Paper Sale" style="text-align:center;z-index:9999;align-self:center;width:200px;margin:0 auto;text-decoration: none;">
+      <span style="display:block;text-align:center;   text-align:center;
+        color:#fff;
+        font-weight:700;
+        font-size:15px;margin-top:-35px;">   
+           {%if settings.sale_theme == "11-theme" %} {{ settings.sale_text_11 }}   
+           <br><br> 
+           {%unless settings.sale_countdown_position_11 == "none" %}
+           <span style="color:#fff;font-size:14px;text-transform: lowercase;" id="count1down"></span> 
+           {%endunless%}
+           {%elsif settings.sale_theme == "12-theme" %} 
+            {{ settings.sale_text_12 }} 
+           {%endif%}
+        <br>
+      </span></a>
+    <script>// <![CDATA[
+      var end = new Date(' {%if settings.sale_theme == "11-theme" %} {{ settings.sale_countdown_11 }} {%elsif settings.sale_theme == "12-theme" %} {{settings.sale_countdown_12}} {%endif%}');
+
+      var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementById('count1down').innerHTML = 'ended';
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+            document.getElementById('count1down').innerHTML = days + ':';
+            document.getElementById('count1down').innerHTML += minutes + ':';
+            document.getElementById('count1down').innerHTML += seconds;
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    // ]]></script>
+    <div style="position:absolute;left:-50px;bottom:80px;z-index:9999;">
+      <div class="button-box">
+        <a href="{{ section.settings.big-button-link }}">
+          <div class="button-big men-dp black" style="width:200px;padding:12px;">
+            {{ section.settings.big-button-text }}
+          </div>
+        </a>
+      </div>
+    </div>
+    <div style="position:absolute;right:50px;bottom:5px;z-index:9999;">
+      <a href="#section1">
+        <div class="arrow-down" style="cursor:pointer;">
+          <span class="arrow-right"></span>
+        </div>
+      </a>
+    </div>
+    </section>
+  {%endif%}
+{%else%}
+  <section class="index-section" style="z-index:900; position:relative !important;display:flex;height:95vh !important;"> 
+    <div class="dp-image-section" style="background: url({{ section.settings.big-section-image | img_url: 'master' }}) no-repeat center center;    background-size:100% !important;">
+    </div>
+    <a href="/collections/sale" alt="Daily Paper Sale" style="text-align:center;z-index:9999;align-self:center;width:200px;margin:0 auto;text-decoration: none;">
+      <span style="display:block;text-align:center;   text-align:center;
+                   color:#fff;
+                   font-weight:700;
+                   font-size:15px;margin-top:-35px;">   
+        {{ section.settings.big-text }}
+
+        <br>
+      </span></a>
+   {% if section.settings.big-button-text != "" %}
+    <div style="position:absolute;left:-50px;bottom:80px;z-index:9999;">
+      <div class="button-box">
+        <a href=" {{ section.settings.big-button-link }}">
+          <div class="button-big men-dp black" style="width:200px;padding:12px;">
+            {{ section.settings.big-button-text }}
+          </div>
+        </a>
+      </div>
+    </div>
+    {%endif%}
+    <div style="position:absolute;right:50px;bottom:5px;z-index:9999;">
+      <a href="#section1">
+        <div class="arrow-down" style="cursor:pointer;">
+          <span class="arrow-right"></span>
+        </div>
+      </a>
+    </div>
+  </section>
+{%endif%}
+{% schema %}
+{
+  "name": "Homepage Sections",
+
+      "settings": [
+  		{
+        "type": "header",
+        "content": "Big Column Section"
+      },
+  	{
+        "type": "checkbox",
+        "id": "sale-theme",
+        "label": "Show sale type section",
+        "info": "Change sale settings in sale section. This one includes countdown and text in middle.",
+        "default": false
+      },
+	{
+        "type": "checkbox",
+        "id": "background-video",
+        "label": "Use video",
+        "info": "If you click this it will use a video as background.",
+        "default": false
+      },
+	{
+            "id": "video-name",
+            "type": "text",
+            "label": "Video name",
+            "default": "example.mp4",
+            "info": "Upload video to assets in theme and put the video name here."
+          },
+ 	{
+        "type": "image_picker",
+        "id": "big-section-image",
+        "label": "Homepage Image"
+      	},
+   		{
+        "type": "html",
+        "id": "big-text",
+        "label": "Homepage text",
+        "info": "For example: Archive sale now online"
+      },
+		{
+            "id": "big-button-text",
+            "type": "text",
+            "label": "Button text",
+            "default": "Button text",
+            "info": "If button text is empty it won't show."
+          },
+{
+            "id": "big-button-link",
+            "type": "url",
+            "label": "Button link"
+          }
+      ],
+  "presets": [
+    {
+      "name": "Big Column Section",
+      "category": "Show one big image with text/buttons"
+    }
+  ]
+    } 
+
+{% endschema %}

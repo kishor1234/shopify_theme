@@ -1,0 +1,148 @@
+{% for block in section.blocks %}  
+  {% if block.settings.reverse == false %}
+  <section class="flex-grid" style="min-height:50vh;height:auto;">
+    <div class="col custom-img-flex" style="background:{{ block.settings.colorleft }}">
+      <img class="test" src="{{block.settings.section-image1 | img_url: 'master' }}" alt="">
+      {%if block.settings.section-image2  %}
+      <img class="test" src="{{block.settings.section-image2 | img_url: 'master' }}" alt="">
+      {%endif%}
+    </div>
+    <div class="col custom-flex" style="background:{{ block.settings.colorright }};color:{{ block.settings.colorrightfont }};">
+      <div class="wrap ">
+        <div class="title">{{ block.settings.title1 }}</div>
+        <div class="summary">{{block.settings.desc1}}</div>
+      </div> 
+      {%if block.settings.title2 != "" %}
+      <div class="wrap ">
+        <div class="title">{{ block.settings.title2 }}</div>
+        <div class="summary">{{ block.settings.desc2 }}</div>
+      </div>
+      {%endif%}
+      {%if block.settings.button-text != "" %}
+      <div class="wrap ">
+        <a href="https://dailypaperclothing.com/{{block.settings.button-link}}" target="_blank"><button class="button button-section">{{block.settings.button-text}}</button></a>
+      </div>
+      {%endif%}
+    </div>
+  </section>
+  {%else%}
+  <section class="flex-grid" style="min-height:50vh;height:auto;">
+    <div class="col custom-flex"  style="background:{{ block.settings.colorleft }};color:{{ block.settings.colorleftfont }};">
+      <div class="wrap">
+        <div class="title">{{ block.settings.title1 }}</div>
+        <div class="summary">{{block.settings.desc1}}</div>
+      </div> 
+      {%if block.settings.title2 != "" %}
+      <div class="wrap ">
+        <div class="title">{{ block.settings.title2 }}</div>
+        <div class="summary">{{ block.settings.desc2 }}</div>
+      </div>
+      {%endif%}
+      {%if block.settings.button-text != "" %}
+      <div class="wrap">
+        <a style="align-self: flex-start;" href="https://dailypaperclothing.com/{{block.settings.button-link}}" target="_blank"><button class="button button-section">{{block.settings.button-text}}</button></a>
+      </div>
+      {%endif%}
+    </div>
+    <div class="col custom-img-flex" style="background:{{ block.settings.colorright }};color:{{ block.settings.colorrightfont }};">
+      <img class="test" src="{{block.settings.section-image1 | img_url: 'master' }}" alt="">
+      {%if block.settings.section-image2  %}
+      <img class="test" src="{{block.settings.section-image2 | img_url: 'master' }}" alt="">
+      {%endif%}
+    </div>
+  </section>
+  {%endif%}
+{%endfor%}
+{% schema %}
+{
+  "name": "All sections",
+	"max_blocks": 999,
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Section",
+      "settings": [
+      {
+        "type": "checkbox",
+        "id": "reverse",
+        "label": "Reverse",
+        "info": "If this is checked it will put the images of the specific section on the right side and text left.",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "colorleft",
+        "label": "Left column color",
+        "info": "Color for the left column of the section.",
+        "default": "#FFffff"
+        
+      },
+      {
+        "type": "color",
+        "id": "colorleftfont",
+        "label": "Left text color font",
+        "info": "Font (text) color for the left side of the section.",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "colorright",
+        "label": "Right column color",
+        "info": "Color for the right column of the section.",
+        "default": "#FFffff"
+      },
+      {
+        "type": "color",
+        "id": "colorrightfont",
+        "label": "Right text color font",
+        "info": "Font (text) color for the right side of the section.",
+        "default": "#000"
+      },
+      {
+        "type": "image_picker",
+        "id": "section-image1",
+        "label": "Section Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "section-image2",
+        "label": "Section Image"
+      },
+        {
+          "id": "title1",
+          "type": "text",
+          "label": "Section Title 1",
+          "default": "Section Title 1"
+        },
+        {
+          "id": "desc1",
+          "type": "richtext",
+          "label": "Section Description 1",
+          "default": "<p>Section Description 1</p>"
+        },
+        {
+          "id": "title2",
+          "type": "text",
+          "label": "Section Title 2 (won't show if empty)",
+          "placeholder": "Section Title 2"
+        },{
+            "id": "desc2",
+            "type": "richtext",
+            "label": "Section Description 2",
+            "default": "<p>Section Description 2</p>"
+          },{
+            "id": "button-text",
+            "type": "text",
+            "label": "Button text",
+            "default": "Button text",
+            "info": "If button text is empty it won't show."
+          },{
+            "id": "button-link",
+            "type": "url",
+            "label": "Button link"
+          }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="block-row col-xs-9 col-main">  
+    {% if settings.enable_multilang %}
+      <div class="rte lang1">{{ page.content | split: '[lang2]' | first }}</div>
+      <div class="rte lang2">{{ page.content | split: '[lang2]' | last }}</div>
+    {% else %}
+      <div class="rte">{{ page.content | split: '[lang2]' | first }}</div>
+    {% endif %}
+  </div>
+</div>
+<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=MViDJp"></script>
+<style>
+  .col-main, .header-panel-bottom {
+    width: 100%!important;
+}
+   div#shopify-section-new-footer {
+    background: #FFF;
+}
+  main.main-content{
+    background:#CCC;
+  }
+  .col-main .rte {
+    width: 100% !important;
+    padding-right:0px;
+    }
+  
+  @media only screen and (min-width: 768px) {
+  
+  }
+</style>
+

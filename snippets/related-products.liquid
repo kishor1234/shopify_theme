@@ -1,0 +1,36 @@
+{%- if collection.handle contains 'kids-line' or product.title contains "Kids" or product.tags contains "Kids" -%}
+  {%- include 'related-products-by-col-dp' -%}
+{%- elsif collection.handle contains 'accessories' or product.tags contains 'Accessories' -%}
+  {%- include 'related-products-by-col-dp' -%}
+{%- elsif collection.handle contains 'women'  -%}
+  {%- include 'product-recommendations-women' -%}
+{%- elsif product.vendor == "Daily Paper X Surf Ghana"  -%}
+  {%- include 'related-products-by-col-dp' -%}
+{%- elsif product.vendor == "Daily Paper X Off-White"  -%}
+  {%- include 'related-products-by-col-dp' -%}
+{%- else -%}
+{%- if product.tags contains 'Comingsoon' -%}
+{%- include 'related-products-by-col-dp' -%}
+  {%- elsif product.tags contains 'UNISEX' -%}
+    {%- include 'product-recommendations-men' -%}
+  {%- elsif product.tags contains 'Women' -%}
+  	{%- include 'product-recommendations-women' -%}
+  {%- else -%}
+  	{%- include 'product-recommendations-men' -%}
+  {%- endif -%}
+{%- endif -%}
+<script type="text/javascript">   
+  jQuery(document).ready(function () {
+    setTimeout(function(){
+    jQuery(".related-products .products-grid").owlCarousel({
+      navigation: true,
+      items: 3,
+      itemsDesktop: [1200, 3],
+      itemsTablet: [767, 3],
+      itemsTabletSmall: [721, 2],
+      itemsMobile: [373, 2],
+      itemsMobileSmall: [360, 2]
+    });
+ }, 1000);
+  });
+</script>

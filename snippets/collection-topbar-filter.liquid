@@ -1,0 +1,301 @@
+{%- if collection.url != '' -%}
+{%- assign coll_url = collection.url -%}
+{%- else %}
+	{%- assign coll_url = '/collections/all' -%}
+{%- endif -%}
+{%- if collection.handle contains 'women' or collection.handle == 'all' or collection.handle contains 'kids' -%}
+{%- assign = woman_man = true -%}
+{%- else -%}
+{%- assign = woman_man = false -%}
+{%- endif -%}
+
+{%- if collection.handle contains 'women' -%}
+{%- assign women_type_url = true -%}
+{%- assign kids_type_url = false -%}
+{%- assign other_type_url = false -%}
+{%- elsif collection.handle contains 'kids' -%}
+{%- assign women_type_url = false -%}
+{%- assign kids_type_url = true -%}
+{%- assign other_type_url = false -%}
+{%- else -%}
+{%- assign women_type_url = false -%}
+{%- assign kids_type_url = false -%}
+{%- endif -%}
+{%- unless collection.handle contains 'women' or collection.handle contains 'kids' -%}
+{%- assign other_type_url = true -%}
+{%- endunless -%}
+
+<div class="sidebarinr">
+  <div class="wfinline">
+    {%- assign fillter_count = 0 -%}
+    {%- for block in section.blocks  -%}
+    {%- if block.type == 'tag_list' or block.type == 'sort_by' or block.type == 'type_list' -%}
+    {%- assign fillter_count = fillter_count | plus:1 -%}  	
+    {%- endif -%}
+
+    {%- if block.type == 'type_list' -%}
+    {%- if block.settings.title == 'Product Type' or block.settings.title == 'product Type' or block.settings.title == 'Product type' or block.settings.title == 'product type' or block.settings.title == 'Collection Type List' or block.settings.title == 'Collection type list' or block.settings.title == 'collection type list' or block.settings.title == 'collection Type list' or block.settings.title == 'collection type List' -%}
+    {%- assign woman_man_title = true -%}
+    {%- else -%}
+    {%- assign woman_man_title = false -%}
+    {%- assign kids_title = false -%}
+    {%- endif -%}
+
+    {%- if block.settings.title == 'Women Collection' -%}
+    {%- assign women_type = true -%}
+    {%- assign men_type = false -%}
+    {%- assign kids_type = false -%}
+    {%- assign other_type = false -%}
+    {%- endif -%}
+
+    {%- if block.settings.title == 'Kids Collection' -%}
+    {%- assign women_type = false -%}
+    {%- assign men_type = false -%}
+    {%- assign kids_type = true -%}
+    {%- assign other_type = false -%}
+    {%- endif -%}
+
+    {%- unless block.settings.title == 'Women Collection' or block.settings.title == 'Kids Collection' -%}
+    {%- assign women_type = false -%}
+    {%- assign men_type = false -%}
+    {%- assign kids_type = false -%}
+    {%- assign other_type = true -%}
+    {%- endunless -%}
+
+
+    {%- if fillter_count == 1 -%}
+    {%- if women_type and women_type_url -%}
+    <div class="filter_wrap wc-mobile-tag {% if woman_man and woman_man_title %}filter_type_last{% endif %}" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">Filter <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    {%- if kids_type and kids_type_url -%}
+    <div class="filter_wrap wc-mobile-tag {% if woman_man and woman_man_title %}filter_type_last{% endif %}" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">Filter <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    {%- if other_type and other_type_url -%}
+    <div class="filter_wrap wc-mobile-tag {% if woman_man and woman_man_title %}filter_type_last{% endif %}" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">Filter <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    {%- endif -%}
+    {%- if women_type and women_type_url -%}
+    <div class="filter_wrap desktop-wrap {% if woman_man and woman_man_title %}filter_type_last{% endif %}" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">{{ block.settings.title | split: 'Women' | last }} <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter by {{ block.settings.title | split: 'Women' | last }} <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    {%- if kids_type and kids_type_url -%}
+    <div class="filter_wrap desktop-wrap {% if woman_man and woman_man_title %}filter_type_last{% endif %}" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">{{block.settings.title | split: 'Kids' | last }} <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter by {{block.settings.title | split: 'Kids' | last }} <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    {%- if other_type and other_type_url -%}
+    <div class="filter_wrap desktop-wrap {% if woman_man and woman_man_title %}filter_type_last{% endif %}" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">{{block.settings.title | split: 'Men' | last }} <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter by {{block.settings.title | split: 'Men' | last }} <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    {%- elsif block.type == 'tag_list' -%}
+    {%- if fillter_count == 1 -%}
+    <div class="filter_wrap wc-mobile-tag" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">Filter <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- endif -%}
+    <div class="filter_wrap desktop-wrap" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">{{block.settings.title}} <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter by {{block.settings.title}} <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>
+    </div>
+    {%- elsif block.type == 'sort_by' -%}
+    <div class="filter_wrap desktop-wrap" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">{{block.settings.title}} <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">Filter by {{block.settings.title}} <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>   
+    </div>
+    <div class="filter_wrap wc-sort-mobile-tag" main-id="wc-{{ block.settings.title | handle }}">
+      <button class="f_g_title"><span class="unactive-li-wc">{{block.settings.title}} <span class="f_icon_arrow">{%- include 'icon-chevron-right' -%}</span></span><span class="active-li-wc">{{block.settings.title}} <span class="filter-tab-close">{%- include 'icon-close' -%}</span></span></button>   
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+  <div class="coll-filter-tabs-part">
+    <div class="coll-filter-tabs">
+      <ul class="coll-filter-tabs-ul">
+        {%- for block in section.blocks  -%}
+        {%- if block.type == 'type_list' -%}
+        {%- if block.settings.title == 'Women Collection' -%}
+        {%- assign women_type = true -%}
+        {%- assign men_type = false -%}
+        {%- assign kids_type = false -%}
+        {%- assign other_type = false -%}
+        {%- endif -%}
+
+        {%- if block.settings.title == 'Kids Collection' -%}
+        {%- assign women_type = false -%}
+        {%- assign men_type = false -%}
+        {%- assign kids_type = true -%}
+        {%- assign other_type = false -%}
+        {%- endif -%}
+
+        {%- unless block.settings.title == 'Women Collection' or block.settings.title == 'Kids Collection' -%}
+        {%- assign women_type = false -%}
+        {%- assign men_type = false -%}
+        {%- assign kids_type = false -%}
+        {%- assign other_type = true -%}        
+        {%- endunless -%}
+        {%- if women_type and women_type_url -%}
+        <li data-id="wc-{{ block.settings.title | handle }}" class="{% if fillter_count == 1 %}active{% endif %} {% if woman_man and woman_man_title %}filter_type_last{% endif %}"><a href="javascript:void(0)">{{block.settings.title | split: 'Women' | last }}</a></li>
+        {%- endif -%}
+        {%- if kids_type and kids_type_url -%}
+        <li data-id="wc-{{ block.settings.title | handle }}" class="{% if fillter_count == 1 %}active{% endif %} {% if woman_man and woman_man_title %}filter_type_last{% endif %}"><a href="javascript:void(0)">{{block.settings.title | split: 'Kids' | last }}</a></li>
+        {%- endif -%}
+        {%- if other_type and other_type_url -%}
+        <li data-id="wc-{{ block.settings.title | handle }}" class="{% if fillter_count == 1 %}active{% endif %} {% if woman_man and woman_man_title %}filter_type_last{% endif %}"><a href="javascript:void(0)">{{block.settings.title | split: 'Men' | last }}</a></li>
+        {%- endif -%}
+        {%- elsif block.type == 'tag_list' -%}
+        <li data-id="wc-{{ block.settings.title | handle }}" class="{% if fillter_count == 1 %}active{% endif %}"><a href="javascript:void(0)">{{block.settings.title}}</a></li>
+        {%- elsif block.type == 'sort_by' -%}
+        <li data-id="wc-{{ block.settings.title | handle }}" class="mobile-hide-sort-wc {% if fillter_count == 1 %}active{% endif %}"><a href="javascript:void(0)">{{block.settings.title}}</a></li>
+        {%- endif -%}  
+        {%- endfor -%}
+      </ul>
+      <div class="coll-filter-tabs-desc">
+        {%- for block in section.blocks  -%}
+        {%- if block.type == 'type_list' -%}
+        {%- if block.settings.title == 'Women Collection' -%}
+        {%- assign women_type = true -%}
+        {%- assign other_type = false -%}
+        {%- assign kids_type = false -%}
+        {%- endif -%}
+
+        {%- if block.settings.title == 'Kids Collection' -%}
+        {%- assign women_type = false -%}
+        {%- assign other_type = false -%}
+        {%- assign kids_type = true -%}
+        {%- endif -%}
+
+        {%- unless block.settings.title == 'Women Collection' or block.settings.title == 'Kids Collection' -%}
+        {%- assign women_type = false -%}
+        {%- assign kids_type = false -%}
+        {%- assign other_type = true -%}
+        {%- endunless -%}
+        {%- if women_type and women_type_url -%}
+        <div class="filter_tab" id="wc-{{ block.settings.title | handle }}">
+          {%- assign grouptag = linklists[block.settings.tag_list_menu] -%}
+          {%- assign tag_to_display = grouptag.links -%} 
+          <ul class="filter_group">
+            {%- for tag in tag_to_display -%}
+            <li class="f_btn__bg {% if collection.url == tag.url %}wc-active {% endif %} {{ tag.title | handleize }}">
+              <a href="{{ tag.url }}" title="{{ tag.title }}">
+                {{ tag.title }}
+              </a>
+            </li>                  
+            {%- endfor -%}
+          </ul>             
+        </div>
+        {%- endif -%}
+        {%- if kids_type and kids_type_url -%}
+        <div class="filter_tab" id="wc-{{ block.settings.title | handle }}">
+          {%- assign grouptag = linklists[block.settings.tag_list_menu] -%}
+          {%- assign tag_to_display = grouptag.links -%} 
+          <ul class="filter_group">
+            {%- for tag in tag_to_display -%}  
+            <li class="f_btn__bg {% if collection.url == tag.url %}wc-active {% endif %}{{ tag.title | handleize }}">
+              <a href="{{ tag.url }}" title="{{ tag.title }}">
+                {{ tag.title }}
+              </a>
+            </li>                
+            {%- endfor -%}
+          </ul>             
+        </div>
+        {%- endif -%}
+        {%- if other_type and other_type_url -%}
+        <div class="filter_tab" id="wc-{{ block.settings.title | handle }}">
+          {%- assign grouptag = linklists[block.settings.tag_list_menu] -%}
+          {%- assign tag_to_display = grouptag.links -%} 
+          <ul class="filter_group">
+            {%- for tag in tag_to_display -%}  
+            <li class="f_btn__bg {% if collection.url == tag.url %}wc-active {% endif %}{{ tag.title | handleize }}">
+              <a href="{{ tag.url }}" title="{{ tag.title }}">
+                {{ tag.title }}
+              </a>
+            </li>                
+            {%- endfor -%}
+          </ul>             
+        </div>
+        {%- endif -%}
+        {%- elsif block.type == 'tag_list' -%}
+        <div class="filter_tab" id="wc-{{ block.settings.title | handle }}">
+          {%- assign grouptag = block.settings.tag_list | newline_to_br | split:'<br />' -%}
+          {%- assign tag_to_display = grouptag -%} 
+          <ul class="filter_group">
+            {%- for tag in tag_to_display -%}
+            {%- assign block_group_tag = tag | handleize -%}
+            {%- if block.settings.avilabel_tag -%}
+            {%- for tags in collection.tags -%}
+            {%- assign collection_group_tag = tags | handleize -%}
+            {%- if collection_group_tag == block_group_tag -%}
+            <li class="f_btn__bg {{ tag | handleize }} " data-handle="{{ tag | handleize }}">
+              <a class="js-no-transition" href="{{coll_url}}/{{ tag | handleize }}" title="{{tag}}" data-value="{{ tag | handleize }}" data-link-collection>
+                {{tag}}
+              </a>
+            </li>
+            {%- endif -%}
+            {%- endfor -%}
+            {%- else -%}
+            <li class="f_btn__bg {{ tag | handleize }}" data-handle="{{ tag | handleize }}">
+              <a class="js-no-transition" href="{{coll_url}}/{{ tag | handleize }}" title="{{tag}}" data-value="{{ tag | handleize }}" data-link-collection>
+                {{tag}}
+              </a>
+            </li>
+            {%- endif -%}                    
+            {%- endfor -%}
+          </ul>             
+        </div>
+
+        {%- elsif block.type == 'sort_by' -%}
+        <div class="filter_tab" id="wc-{{ block.settings.title | handle }}">
+          <ul class="filter_sort filter_group">
+            {%- for option in collection.sort_options -%}
+            {% capture count %}sort_title_{{forloop.index}}{% endcapture %}
+            {%- assign opt_val = block.settings[count] -%}
+            {%- if opt_val -%}
+            <li {% if option.value == sort_by %}class="active"{% endif %}>
+              <a href="#sort" data-select="{{ option.value }}" data-id="{{ sort_by }}">{{ option.name }}
+              </a>                  
+            </li>
+            {%- endif -%}
+            {%- endfor -%}
+
+          </ul>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="more-results"> 
+        <ul class="search_nav">
+          {%- for link in linklists.new-search.links -%}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+          {%- endfor -%}
+          <li id="news-btn">  
+            <div id="newsbtn" class="newsbtn" onClick="show()" style="cursor:pointer;">Newsletter </div>          
+          </li>
+          <li>
+            {%- form 'currency' -%}
+            <select class="currency" name="currency">
+              {%- for currency in shop.enabled_currencies -%}
+              {%- if currency == cart.currency -%}
+              <option selected="true" label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+              {%- else -%}
+              <option label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+              {%- endif -%}
+              {%- endfor -%}
+            </select>
+            {%- endform -%}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,492 @@
+{% comment %} {{ 'fullpage.js' | asset_url | script_tag }} {% endcomment %}
+<ul class="home-desktop-dots" id="home-desktop-dots" style="display:none;">
+  <li data-id="section0" class="active"></li>
+  {%- for block in section.blocks -%}
+  {%- if block.type == 'image-text' -%}
+  <li data-id="section{{ forloop.index }}"></li>
+  {%- endif -%}
+  {%- endfor -%}
+  {%- if section.settings.full_image != blank -%}
+  <li data-id="full-image"></li>
+  {%- endif -%}
+  {%- comment -%}<li data-id="home-footer"></li>{%- endcomment -%}
+</ul>
+<div id="fullpage-x">  
+  {%- if section.settings.col-collection-image != blank or section.settings.col-collection-image2 != blank -%}
+  <div id="section0" class="index-section section active"> 
+    <div  style="width:50%;display:table-cell;position:relative;background:url({{ section.settings.col-collection-image | img_url: 'master' }}) no-repeat {{ section.settings.col-collection-image-align }} center;background-size:cover;">
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"></a>
+      <h2 class="section0-h2" style="color:{{ section.settings.col-background_color }};">{{ section.settings.col-collection-name }}</h2>
+      <div class="button-box button-box-01">
+        <a href="{{ section.settings.col-button-link }}" style="text-decoration:none;">
+          <div class="button-big men-dp {{ section.settings.col-button-color }}">
+            {{ section.settings.col-button-text }}
+          </div>
+        </a>
+      </div>
+    </div>
+    <div  style="width:50%;display:table-cell;position:relative;background:url({{ section.settings.col-collection-image2 | img_url: 'master' }}) no-repeat {{ section.settings.col-collection-image2-align }} center;background-size:cover;">
+      <a class="index-pimageL" href="{{ section.settings.col-button-link2 }}" alt="DailyPaperSS20Women"></a>
+      <div class="button-box button-box-02">
+        <a href="{{ section.settings.col-button-link2 }}" style="text-decoration:none;">
+          <div class="button-big women-dp {{ section.settings.col-button-color }}">
+            {{ section.settings.col-button-text2 }}
+          </div>
+        </a>
+      </div>
+    </div>
+    {%- comment -%}
+    <ul id="myMenu">
+      {%- if section.settings.col-collection-image != blank or section.settings.col-collection-image2 != blank -%}
+      <li data-menuanchor="section0" class="active"><a href="#section0"></a></li>
+      {%- endif -%}
+      <li data-menuanchor="section1"><a href="#section1"></a></li>
+      <li data-menuanchor="section2"><a href="#section2"></a></li>
+      {%- if section.settings.full_image != blank -%}
+      <li data-menuanchor="full-image"><a href="#full-image"></a></li>
+      {%- endif -%}
+    </ul>
+    {%- endcomment -%}
+  </div>
+  {%- endif -%}
+  {%- for block in section.blocks -%}
+  {%- if block.type == 'image-text' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="wc-image-text-part">
+      {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank or block.settings.image_01 != blank -%}
+      <div {% if block.settings.btn_link_011 != blank %}data-location="{{ block.settings.btn_link_011 }}" {% endif %} class="wc-image-text-left {% if block.settings.btn_link_011 != blank %}dbimagelink{% endif %}"{% if block.settings.image_01 != blank %} style="background:url({{ block.settings.image_01 | img_url: 'master' }}) no-repeat {{ block.settings.image_01_align }} center;background-size:cover;{% if block.settings.btn_link_011 != blank %}cursor:pointer;{% endif %}"{% endif %}> 
+		<!--Banner clock-->
+        {%- if block.settings.desc_clock != blank -%}
+        <div class="clock">{{ block.settings.desc_clock }}</div>
+      {%- endif -%}
+        <!--end-->
+        {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank -%}
+        <div class="wc-image-text-wrap {% if block.settings.btn_align_full_image != blank %}full-image-align-{{ block.settings.btn_align_full_image }}{% endif %}">
+          {%- if block.settings.title_01 != blank -%}
+          <h2>{{ block.settings.title_01 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_01 != blank -%}
+          <p>{{ block.settings.desc_01 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_01 != blank and block.settings.btn_title_01 != blank -%}
+          <a href="{{ block.settings.btn_link_01 }}" class="{{ block.settings.btn_bg_color_01 }}">{{ block.settings.btn_title_01 }}</a>
+          {%- endif -%}
+          {%- if block.settings.btn_link_03 != blank and block.settings.btn_title_03 != blank -%}
+          <a href="{{ block.settings.btn_link_03 }}" class="{{ block.settings.btn_bg_color_01 }} second-btn">{{ block.settings.btn_title_03 }}</a>
+          {%- endif -%}
+        </div>
+        
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+      {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank or block.settings.image_02 != blank -%}
+      <div {% if block.settings.btn_link_022 != blank %}data-location="{{ block.settings.btn_link_022 }}" {% endif %}class="wc-image-text-right {% if block.settings.btn_link_022 != blank %}dbimagelinkk{% endif %}"{% if block.settings.image_02 != blank %} style="background:url({{ block.settings.image_02 | img_url: 'master' }}) no-repeat {{ block.settings.image_02_align }} center;background-size:cover;{% if block.settings.btn_link_022 != blank %}cursor:pointer;{% endif %}"{% endif %}>
+
+        {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank -%}
+        <div class="wc-image-text-wrap">
+          {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_02 != blank and block.settings.btn_title_02 != blank -%}
+          <a href="{{ block.settings.btn_link_02 }}" class="{{ block.settings.btn_bg_color_02 }}">{{ block.settings.btn_title_02 }}</a>
+          {%- endif -%}
+          {%- if block.settings.btn_link_04 != blank and block.settings.btn_title_04 != blank -%}
+          <a href="{{ block.settings.btn_link_04 }}" class="{{ block.settings.btn_bg_color_02 }} second-btn">{{ block.settings.btn_title_04 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>  
+  </div>
+  {%- endif -%}
+  {%- endfor -%}
+  {%- if section.settings.full_image != blank -%}
+  <div id="full-image" class="index-section section"> 
+    <div class="wc-image-text-part" style="background:url({{ section.settings.full_image | img_url: 'master' }}) no-repeat center center;background-size:cover;">
+      {%- if section.settings.full_image_logo != blank -%}
+      <figure class="wc-full-img-logo-center"><img src="{{ section.settings.full_image_logo | img_url: 'master' }}" alt="" title="" /></figure>
+      {%- endif -%}
+    </div>  
+  </div>
+  {%- endif -%}
+  <div id="home-footer" class="index-section section index-footer">
+    {% comment %} {% include 'footer-dp' %}   {% endcomment %}
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(".dbimagelink").click(function() {
+  window.location = $(".dbimagelink").data("location"); 
+  return false;
+});
+  $(".dbimagelinkk").click(function() {
+  window.location = $(".dbimagelinkk").data("location"); 
+  return false;
+});
+  //using document ready...
+  $(document).ready(function(){
+
+    if($(window).width() >= 768){
+      //initialising fullpage.js in the jQuery way
+      $('#fullpage').fullpage({
+        //sectionsColor: ['#ff5f45', '#0798ec', '#fc6c7c', '#fec401'],
+        //menu: '#myMenu',
+        //anchors: ['section0', 'section1', 'section2', 'section3']
+      });
+    };
+
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Section"
+    },
+    {
+      "id": "col-collection-name",
+      "type": "text",
+      "label": "Title",
+      "default": "SS20 RESORT",
+      "info": "Section title in center"
+    },
+    {
+      "type": "color",
+      "id": "col-background_color",
+      "label": "Text color",
+      "default": "#ffffff",
+      "info":"Collection name text color."
+    },
+    {
+      "type": "select",
+      "id": "col-button-color",
+      "options": [
+        {
+         "value": "white",
+         "label": "White"
+        },
+        {
+         "value": "black",
+         "label": "Black"
+        }
+      ],
+      "label": "Button Color"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image",
+     "label": "Left Image"
+    },
+            {
+          "type": "select",
+          "id": "col-collection-image-align",
+          "label": "Image Alignment",
+          "default": "center",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ]
+        },
+    {
+     "id": "col-button-text",
+     "type": "text",
+     "label": "Button text",
+     "default": "SHOP MEN",
+     "info": "If button text is empty it won't show."
+    },
+    {
+     "id": "col-button-link",
+     "type": "url",
+     "label": "Button link"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image2",
+     "label": "Right Image"
+    },
+{
+          "type": "select",
+          "id": "col-collection-image2-align",
+          "label": "Image Alignment",
+          "default": "center",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ]
+        },
+    {
+     "id": "col-button-text2",
+     "type": "text",
+     "label": "Button text",
+     "default": "SHOP WOMEN",
+     "info": "If button text is empty it won't show."
+    },
+    {
+     "id": "col-button-link2",
+     "type": "url",
+     "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Full Image"
+    },
+    {
+     "type": "image_picker",
+     "id": "full_image",
+     "label": "Image"
+    },
+    {
+     "type": "image_picker",
+     "id": "full_image_logo",
+     "label": "Logo Image"
+    },
+    {
+     "type": "url",
+     "id": "full_image_link",
+     "label": "Logo Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-text",
+      "name": "Image Text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_01",
+          "label": "Image 01"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_011",
+          "label": "Image Link"
+        },
+{
+          "type": "select",
+          "id": "image_01_align",
+          "label": "Image Alignment",
+          "default": "center",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title_01",
+          "label": "Heading 01"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_01",
+          "label": "Description 01"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_clock",
+          "label": "Clock on Banner"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_01",
+          "label": "Button Heading 01"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_01",
+          "label": "Button Link 01"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_03",
+          "label": "Button Heading 03"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_03",
+          "label": "Button Link 03"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_01",
+          "label": "Button Background Color 01",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "btn_align_full_image",
+          "label": "Button Alignment Full Image",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image_02",
+          "label": "Image 02"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_022",
+          "label": "Image Link"
+        },
+{
+          "type": "select",
+          "id": "image_02_align",
+          "label": "Image Alignment",
+          "default": "center",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title_02",
+          "label": "Heading 02"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_02",
+          "label": "Description 02"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_02",
+          "label": "Button Heading 02"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link 02"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_04",
+          "label": "Button Heading 04"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_04",
+          "label": "Button Link 04"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_02",
+          "label": "Button Background Color 02",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+     "name": "Collection Section",
+     "category": "Show two images next to each other"
+    }
+  ]
+} 
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+<style>
+  .clock {
+    color: #FFF;
+    position: relative;
+    /* margin: auto 43%; */
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+}
+header.site-header.site-topbar-true {
+  position: fixed;
+}
+.index-section{
+  height:100vh;
+}
+</style>

@@ -1,0 +1,43 @@
+<figure class="main-slider" >
+  <div class="overlay">
+  	<img src="{{ section.settings.overlay_image | img_url: 'master' }}" alt="{{ section.settings.image.alt }}" >
+  </div>
+</figure>
+
+<style>
+    figure.main-slider {
+    background: url("{{ section.settings.top_image | img_url: 'master' }}")
+  }
+  
+.main-slider {
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+  
+</style>
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+	{
+      "type": "image_picker",
+      "id": "top_image",
+      "label": "top slide image"
+    },
+	{
+      "type": "image_picker",
+      "id": "overlay_image",
+      "label": "top slide image"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

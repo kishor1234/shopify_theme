@@ -1,0 +1,46 @@
+<div class="row">
+  {% include 'service-page-sidebar' %}
+  <div class="col-main">  
+
+    {% if settings.enable_multilang %}
+      <div class="rte lang1">{{ page.content | split: '[lang2]' | first }}</div>
+      <div class="rte lang2">{{ page.content | split: '[lang2]' | last }}</div>
+    {% else %}
+      <div class="rte">{{ page.content | split: '[lang2]' | first }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.title != blank or section.settings.text != blank %}
+    <div class="right-sidebar">
+      {% if section.settings.title != blank %}
+      <h1 class="service-title">{{ section.settings.title }}</h1>
+      {% endif %}
+      {% if section.settings.text != blank %}
+      {{ section.settings.text }}
+      {% endif %} 
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "About us",
+    "settings": [
+	  {
+		"type": "header",
+		"content": "Right sidebar"
+	  },
+	  {
+		"type": "text",
+		"id": "title",
+		"label": "Title",
+		"default": "Get to know us!"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text",
+		"label": "text"
+	  }
+	]
+  }
+{% endschema %}

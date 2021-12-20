@@ -1,0 +1,233 @@
+{{ 'kiwisizing-custom.css' | asset_url | stylesheet_tag }}
+
+{%- section 'product-template-comingsoon' -%}
+<!-- AJAX CART MESSAGE -->
+{% include 'message-modal' %}
+{% comment %}
+{% if settings.display_recently_viewed_products %} 
+{% include 'recently-viewed-products' %}
+{% endif %}
+{% endcomment %}
+
+<script>
+ /* var innrH = $('.template-product .product-img-box').innerHeight();
+  $(window).scroll(function(){
+    var scrolltop = $(window).scrollTop() + $(window).height() - 250;
+    if(scrolltop >= innrH){
+      $('.product-desktop-dots').hide();
+    }else{
+      $('.product-desktop-dots').show();      
+    }
+  });
+*/
+  
+  $(window).on('load',function(){
+    $('.option-select-wc option').first().prop('selected', 'true');
+    //$('#product-add-to-cart').val('sold out');
+    $('#product-add-to-cart').addClass('disabled');
+  });
+
+  $('.inlinecolors .inlinecolors-selected').on('click', function(){
+    $(this).parents('.inlinecolors').toggleClass('active');
+    $(this).parents('.inlinecolors').find('.color-dropdown').toggle();
+
+  });
+
+  $(window).on('load', function(){
+    $('#product-selectors-option-0').prepend('<option value="Select Your Size" data-id="Select Your Size" selected="selected">Select Your Size</option>');
+    var add_val = $('.mobile-prod-grid-part #product-variants #product-add-to-cart').val();    
+    setTimeout(function(){
+      jQuery('.single-option-selector').selectize();
+      if(add_val == 'Add to Cart'){
+        $('.mobile-prod-grid-part #product-variants #product-add-to-cart').val('Add');     
+      }
+      if($(window).width() >= 767){
+      $('#product-add-to-cart').val('Add to Cart');
+      }else{
+        $('#product-add-to-cart').val('Add');
+      }
+    }, 300);
+    setTimeout(function(){
+      var add_val_text = $('#product-add-to-cart').val();
+      if(add_val_text == 'Sold Out' || add_val_text == 'Unavailable'){
+        $('.notify-me-wc-available').addClass('hide');
+        $('.notify-me-wc-unavailable').removeClass('hide');
+      }else{
+        $('.notify-me-wc-available').removeClass('hide');
+        $('.notify-me-wc-unavailable').addClass('hide');
+      }
+    }, 100); 
+  });
+
+  {% if settings.display_subtotal and product.available %} 
+  //update price when changing quantity
+  function updatePricing() {
+    //try pattern one before pattern 2
+    var regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;
+    var unitPriceTextMatch = jQuery('.product .price').text().match(regex);
+    if (!unitPriceTextMatch) {
+      regex = /([0-9]+[.|,][0-9]+)/g;
+      unitPriceTextMatch = jQuery('.product .price').text().match(regex);     
+    }
+    if (unitPriceTextMatch) {
+      var unitPriceText = unitPriceTextMatch[0];     
+      var unitPrice = unitPriceText.replace(/[.|,]/g,'');
+      var quantity = parseInt(jQuery('#quantity').val());
+      var totalPrice = unitPrice * quantity;
+      var totalPriceText = Shopify.formatMoney(totalPrice, window.money_format);
+      regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;     
+      if (!totalPriceText.match(regex)) {
+        regex = /([0-9]+[.|,][0-9]+)/g;
+      } 
+      totalPriceText = totalPriceText.match(regex)[0];
+      var regInput = new RegExp(unitPriceText, "g"); 
+      var totalPriceHtml = jQuery('.product .price').html().replace(regInput ,totalPriceText);
+      jQuery('.product .total-price span').html(totalPriceHtml);     
+    }
+  }
+  jQuery('#quantity').on('change', updatePricing);
+  {% endif %}
+  var selectCallback = function(variant, selector) {
+    var addToCart = jQuery('#product-add-to-cart'),
+        productPrice = jQuery('.product .price'),
+        comparePrice = jQuery('.product .compare-price');  
+    if (variant) {
+      if (variant.available) {
+        // We have a valid product variant, so enable the submit button
+        addToCart.removeClass('disabled').removeAttr('disabled').val(window.inventory_text.add_to_cart);
+      } else {
+        // Variant is sold out, disable the submit button
+        addToCart.val(window.inventory_text.sold_out).addClass('disabled').attr('disabled', 'disabled');
+      }
+      // Regardless of stock, update the product price
+      productPrice.html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}"));
+                                            // Also update and show the product's compare price if necessary
+                                            if ( variant.compare_at_price > variant.price ) {
+                        productPrice.addClass("on-sale")
+      comparePrice
+      .html(Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}"))
+                                .show();
+            } else {
+            comparePrice.hide();
+      productPrice.removeClass("on-sale");
+    }
+    {% if settings.use_color_swatch %}
+    // BEGIN SWATCHES
+    var form = jQuery('#' + selector.domIdPrefix).closest('form');
+    for (var i=0,length=variant.options.length; i<length; i++) {
+      var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] +'"]');
+      if (radioButton.size()) {
+        radioButton.get(0).checked = true;
+      }
+    }
+    // END SWATCHES
+    {% endif %}
+    {% if settings.display_subtotal and product.available %}  
+    updatePricing();
+    {% endif %}
+    {% if settings.enable_multiple_currencies %}
+    Currency.convertAll('{{ shop.currency }}', jQuery('#currencies').val(), 'span.money', 'money_format');
+                        {% endif %}
+                        } else {
+                        // The variant doesn't exist. Just a safeguard for errors, but disable the submit button anyway
+                        addToCart.val(window.inventory_text.unavailable).addClass('disabled').attr('disabled', 'disabled');
+  }
+  //update variant inventory
+  {% if settings.display_availability %}
+  if (variant.available) {
+    if (variant.inventory_management!=null) {
+      jQuery(".product-inventory span").text(variant.inventory_quantity + " " + window.inventory_text.in_stock);
+    } else {
+      jQuery(".product-inventory span").text(window.inventory_text.many_in_stock);
+    }
+  } else {
+    jQuery(".product-inventory span").text(window.inventory_text.out_of_stock);
+  }
+  {% endif %}
+  /*begin variant image*/
+  if (variant && variant.featured_image) {
+    var originalImage = jQuery("#product-featured-image");
+    var newImage = variant.featured_image;
+    var element = originalImage[0];
+    Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
+      jQuery('#more-view-carousel img').each(function() {
+        var grandSize = jQuery(this).attr('src');
+        grandSize = grandSize.replace('compact','grande');
+        if (grandSize == newImageSizedSrc) {
+          jQuery(this).parent().trigger('click');              
+          return false;
+        }
+      });
+    });        
+  }
+  /*end of variant image*/
+  };
+  jQuery(function($) {
+    {% if product.variants.size >= 1 %}
+    new Shopify.OptionSelectors('product-selectors', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback, 
+      enableHistoryState: true
+    });   
+    {% if product.options.size == 1 %}
+    {% for variant in product.variants %}
+    {% unless variant.available %}
+    //jQuery('.single-option-selector option').filter(function() { return jQuery(this).html() === {{ variant.title | json }}; }).remove();
+  jQuery('.single-option-selector option').filter(function() { return jQuery(this).html() === {{ variant.title | json }}; }).addClass('soldout');  
+
+  {% endunless %}
+  {% endfor %}  
+  //jQuery('.single-option-selector').trigger('change');
+  {% endif %}
+  {% if settings.use_color_swatch and product.options.size > 1 %}
+  Shopify.linkOptionSelectors({{ product | json }});
+  {% endif %} 
+  {% if settings.use_color_swatch != true %}
+  $('.single-option-selector option.soldout').each(function(){
+    var opt_val = $(this).val();
+    $('.soldout-list').append('<div>'+opt_val+'</div>');
+    setTimeout(function(){
+      var select_val = $('.selectize-input .item .variant-title-wc').text();
+      if(opt_val == select_val){
+        $('#product-variants #product-add-to-cart').val('Add to Cart');
+        $('.notify-me-wc-available').addClass('hide');
+        $('.notify-me-wc-unavailable').removeClass('hide');
+      }
+    }, 300);
+  });
+
+  $(document).on('click','.template-product #add-to-cart-form .selectize-dropdown-content .variant-title-wc',function(){
+    setTimeout(function(){
+      console.log('ttt');
+    }, 1000);
+  });
+
+  jQuery('.selectize-input input').attr("disabled","disabled"); 
+
+  {% endif %}
+  {% endif %}
+  // Auto-select first available variant on page load. Otherwise the product looks sold out.
+  {% assign found_one_in_stock = false %}
+  {% for variant in product.variants %}
+  {% if variant.available and found_one_in_stock == false %}
+  {% assign found_one_in_stock = true %}
+  {% for option in product.options %}
+  //$('.single-option-selector:eq({{ forloop.index0 }})').val({{ variant.options[forloop.index0] | json }}).trigger('change');
+  {% endfor %}
+  {% endif %}
+  {% endfor %}
+  {% if settings.display_product_reviews %}  
+  var reviewsTimeout = setInterval(function() {
+    if (jQuery(".spr-badge-caption").length>0) {
+      jQuery(".spr-badge-caption").on('click', function() {
+        jQuery('html,body').animate({
+          scrollTop: jQuery(".panel:last").offset().top},
+                                    '400');
+        jQuery("#collapse-tab4").collapse('show');
+      });
+      clearInterval(reviewsTimeout);
+    }
+  },1000);
+  {% endif %}
+  });
+</script>

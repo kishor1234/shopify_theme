@@ -1,0 +1,68 @@
+{% capture social_icon_html %}
+  <div class="social-links {{ container_class }}">
+    <ul class="social-links__list">
+      {% if settings.social_facebook_url != blank %}
+        <li><a aria-label="Facebook"  class="facebook" target="_blank" rel="noopener" href="{{ settings.social_facebook_url }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25.436" height="25.436" viewBox="0 0 25.436 25.436">
+            <path id="facebook" d="M25.436,12.718A12.718,12.718,0,1,0,12.718,25.436c.075,0,.149,0,.224,0v-9.9H10.209V12.35h2.732V10.005a3.826,3.826,0,0,1,4.084-4.2,22.2,22.2,0,0,1,2.449.124V8.773H17.8c-1.316,0-1.575.626-1.575,1.545v2.027h3.155l-.412,3.184H16.23v9.414A12.722,12.722,0,0,0,25.436,12.718Z"/>
+          </svg>
+          </a>
+        </li>
+      {% endif %}
+      {% if settings.social_instagram_url != blank %}
+        <li><a aria-label="Instagram" class="instagram" target="_blank" rel="noopener" href="{{ settings.social_instagram_url }}">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="25.533" height="25.533" viewBox="0 0 25.533 25.533">
+          <g id="Group_1351" data-name="Group 1351" transform="translate(-108.449 -582)">
+            <path id="Path_8" data-name="Path 8" d="M211.887,209.444A2.444,2.444,0,1,1,209.444,207,2.443,2.443,0,0,1,211.887,209.444Zm0,0" transform="translate(-88.228 385.323)"/>
+            <path id="Path_9" data-name="Path 9" d="M147.209,137.175a2.427,2.427,0,0,0-1.391-1.391,4.055,4.055,0,0,0-1.361-.252c-.773-.035-1-.043-2.962-.043s-2.189.007-2.962.043a4.058,4.058,0,0,0-1.361.252,2.428,2.428,0,0,0-1.391,1.391,4.056,4.056,0,0,0-.252,1.361c-.035.773-.043,1-.043,2.962s.008,2.189.043,2.962a4.055,4.055,0,0,0,.252,1.361,2.427,2.427,0,0,0,1.391,1.391,4.05,4.05,0,0,0,1.361.252c.773.035,1,.043,2.962.043s2.19-.007,2.962-.043a4.05,4.05,0,0,0,1.361-.252,2.427,2.427,0,0,0,1.391-1.391,4.059,4.059,0,0,0,.252-1.361c.035-.773.043-1,.043-2.962s-.007-2.189-.043-2.962A4.05,4.05,0,0,0,147.209,137.175Zm-5.715,8.088a3.764,3.764,0,1,1,3.764-3.764A3.764,3.764,0,0,1,141.495,145.263Zm3.913-6.8a.88.88,0,1,1,.88-.88A.88.88,0,0,1,145.408,138.465Zm0,0" transform="translate(-20.279 453.268)"/>
+            <path id="Path_10" data-name="Path 10" d="M12.766,0A12.766,12.766,0,1,0,25.533,12.766,12.768,12.768,0,0,0,12.766,0Zm7.286,15.789a5.378,5.378,0,0,1-.341,1.779,3.748,3.748,0,0,1-2.144,2.144,5.382,5.382,0,0,1-1.779.341c-.782.036-1.031.044-3.022.044s-2.241-.009-3.023-.044a5.382,5.382,0,0,1-1.779-.341,3.748,3.748,0,0,1-2.144-2.144,5.377,5.377,0,0,1-.341-1.779c-.036-.782-.044-1.032-.044-3.023s.008-2.241.044-3.022A5.379,5.379,0,0,1,5.82,7.965,3.751,3.751,0,0,1,7.965,5.821,5.383,5.383,0,0,1,9.744,5.48c.782-.036,1.031-.044,3.022-.044s2.241.009,3.022.044a5.385,5.385,0,0,1,1.779.34,3.749,3.749,0,0,1,2.144,2.144,5.378,5.378,0,0,1,.341,1.779c.036.782.044,1.031.044,3.022S20.089,15.007,20.053,15.789Zm0,0" transform="translate(108.449 582)"/>
+          </g>
+        </svg>
+
+        </a></li>
+      {% endif %}
+      
+      {% if settings.social_twitter_url != blank %}
+        <li><a aria-label="Twitter" class="twitter" target="_blank" rel="noopener" href="{{ settings.social_twitter_url }}">
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="25.436" height="25.436" viewBox="0 0 25.436 25.436">
+            <path id="twitter" d="M12.718,0A12.718,12.718,0,1,0,25.436,12.718,12.719,12.719,0,0,0,12.718,0Zm5.807,9.916q.008.188.008.377A8.249,8.249,0,0,1,10.227,18.6h0a8.263,8.263,0,0,1-4.474-1.311,5.937,5.937,0,0,0,.7.04,5.857,5.857,0,0,0,3.626-1.25,2.922,2.922,0,0,1-2.727-2.028A2.909,2.909,0,0,0,8.666,14a2.92,2.92,0,0,1-2.342-2.861c0-.013,0-.025,0-.037a2.9,2.9,0,0,0,1.322.365,2.922,2.922,0,0,1-.9-3.9,8.288,8.288,0,0,0,6.017,3.05,2.921,2.921,0,0,1,4.974-2.662,5.855,5.855,0,0,0,1.854-.709A2.93,2.93,0,0,1,18.3,8.864a5.822,5.822,0,0,0,1.676-.46,5.932,5.932,0,0,1-1.456,1.512Zm0,0"/>
+          </svg>
+          </a>
+        </li>
+      {% endif %}
+      
+      {% if settings.social_youtube_url != blank %}
+        <li><a aria-label="Youtube" class="youtube" target="_blank" rel="noopener" href="{{ settings.social_youtube_url }}">
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="25.436" height="25.436" viewBox="0 0 25.436 25.436">
+            <g id="Group_1350" data-name="Group 1350" transform="translate(-189.346 -582)">
+              <path id="Path_11" data-name="Path 11" d="M224.113,212.8l4.137-2.383-4.137-2.383Zm0,0" transform="translate(-23.633 384.296)"/>
+              <path id="Path_12" data-name="Path 12" d="M12.718,0A12.718,12.718,0,1,0,25.436,12.718,12.719,12.719,0,0,0,12.718,0Zm7.947,12.731a20.99,20.99,0,0,1-.327,3.823,1.991,1.991,0,0,1-1.4,1.4,48.338,48.338,0,0,1-6.219.327,46.608,46.608,0,0,1-6.219-.34,1.992,1.992,0,0,1-1.4-1.4,20.9,20.9,0,0,1-.327-3.823A20.976,20.976,0,0,1,5.1,8.9,2.032,2.032,0,0,1,6.5,7.481a48.338,48.338,0,0,1,6.219-.327,46.509,46.509,0,0,1,6.219.34,1.992,1.992,0,0,1,1.4,1.4,19.919,19.919,0,0,1,.327,3.836Zm0,0" transform="translate(189.346 582)"/>
+            </g>
+          </svg>
+
+        </a></li>
+      {% endif %}
+      {% comment %} {% if settings.social_vimeo_url != blank %}
+        <li><a aria-label="Vimeo" class="vimeo" target="_blank" rel="noopener" href="{{ settings.social_vimeo_url }}">{% render 'svg-vimeo' %}</a></li>
+      {% endif %} 
+      {% if settings.social_pinterest_url != blank %}
+        <li><a aria-label="Pinterest" class="pinterest" target="_blank" rel="noopener" href="{{ settings.social_pinterest_url }}">{% render 'svg-pinterest' %}</a></li>
+      {% endif %}
+      {% if settings.social_tiktok_url != blank %}
+        <li><a aria-label="Tiktok" class="tiktok" target="_blank" rel="noopener" href="{{ settings.social_tiktok_url }}">{% render 'svg-tiktok' %}</a></li>
+      {% endif %}
+
+      {% if settings.social_custom_url != blank %}
+        <li>
+          <a aria-label="{{ icon_setting.alt | escape }}" class="social-custom" target="_blank" rel="noopener" href="{{ settings.social_custom_url }}">
+            <img src="{{ icon_setting | img_url: icon_size }}" alt="{{ icon_setting.alt }}" width="{{ icon_setting.width }}" height="{{ icon_setting.height }}"/>
+          </a>
+        </li>
+      {% endif %} {% endcomment %}
+    </ul>
+  </div>
+{% endcapture %}
+{% if social_icon_html contains '<li>' %}{{ social_icon_html }}{% endif %}

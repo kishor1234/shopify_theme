@@ -1,0 +1,16 @@
+{%- section 'daily-paper-x-unruly' -%}
+
+<div id="section_Resort_C" class="index-section section kmono_carausel">   
+    <div class="landing-product-list">
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["daily-paper-x-komono"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Komono-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>

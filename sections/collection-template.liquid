@@ -1,0 +1,605 @@
+{% if settings.collection_results_per_page != blank %}
+{% assign product_per_page = settings.collection_results_per_page %}
+{% else %}
+{% assign product_per_page = 100 %}
+{% endif %}
+
+{% assign sale_items_count = 0 %}
+
+{% for product in collection.products %}
+{% for tag in product.tags %}
+{% if tag == 'JUNE21SALE' %}
+{% assign sale_items_count = sale_items_count | plus: 1 %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+<!---new code{{sale_items_count}}-->
+<div class="block-row coll-main">
+
+  {%- if collection.title contains "Daily Paper x Unruly" -%}
+  <div id="video-wrapper">
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/cdIQDwIiH-E?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    </div>
+  </div>
+ <style>
+    #video-wrapper {
+        width: 100%;
+        height: auto;
+        background-color: #000;
+    }
+    .video-container {
+        width: 60%;
+        margin: 2px auto;
+        height: 400px;
+        background-color: #000;
+    }
+    @media only screen and (max-width: 600px) {
+        .video-container {
+            width: 85% !important;
+            margin: 50px auto;
+            height: 200px !important;
+            background-color: #000;
+
+        }
+        .l1{
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Avenir LT Std';
+            width: 100% !important;
+            margin: 0 auto 20px;
+            color: #222;
+        }
+    }
+
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 450px;
+    }
+    .description{
+        margin-top: 60px;
+        text-align: center;
+
+    }
+    .desc-page{
+        margin:0px 50px;
+    }
+    .l1{
+        text-align: center;
+        font-size: 16px;
+        font-family: 'Avenir LT Std';
+        width: 60%;
+        margin: 0 auto 20px;
+        color: #222;
+    }
+    .h2-header{
+        text-align: center;
+        font: normal normal bold 28px/32px commuters-sans;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+</style>
+  <div class="description">
+    <h2 class="h2-header">Daily Paper x Unruly</h2>
+    <div class="desc-page">
+      <p class="l1" id="l1">
+         Daily Paper and Popcaan’s Unruly Entertainment have joined forces to create a one-of-a-kind capsule collection rich in heritage and purpose.
+      </p>
+      <p class="l1" id="l2">
+      While Unruly champions individuality, integrity, family and freedom, Daily Paper builds on community, heritage, unity and creativity, leading to an organic alignment between the two collectives.
+      </p>
+      <p class="l1" id="l3">
+        The limited collection of unique, bold pieces is inspired by Jamaican dirt bike culture. Each piece is adorned with unique prints and artworks and the colours of the styles are a reflection of the Jamaican flag.
+      </p>
+      <p class="l1" id="l4">
+        The campaign features an exclusive music video created for the collaboration, that captures a day in a life with Popcaan, taking the audience into the Unruly universe.
+      </p>
+    </div>
+  </div>
+  
+  {%- endif -%}
+</div>
+
+<!--end-->
+
+<div class="block-row coll-main">   
+  <div class="coll_middle">
+    <div class="collection_loader_cls">
+      <img src="{{'shield-logo-loading-3.gif' | asset_url}}" alt=""/>
+    </div>
+    <div class="coll-top-bar">
+      <div class="coll-breadcrumb">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>{{ collection.title }}</li>
+          <li>{{ collection.all_products_count | minus: sale_items_count }} Products </li>
+        </ul>
+      </div>
+      <div class="coll-filter-part">
+        {%- include 'collection-topbar-filter' -%}
+      </div>
+    </div>
+
+ {%- comment -%}
+    ---------------------------------------------------------
+    ------------------- Desktop -----------------------------
+    ---------------------------------------------------------
+    {%- endcomment -%}
+    
+    <div class="desktop-coll-grid-wc">
+      {% paginate collection.products by 25 %}
+      <div class="products-grid row">
+        {% if collection.products.size > 0 %}      
+        {% if settings.collection_results_per_row != blank and settings.collection_results_per_row != '5' %}
+        {% assign product_grid = 12 | divided_by: settings.collection_results_per_row %}
+        {% assign columns = true %}
+        {% endif %}      
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Product ------------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {% for product in collection.products limit:9999 %}    
+        {%- assign count = count | plus: 1 -%}     
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {%- if count_1 == 1 -%}
+        {%- assign banner_1 = paginate.current_page | plus:paginate.current_page | minus: 1 -%}
+        {%- endif -%}
+        {%- if count >= 1 -%}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+          {% include 'product-main-grid' %}  
+        </div>      
+        {%- endif -%}
+        {%- endfor -%}     
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Banner 1 -----------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {%- if count >= 12 -%}
+        {%- assign banner_count = 0 -%}
+        {%- for block in section.blocks -%}
+        {%- if block.type == 'banner_image' -%}
+        {%- assign banner_count = banner_count | plus: 1 -%}
+        {% assign mod = banner_count | modulo: 2 %}
+        {%- unless mod == 0 -%}      
+        {%- if banner_1 == banner_count -%}
+        {%- if block.settings.banner_image != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12 product-wrap">
+          <figure style="background:url('{{ block.settings.banner_image | img_url: 'master' }}') no-repeat center center;background-size:cover;height:100vh;"><!--<img src="{{ block.settings.banner_image | img_url: 'master' }}" alt="banner_01" title="banner_01" />--></figure>
+        </div>
+        {%- endif -%}
+        {%- endif -%}
+        {%- endunless -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {%- endif -%}
+
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Product ------------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {% for product in collection.products limit:4 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {% if count >= 12 and count <= 16 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      
+        {% for product in collection.products limit:4 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {%- if count_1 == 25 -%}
+        {%- assign banner_2 = paginate.current_page | plus:paginate.current_page -%}
+        {%- endif -%}
+        {% if count >= 21 and count <= 25 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+          {% include 'product-main-grid' %}
+        </div>  
+        {%- endif -%}
+        {%- endfor -%}     
+
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Banner 2 -----------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {%- if count >= 25 -%}
+        {%- for block in section.blocks -%}
+        {%- if block.type == 'banner_image' -%}
+        {%- assign banner_count_1 = banner_count_1 | plus: 1 -%}        
+        {% assign mod = banner_count_1 | modulo: 2 %}
+        {%- if mod == 0 -%}        
+        {%- if banner_2 == banner_count_1 -%}
+        {%- if block.settings.banner_image != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12 product-wrap">
+          <figure style="background:url('{{ block.settings.banner_image | img_url: 'master' }}') no-repeat center center;background-size:cover;height:100vh;"><!--<img src="{{ block.settings.banner_image | img_url: 'master' }}" alt="banner_02" title="banner_02" />--></figure>
+          <!--<figure><img src="{{ block.settings.banner_image | img_url: 'master' }}" alt="banner_02" title="banner_02" /></figure>-->
+        </div>        
+        {%- endif -%}
+        {%- endif -%}
+        {%- endif -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {%- endif -%}
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Product ------------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {%- if count >= 25 -%}
+        {% for product in collection.products offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {%- assign count_1 = count_1 | plus:1 -%}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endfor -%}
+        <div id="product-list-foot"></div> 
+        {%- endif -%}
+        {% else %}
+        <p class="text-center" {% if settings.enable_multilang %}data-translate="collections.general.no_matches"{% endif %}>{{ 'collections.general.no_matches' | t }}</p>
+        {% endif %}
+
+      </div>
+      {% if paginate.pages > 1 %}
+      <figure class="load_more_loader hide"><img src="{{ 'loading.gif' | asset_url }}" alt="" /></figure>
+      {% if paginate.next %}
+      <div class="load-more-product" id="more"><a href="{{ paginate.next.url }}"></a></div>              
+      {% endif %}   
+      {% endif %}
+      {% endpaginate %}
+    </div>
+    
+
+  {%- comment -%}
+    ---------------------------------------------------------
+    ------------------- Mobile ------------------------------
+    ---------------------------------------------------------
+    {%- endcomment -%}
+    
+    <div class="mobile-coll-grid-wc">
+      {% paginate collection.products by 50 %}
+      <div class="products-grid row">   
+        {% if collection.products.size > 0 %}      
+        {% if settings.collection_results_per_row != blank and settings.collection_results_per_row != '5' %}
+        {% assign product_grid = 50 | divided_by: settings.collection_results_per_row %}
+        {% assign columns = true %}
+        {% endif %}     
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Product ------------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {%- assign count = 0 %}        
+         {% for product in collection.products limit:25 %}    
+        {%- assign count = count | plus: 1 -%}     
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {%- if count_1 == 25 -%}
+        {%- assign banner_1 = paginate.current_page | plus:paginate.current_page | minus: 1 -%}
+        {%- endif -%}
+
+        {%- if count <= 25 -%}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-4 product-mobile-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+          {% include 'product-main-grid' %}  
+        </div>      
+        {%- endif -%}
+        {%- endfor -%}     
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Banner 1 -----------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {%- if count >= 6 -%}
+        {%- assign banner_count = 0 -%}
+        {%- for block in section.blocks -%}
+        {%- if block.type == 'banner_image' -%}
+        {%- assign banner_count = banner_count | plus: 1 -%}
+        {% assign mod = banner_count | modulo: 2 %}
+        {%- unless mod == 0 -%}      
+        {%- if banner_1 == banner_count -%}
+        {%- if block.settings.mobile_banner_image != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12 product-mobile-wrap">
+          <figure><img src="{{ block.settings.mobile_banner_image | img_url: 'master' }}" alt="banner_01" title="banner_01" /></figure>
+        </div>
+        {%- endif -%}
+        {%- endif -%}
+        {%- endunless -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {%- endif -%}
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Product ------------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {% for product in collection.products limit:25 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {%- if count_1 == 25 -%}
+        {%- assign banner_2 = paginate.current_page | plus:paginate.current_page -%}
+        {%- endif -%}
+        {% if count >= 25 and count <= 50 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-4 product-mobile-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+
+
+        {%- comment -%}
+        ----------------------------------------------------------
+        ------------------- Banner 2 -----------------------------
+        ----------------------------------------------------------
+        {%- endcomment -%}
+        {%- if count >= 12 -%}
+        {%- assign banner_count_1 = 0 -%}
+        {%- for block in section.blocks -%}
+        {%- if block.type == 'banner_image' -%}
+        {%- assign banner_count_1 = banner_count_1 | plus: 1 -%}  
+        {% assign mod = banner_count_1 | modulo: 2 %}
+        {%- if mod == 0 -%}        
+        {%- if banner_2 == banner_count_1 -%}
+        {%- if block.settings.mobile_banner_image != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12 product-mobile-wrap">
+          <figure><img src="{{ block.settings.mobile_banner_image | img_url: 'master' }}" alt="banner_02" title="banner_02" /></figure>
+        </div>        
+        {%- endif -%}
+        {%- endif -%}
+        {%- endif -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {%- endif -%}
+        <div id="product-list-foot"></div> 
+        {% else %}
+        <p class="text-center" {% if settings.enable_multilang %}data-translate="collections.general.no_matches"{% endif %}>{{ 'collections.general.no_matches' | t }}</p>
+        {% endif %}
+      </div>
+      {% if paginate.pages > 1 %}
+      <figure class="load_more_loader hide"><img src="{{ 'loading.gif' | asset_url }}" alt="" /></figure>
+      {% if paginate.next %}
+      <div class="load-more-product" id="more"><a href="{{ paginate.next.url }}"></a></div>              
+      {% endif %}    
+      {% endif %}
+      {% endpaginate %}
+    </div>     
+  </div>
+</div>
+
+
+
+{%- include 'collection-script' -%}
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Collection Section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "banner_image_01",
+        "label": "Banner Image 01"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_image_02",
+        "label": "Banner Image 02"
+      }
+    ],
+    "blocks":[
+	  {
+		"type":"banner_image",
+		"name":"Banner Image",
+		"settings":[
+          {
+            "type": "image_picker",
+            "id": "banner_image",
+            "label": "Banner Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "mobile_banner_image",
+            "label": "Mobile Banner Image"
+          }
+		]
+	  },
+	  {
+		"type":"type_list",
+		"name":"Type List",
+		"settings":[
+		  {
+		    "type":"text",
+		    "id":"title",
+		    "label":"Title"
+		  },
+          {
+            "type":"link_list",
+            "id":"tag_list_menu",
+            "label":"Select Menu"
+          },
+          {
+            "type":"checkbox",
+            "id":"avilabel_tag",
+            "label":"Display Only Available Type",
+            "default":false
+          }
+		]
+	  },
+	  {
+		"type":"tag_list",
+		"name":"Tag List",
+		"settings":[
+		  {
+		    "type":"text",
+		    "id":"title",
+		    "label":"Title"
+		  },
+          {
+            "type":"html",
+            "id":"tag_list",
+            "label":"Tag List",
+            "info":"Tags are case sensitive and must match your product tag exactly"
+          },
+          {
+            "type":"checkbox",
+            "id":"avilabel_tag",
+            "label":"Display Only Available Tags",
+            "default":false
+          }
+		]
+	  },
+	  {
+		"type":"sort_by",
+		"name":"Sort By",
+		"settings":[
+		  {
+		    "type":"text",
+		    "id":"title",
+		    "label":"Title"
+		  },
+          {
+            "type":"checkbox",
+            "id":"sort_title_1",
+            "label":"Featured",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_2",
+            "label":"Best selling",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_3",
+            "label":"Alphabetically, A-Z",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_4",
+            "label":"Alphabetically, Z-A",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_5",
+            "label":"Price, low to high",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_6",
+            "label":"Price, high to low",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_7",
+            "label":"Date, old to new",
+            "default": true
+          },
+          {
+            "type":"checkbox",
+            "id":"sort_title_8",
+            "label":"Date, new to old",
+            "default": true
+          }
+		]
+	  }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+$(window).on('resize load', function() {
+  $('.site-header iframe').each(function() {
+    var self = $(this);
+    var container = self.parent();
+
+   self.css({
+      width: container.width() + "px",
+      height: container.width() * (9/16) + 'px',
+      position: 'absolute',
+      marginTop: -container.width() * (9/32) + 'px',
+      top: '50%'
+    });
+  });
+});
+
+
+// Load the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('yt-player', {
+      autoplay : 1,
+      videoId: 'Bdp95w5ejys',
+      playerVars : {
+        'autoplay' : 1,
+        'rel' : 0,
+        'showinfo' : 0,
+        'showsearch' : 0,
+        'controls' : 0,
+        'loop' : 1,
+        'enablejsapi' : 1,
+        'playlist': 'Bdp95w5ejys'
+      },
+      events: {
+      	"onReady": onPlayerReady,
+      	//"onStateChange": onPlayerStateChange
+ 			}
+	});
+}
+
+function onPlayerReady(event) {
+	event.target.mute();
+  event.target.playVideo();
+}
+
+function onPlayerStateChange(event) {
+	var id = 'Bdp95w5ejys';
+
+    if(event.data === YT.PlayerState.ENDED){
+        player.loadVideoById(id);
+    }
+}
+{% endjavascript %}

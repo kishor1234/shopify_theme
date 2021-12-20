@@ -1,0 +1,52 @@
+{%- if section.settings.enabled_suggestion_product -%}
+<div class="suggestion-product-section">
+  {%- if section.settings.title != blank -%}
+  <h2>{{ section.settings.title }}</h2>
+  {%- endif -%}
+  <div class="products-grid row">
+    {%- assign collection = collections[section.settings.collection] -%}
+    {%- for product in collection.products limit: section.settings.product_limit -%}
+    <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+      {% include 'product-main-grid' %}  
+    </div>   
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Suggestion Product",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enabled_suggestion_product",
+        "label": "Show Suggestion Product",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "text",
+        "id": "product_limit",
+        "label": "Product Limit",
+        "default": "8"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

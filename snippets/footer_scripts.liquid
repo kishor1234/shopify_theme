@@ -1,0 +1,101 @@
+<!-- Footer scripts -->
+<!-- CookiePro Cookies Consent Notice start for uk.dailypaperclothing.com --
+<script src="https://cookie-cdn.cookiepro.com/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="6c60b4d1-d0e5-4e01-9688-69de2d0ca05a" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- CookiePro Cookies Consent Notice end for uk.dailypaperclothing.com -->
+
+<a class="optanon-show-settings">Cookie Settings</a>
+
+<!-- CookiePro Cookies Settings button end -->
+<script>
+  window.ajax_cart = {{settings.ajax_cart}};
+  window.money_format = "{{shop.money_with_currency_format}}";
+  window.shop_currency = "{{ shop.currency }}";
+  window.show_multiple_currencies = {{settings.enable_multiple_currencies}};
+  window.loading_url = "{{ 'loading.gif' | asset_url}}"; 
+  window.use_color_swatch = {{ settings.use_color_swatch }};
+  window.product_image_resize = {{settings.product_image_resize}};
+  window.enable_sidebar_multiple_choice = {{ settings.enable_sidebar_multiple_choice}};
+  window.dropdowncart_type = "{{ settings.dropdowncart_type }}";
+  window.file_url = "{{''|file_url}}";
+  window.asset_url = "{{''|asset_url}}";
+  window.images_size = {
+    is_crop: {{ settings.product_image_crop }},
+    ratio_width : {{ settings.product_image_ratio_width }},
+    ratio_height : {{ settings.product_image_ratio_height }},
+  };
+  window.inventory_text = {
+    in_stock: "{{ 'products.product.in_stock' | t }}",
+    many_in_stock: "{{ 'products.product.many_in_stock' | t }}",
+    out_of_stock: "{{ 'products.product.out_of_stock' | t }}",
+    add_to_cart: "{{ 'products.product.add_to_cart' | t }}",
+    sold_out: "{{ 'products.product.sold_out' | t }}",
+    unavailable: "{{ 'products.product.unavailable' | t }}"
+  };
+          
+  window.multi_lang = {{settings.enable_multilang}};
+</script>
+{% if settings.enable_multilang %}
+    {% include 'translator' %}
+{% endif %}
+    <script src="{{ 'bootstrap.min.js' | asset_url }}" async></script>
+    <script src="{{ 'api.jquery.js' | shopify_asset_url }}" defer></script>
+    <script src="{{ 'ella.js' | asset_url }}" defer></script>
+    {% if template contains 'product' or template contains 'unite-template' or product.title contains "Gift" or template contains 'index' %}
+      <script src="{{ 'selectize.min.js' | asset_url }}" defer></script>
+      <script src="{{ 'option_selection.js' | shopify_asset_url }}" defer></script>
+    {%endif%}
+    {% include 'new-currency' %}
+{%comment%}
+    {% include 'ip-geolocation' %}
+{%endcomment%}
+    <script>
+      var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+          showLeftPush = document.getElementById( 'showLeftPush' ),
+          body = document.body;
+
+      showLeftPush.onclick = function() {
+          classie.toggle( this, 'active' );
+          classie.toggle( body, 'cbp-spmenu-push-toright' );
+          classie.toggle( menuLeft, 'cbp-spmenu-open' );
+      };
+    </script>
+    {% if settings.enable_lazy_loading_pc or settings.enable_lazy_loading_mobile %}
+    {{ 'wow.min.js' | asset_url | script_tag }}
+    {% endif %}
+    <script type="text/javascript">
+      !function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+      document.addEventListener("DOMContentLoaded",function(){var e;if("IntersectionObserver"in window){e=document.querySelectorAll(".lazy");var n=new IntersectionObserver(function(e,t){e.forEach(function(e){if(e.isIntersecting){var t=e.target;t.src=t.dataset.src,t.classList.remove("lazy"),t.classList.add("lazyloaded"),n.unobserve(t)}})});e.forEach(function(e){n.observe(e)})}else{var t;function o(){t&&clearTimeout(t),t=setTimeout(function(){var n=window.pageYOffset;e.forEach(function(e){e.offsetTop<window.innerHeight+n&&(e.src=e.dataset.src,e.classList.remove("lazy"),e.classList.add("lazyloaded"))}),0==e.length&&(document.removeEventListener("scroll",o),window.removeEventListener("resize",o),window.removeEventListener("orientationChange",o))},20)}e=document.querySelectorAll(".lazy"),document.addEventListener("scroll",o),window.addEventListener("resize",o),window.addEventListener("orientationChange",o)}});
+    </script>
+    <script>
+      function isMobileFunc() { 
+          var userAgent = navigator.userAgent.toLowerCase();   
+          var phone = (/iphone|android|ipod|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(userAgent));
+          var tablet = (/ipad|sch-i800|playbook|tablet|kindle|gt-p1000|sgh-t849|shw-m180s|a510|a511|a100|dell streak|silk/i.test(userAgent));
+          return phone || tablet;
+      }
+      var enable_lazy_loading_pc = {{settings.enable_lazy_loading_pc}};
+      var enable_lazy_loading_mobile = {{settings.enable_lazy_loading_mobile}};
+      var isMobile = isMobileFunc();
+
+
+      if ((enable_lazy_loading_pc && !isMobile) || (enable_lazy_loading_mobile && isMobile)) {
+        new WOW().init({offset:50});
+      }
+        
+      if (isMobile) {
+        var currentEl;
+        jQuery('.site-nav .dropdown > a').bind('click', function(event) {
+            if (currentEl != this) {
+                event.preventDefault();
+                currentEl = this;
+            }
+        });
+      }
+      
+      
+      
+      
+    </script>

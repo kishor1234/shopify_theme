@@ -1,0 +1,243 @@
+<div class="image-text-landingpage it-lp-1">
+  <figure>
+<!--     <img src="{{ section.settings.image_text_1 | img_url: 'master' }}" alt="{{ section.settings.image.alt }}" > -->
+  </figure>
+  <div>
+    <h2>{{ section.settings.heading_it_1 }}</h2>
+    <p>{{ section.settings.paragraph_it_1 }}</p>
+    <a>{{ section.settings.button_text_it_1 }}</a>
+  </div>
+</div>
+
+<!-- collection -->
+
+<div class="image-text-landingpage it-lp-2 ">
+  <figure>
+<!--     <img src="{{ section.settings.image_text_2 | img_url: 'master' }}" alt="{{ section.settings.image.alt }}" > -->
+  </figure>
+  <div>
+    <h2>{{ section.settings.heading_it_2 }}</h2>
+    <p>{{ section.settings.paragraph_it_2 }}</p>
+    <a>{{ section.settings.button_text_it_2 }}</a>
+  </div>
+</div>
+
+<!-- collection -->
+
+<div class="image-text-overlay">
+    <div>
+      <h2>{{ section.settings.heading_overlay }}</h2>
+      <p>{{ section.settings.paragraph_overlay }}</p>
+    </div>
+</div>
+
+
+
+<style>
+  .image-text-landingpage {
+  	display: grid;
+	grid-template-columns: 1fr 1fr;
+  }
+  
+  .image-text-landingpage.it-lp-1 > div {
+    grid-column: 1 / span 1;
+  }
+  .image-text-landingpage > * {
+  grid-row: 1;
+  }
+  
+  .image-text-overlay {
+    background: url("{{ section.settings.image_overlay | img_url: 'master' }}")
+  }
+  
+  .it-lp-1 figure {
+  background: url("{{ section.settings.image_text_1 | img_url: 'master' }}")
+  }
+  
+    .it-lp-2 figure {
+  background: url("{{ section.settings.image_text_2 | img_url: 'master' }}")
+  }
+  
+  .image-text-overlay, .image-text-landingpage {
+  height: 100vh;
+  background-size: cover;
+}
+
+  .image-text-overlay > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #00000040;
+}  
+</style>
+
+
+<!-- <div class="landing-product-list">
+      <div class="grid-item col-xs-12 p-0 product-wrap m-0 posi-ab-wc">
+        <div class="row">
+      {%- assign collection = collections[section.settings.collection_1] -%}
+      {%- assign prod_limit = section.settings.show_product -%}
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }} left-products">
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- assign count = count | plus: 1 -%}     
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {%- if count_1 == 4 -%}
+        {%- assign banner_1 = paginate.current_page | plus:paginate.current_page | minus: 1 -%}
+        {%- endif -%}
+        {%- if count <= 4 -%}
+        {%- include 'product-landing-grid' -%}
+        {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      
+            <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }} right-products">
+        {%- for product in collection.products limit:2 offset: count -%}
+        {%- assign count = count | plus: 1 -%}     
+        {%- assign count_1 = count_1 | plus:1 -%}
+        {%- if count_1 == 5 -%}
+        {%- assign banner_1 = paginate.current_page | plus:paginate.current_page | minus: 1 -%}
+        {%- endif -%}
+        {% if count >= 5 and count <= 6 %}
+        {%- include 'product-landing-grid' -%}
+        {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      </div>
+      </div>
+    </div>
+    <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ forloop.index }}').slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+        $('.landing-slider-part-wc').slick({
+          infinite: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          dots: true
+        });
+      });
+    </script> -->
+
+
+{% schema %}
+  {
+    "name": "Image Text",
+    "settings": [
+	{
+      "type": "image_picker",
+      "id": "image_text_1",
+      "label": "image with text 1"
+    },
+    {
+       "type": "text",
+       "id": "heading_it_1",
+       "label": "heading",
+       "default": "Title"
+    },
+    {
+       "type": "text",
+       "id": "paragraph_it_1",
+       "label": "paragraph",
+       "default": "paragraph"
+    },
+    {
+       "type": "text",
+       "id": "button_text_it_1",
+       "label": "button text",
+       "default": "click here"
+    },
+	{
+      "type": "image_picker",
+      "id": "image_text_2",
+      "label": "image with text 2"
+    },
+    {
+       "type": "text",
+       "id": "heading_it_2",
+       "label": "heading",
+       "default": "Title"
+    },
+    {
+       "type": "text",
+       "id": "paragraph_it_2",
+       "label": "paragraph",
+       "default": "paragraph"
+    },
+    {
+       "type": "text",
+       "id": "button_text_it_2",
+       "label": "button text",
+       "default": "click here"
+    },
+	{
+      "type": "image_picker",
+      "id": "image_overlay",
+      "label": "image background overlay"
+    },
+    {
+       "type": "text",
+       "id": "heading_overlay",
+       "label": "heading",
+       "default": "Title"
+    },
+    {
+       "type": "text",
+       "id": "paragraph_overlay",
+       "label": "paragraph",
+       "default": "paragraph"
+    },
+    {
+       "type": "collection",
+       "id": "collection_1",
+       "label": "collection 1",
+       "info": "display products from this collection"
+    },
+    {
+        "type": "range",
+        "id": "show_product_1",
+        "min": 3,
+        "max": 10,
+        "step": 1,
+        "unit": "p",
+        "label": "show products",
+        "default": 4
+    },
+    {
+       "type": "collection",
+       "id": "collection_2",
+       "label": "collection 2",
+       "info": "display products from this collection"
+    },
+    {
+        "type": "range",
+        "id": "show_product_2",
+        "min": 3,
+        "max": 10,
+        "step": 1,
+        "unit": "p",
+        "label": "show products",
+        "default": 4
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

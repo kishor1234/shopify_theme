@@ -1,0 +1,318 @@
+{%- comment -%}
+{% if settings.collection_results_per_page != blank %}
+{% assign product_per_page = settings.collection_results_per_page %}
+{% else %}
+{% assign product_per_page = 100 %}
+{% endif %}
+<div class="block-row coll-main">    
+  {% paginate collection.products by 25 %}
+  <div class="coll_middle">
+    <div class="collection_loader_cls">
+      <img src="{{'loading.gif' | asset_url}}" alt=""/>
+    </div>
+    <div class="coll-top-bar">
+      <div class="coll-breadcrumb">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>{{ collection.title }}</li>
+        </ul>
+      </div>
+      <div class="coll-filter-part">
+        {%- include 'collection-topbar-filter' -%}
+      </div>
+    </div>
+    <div class="products-grid row">
+      {% if collection.products.size > 0 %}      
+      {% if settings.collection_results_per_row != blank and settings.collection_results_per_row != '5' %}
+      {% assign product_grid = 12 | divided_by: settings.collection_results_per_row %}
+      {% assign columns = true %}
+      {% endif %}
+      {% for product in collection.products limit:12 %}    
+      {%- assign count = count | plus: 1 -%}
+      {%- if count <= 12 -%}
+      <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+        {% include 'product-main-grid' %}
+      </div>
+      {%- endif -%}
+      {%- endfor -%}
+      
+      {%- if count >= 12 -%}
+      {%- if section.settings.banner_image_01 != blank -%}
+      <div class="grid-img-item col-xs-12 col-sm-12">
+        <figure><img src="{{ section.settings.banner_image_01 | img_url: 'master' }}" alt="banner_01" title="banner_01" /></figure>
+      </div>
+      {%- endif -%}
+      {%- endif -%}
+      
+      {%- comment -%}
+      -----------------------------------------------------------------------------
+      ---------------------------------- Desktop ----------------------------------
+      -----------------------------------------------------------------------------
+      {%- endcomment -%}
+      <div class="desktop-coll-grid-wc">
+        {% for product in collection.products limit:4 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {% if count >= 12 and count <= 16 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+        <div class="grid-item col-xs-12 p-0 product-wrap">
+          <div class="row">
+            <div class="grid-item col-xs-12 col-sm-6 col-md-6 pro-space">
+              {% for product in collection.products limit:4 offset: count %}
+              {%- assign count = count | plus: 1 -%}      
+              {% if count >= 16 and count <= 20 %}
+              <div class="grid-list-item col-xs-12 col-sm-6 col-md-6">
+                {% include 'product-main-grid' %}
+              </div>
+              {% endif %}   
+              {% endfor %}
+            </div>          
+            <div class="grid-item col-xs-12 col-sm-6 col-md-6 grid-p-l pro-space">
+              {% for product in collection.products limit:1 offset: count %}
+              {%- assign count = count | plus: 1 -%} 
+              {% if count == 21 %}
+              {% include 'product-main-grid' %}
+              {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>        
+        {% for product in collection.products limit:4 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {% if count >= 21 and count <= 25 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}      
+        {%- if count >= 25 -%}
+        {%- if section.settings.banner_image_02 != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12">
+          <figure><img src="{{ section.settings.banner_image_02 | img_url: 'master' }}" alt="banner_02" title="banner_02" /></figure>
+        </div>
+        {%- endif -%}
+        {%- endif -%}
+        {%- if count >= 25 -%}
+        {% for product in collection.products offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endfor -%}
+        <div id="product-list-foot"></div> 
+        {%- endif -%}
+      </div>     
+      
+      {%- comment -%}
+      -----------------------------------------------------------------------------
+      ---------------------------------- Mobile ----------------------------------
+      -----------------------------------------------------------------------------
+      {%- endcomment -%}
+      <div class="mobile-coll-grid-wc">
+        {%- assign count = 12 -%}
+        {% for product in collection.products limit:6 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {% if count >= 12 and count <= 18 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-4 product-mobile-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+        {%- if count >= 18 -%}
+        {%- if section.settings.banner_image_02 != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12">
+          <figure><img src="{{ section.settings.banner_image_02 | img_url: 'master' }}" alt="banner_02" title="banner_02" /></figure>
+        </div>
+        {%- endif -%}
+        {%- endif -%}
+        {%- if count >= 18 -%}
+        {% for product in collection.products offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        <div class="grid-item col-xs-6 col-sm-4 col-md-4 product-mobile-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endfor -%}
+        <div id="product-list-foot"></div> 
+        {%- endif -%}
+      </div>
+      {% else %}
+      <p class="text-center" {% if settings.enable_multilang %}data-translate="collections.general.no_matches"{% endif %}>{{ 'collections.general.no_matches' | t }}</p>
+      {% endif %}
+    </div>
+    {% if paginate.pages > 1 %}
+    <figure class="load_more_loader hide"><img src="{{ 'loading.gif' | asset_url }}" alt="" /></figure>
+    {% if paginate.next %}
+    <div class="load-more-product" id="more"><a href="{{ paginate.next.url }}"></a></div>              
+    {% endif %}          
+    {% endif %}
+  </div>
+  {% endpaginate %}    
+</div>
+
+{%- include 'collection-script' -%}
+{%- endcomment -%}
+
+{% if settings.collection_results_per_page != blank %}
+{% assign product_per_page = settings.collection_results_per_page %}
+{% else %}
+{% assign product_per_page = 100 %}
+{% endif %}
+<div class="block-row coll-main">    
+  {% paginate collection.products by 25 %}
+  <div class="coll_middle">
+    <div class="collection_loader_cls">
+      <img src="{{'loading.gif' | asset_url}}" alt=""/>
+    </div>
+    <div class="coll-top-bar">
+      <div class="coll-breadcrumb">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>{{ collection.title }}</li>
+        </ul>
+      </div>
+      <div class="coll-filter-part">
+        {%- include 'collection-topbar-filter' -%}
+      </div>
+    </div>
+    <div class="products-grid row">
+      {% if collection.products.size > 0 %}      
+      {% if settings.collection_results_per_row != blank and settings.collection_results_per_row != '5' %}
+      {% assign product_grid = 12 | divided_by: settings.collection_results_per_row %}
+      {% assign columns = true %}
+      {% endif %}
+      {%- assign count_banner = 0 -%}
+      {% for product in collection.products limit:12 %}    
+      {%- assign count = count | plus: 1 -%}
+      {%- assign count_banner = count_banner | plus: 1 -%}
+      {%- if count <= 12 -%}
+      <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+        {% include 'product-main-grid' %}
+      </div>
+      {%- endif -%}
+      {%- endfor -%}
+      
+      {%- if count_banner >= 12 -%}
+      {%- if section.settings.banner_image_01 != blank -%}
+      <div class="grid-img-item col-xs-12 col-sm-12 product-wrap">
+        <figure><img src="{{ section.settings.banner_image_01 | img_url: 'master' }}" alt="banner_01" title="banner_01" /></figure>
+      </div>
+      {%- endif -%}
+      {%- endif -%}
+      
+      {%- comment -%}
+      -----------------------------------------------------------------------------
+      ---------------------------------- Desktop ----------------------------------
+      -----------------------------------------------------------------------------
+      {%- endcomment -%}
+      <div class="desktop-coll-grid-wc">
+        {%- assign count_banner_1 = 0 -%}
+        {% for product in collection.products limit:4 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {%- assign count_banner_1 = count_banner | plus: 1 -%}
+        {% if count >= 12 and count <= 16 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+        <div class="grid-item col-xs-12 p-0 product-wrap">
+          <div class="row">
+            <div class="grid-item col-xs-12 col-sm-6 col-md-6 pro-space">
+              {% for product in collection.products limit:4 offset: count %}
+              {%- assign count = count | plus: 1 -%}      
+              {%- assign count_banner_1 = count_banner | plus: 1 -%}
+              {% if count >= 16 and count <= 20 %}
+              <div class="grid-list-item col-xs-12 col-sm-6 col-md-6">
+                {% include 'product-main-grid' %}
+              </div>
+              {% endif %}   
+              {% endfor %}
+            </div>          
+            <div class="grid-item col-xs-12 col-sm-6 col-md-6 grid-p-l pro-space">
+              {% for product in collection.products limit:1 offset: count %}
+              {%- assign count = count | plus: 1 -%} 
+              {%- assign count_banner_1 = count_banner | plus: 1 -%}
+              {% if count == 21 %}
+              {% include 'product-main-grid' %}
+              {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>        
+        {% for product in collection.products limit:4 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {%- assign count_banner_1 = count_banner | plus: 1 -%}
+        {% if count >= 21 and count <= 25 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}      
+        {%- if count_banner_1 >= 13 -%}
+        {%- if section.settings.banner_image_02 != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12 product-wrap">
+          <figure><img src="{{ section.settings.banner_image_02 | img_url: 'master' }}" alt="banner_02" title="banner_02" /></figure>
+        </div>
+        {%- endif -%}
+        {%- endif -%}
+        {%- if count >= 25 -%}
+        {% for product in collection.products offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endfor -%}
+        <div id="product-list-foot"></div> 
+        {%- endif -%}
+      </div>     
+      
+      {%- comment -%}
+      -----------------------------------------------------------------------------
+      ---------------------------------- Mobile ----------------------------------
+      -----------------------------------------------------------------------------
+      {%- endcomment -%}
+      <div class="mobile-coll-grid-wc">
+        {%- assign count = 12 -%}
+        {% for product in collection.products limit:6 offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        {% if count >= 12 and count <= 18 %}
+        <div class="grid-item col-xs-6 col-sm-4 col-md-4 product-mobile-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+        {%- if count >= 18 -%}
+        {%- if section.settings.banner_image_02 != blank -%}
+        <div class="grid-img-item col-xs-12 col-sm-12">
+          <figure><img src="{{ section.settings.banner_image_02 | img_url: 'master' }}" alt="banner_02" title="banner_02" /></figure>
+        </div>
+        {%- endif -%}
+        {%- endif -%}
+        {%- if count >= 18 -%}
+        {% for product in collection.products offset: count %}
+        {%- assign count = count | plus: 1 -%} 
+        <div class="grid-item col-xs-6 col-sm-4 col-md-4 product-mobile-wrap">
+          {% include 'product-main-grid' %}
+        </div>
+        {%- endfor -%}
+        <div id="product-list-foot"></div> 
+        {%- endif -%}
+      </div>
+      {% else %}
+      <p class="text-center" {% if settings.enable_multilang %}data-translate="collections.general.no_matches"{% endif %}>{{ 'collections.general.no_matches' | t }}</p>
+      {% endif %}
+    </div>
+    {% if paginate.pages > 1 %}
+    <figure class="load_more_loader hide"><img src="{{ 'loading.gif' | asset_url }}" alt="" /></figure>
+    {% if paginate.next %}
+    <div class="load-more-product" id="more"><a href="{{ paginate.next.url }}"></a></div>              
+    {% endif %}          
+    {% endif %}
+  </div>
+  {% endpaginate %}    
+</div>
+
+{%- include 'collection-script' -%}

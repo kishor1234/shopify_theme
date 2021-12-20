@@ -1,0 +1,222 @@
+<script src="https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js"></script>
+
+<script>
+  // On call to IPGeolocation API on each page during a user's visit, API response will be served from sessionStorage after the first page.
+  _ipgeolocation.enableSessionStorage(true);
+  var ip = sessionStorage.getItem("ip");
+  var country_name = sessionStorage.getItem("country_name");
+  var country_code2 = sessionStorage.getItem("country_code2");
+  status_value = sessionStorage.getItem('status_value');
+
+  if (!ip || !country_name || !country_code2) {
+        _ipgeolocation.makeAsyncCallsToAPI(false);
+        _ipgeolocation.setFields("country_name,country_code2");
+        _ipgeolocation.getGeolocation(handleResponse, "2568dcb423584ca0a00ce9f7fff66a9d");
+    }
+  function handleResponse(json) {
+      ip = json.ip;
+      country_name = json.country_name;
+      country_code2 = json.country_code2;
+  }
+  
+  console.log("ctnasssssme",country_name);
+  if(country_name ==="United Kingdom"){
+    window.location.replace("https://uk.dailypaperclothing.com/");
+  }
+
+  /************Kishor Code for write cookis*************/
+  
+  function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {   
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+  /****end****/
+         
+
+  $(document).ready(function() {
+    
+    
+   
+    
+    $('#ip').html('IP: ' + ip);
+    $('#country_name').html(country_name);
+    var el = document.getElementById(country_code2);
+    if(el !== null && el !== undefined) {
+      el.style.display = 'block';
+    }
+
+    
+    CountrySelectionPopupHTMLSelectedCountry = "";
+    CountrySelectionPopupHTMLCountry = "";
+    
+
+    CountrySelectionPopupHTML =  "<div class='dp-modal' id='dp-modal'><div class='dp-modal-header'><div class='dp-modal-title'><p style=\"font-weight: bold\">WELCOME TO DAILY PAPER UK</p><p>You're now entering the UK Store, where you can shop in your <br>preferred currency for a localised shopping experience.<br></p> <a href='javascript:void(0)' class='dp-close-modal-button' id='onetrust-accept-btn-handler-black'>CONTINUE TO SHOP IN THE UK</a><br><a href='https://www.dailypaperclothing.com/' id='onetrust-accept-btn-handler-white'>Switch to the Worldwide Shop</a>";
+        
+    if (country_name !== "United Kingdom" && status_value !== "closed") 
+    {
+      
+      
+      CountrySelectionPopupHTML =  "<div class='dp-modal' id='dp-modal'><div class='dp-modal-header'><div class='dp-modal-title'><p style=\"font-weight: bold\">WELCOME TO DAILY PAPER UK</p><p>You're now entering the UK Store, where you can shop in your <br>preferred currency for a localised shopping experience.<br></p> <a href='javascript:void(0)' class='dp-close-modal-button' id='onetrust-accept-btn-handler-black'>CONTINUE TO SHOP IN THE UK</a><br><a href='https://www.dailypaperclothing.com/' id='onetrust-accept-btn-handler-white'>Switch to the Worldwide Shop</a>";
+    
+      
+      {%- assign mobile_link = linklists["store-dropdown-menu"] -%}
+      {%- for m_link in mobile_link.links -%}
+      
+      {%- if m_link.url != '#TitleNoLink' -%}
+      
+      {% assign CountryWWLink = m_link.url %}
+      {% assign CountryWWPathname = '' %}
+      {% if m_link.url contains '?' %}
+      	{% assign colors = m_link.url | split: "?"  %}
+      	{% assign CountryWWLink = colors[0] %}
+      	{% assign CountryWWPathname = colors[1] %}
+		{% assign CountryWWPathname =  '?' | append: colors[1] %}
+      {% endif %}
+      
+      {% unless m_link.url contains '/pages/' or m_link.url == 'https://www.dailypaperclothing.com?Lan=de' %}
+      
+      
+      PlatformToUse = "{{ m_link.title  }}";
+      
+      if (country_name != "United States" && country_name != "Germany" && country_name != "United Kingdom" )
+      {
+        country_name_Display = country_name;
+        country_name = "Worldwide";
+      
+      }
+      
+      if (PlatformToUse == country_name )
+      {
+       if (PlatformToUse == "Worldwide")
+       {
+       //CountrySelectionPopupHTMLSelectedCountry =  "<p><a href=\"{{ CountryWWLink }}"+window.location.pathname+"{{CountryWWPathname}}\" style=\"text-decoration: underline;\">Recommend {{ m_link.title  }} shop if you are based in "+country_name_Display+".</a></p>";  
+       }
+       else
+       {
+         //CountrySelectionPopupHTMLSelectedCountry =  "<p><a href=\"{{ CountryWWLink }}"+window.location.pathname+"{{CountryWWPathname}}\" style=\"text-decoration: underline;\">Recommend to shop in "+country_name+".</a></p>";
+       }
+      }
+      else
+      {
+    	//CountrySelectionPopupHTMLCountry =  CountrySelectionPopupHTMLCountry + "<a href=\"{{ CountryWWLink }}"+window.location.pathname+"{{CountryWWPathname}}\">{{ m_link.title  }}</a><br>";
+      }
+      {% endunless %}
+        
+      {%- endif -%}  
+      
+ 
+    {%- endfor -%}
+
+
+      
+      
+      CountrySelectionPopupHTML =  CountrySelectionPopupHTML + CountrySelectionPopupHTMLSelectedCountry + "<p>" + CountrySelectionPopupHTMLCountry+ "</p></div><button class=\"dp-close-modal-button\">×</button></div></div>";
+
+      
+      $('#'+document.body.id).prepend(CountrySelectionPopupHTML);
+
+      
+//       $('.dp-modal').addClass('active');
+//       $('.dp-modal').after($('<div class=dp-overlay></div>'));
+//       $('.dp-overlay').addClass('active');
+      
+		
+
+      
+
+      
+    }
+    CountrySelectionPopupHTML =  CountrySelectionPopupHTML + CountrySelectionPopupHTMLSelectedCountry + "<p>" + CountrySelectionPopupHTMLCountry+ "</p></div><button class=\"dp-close-modal-button\">×</button></div></div>";
+
+      
+//       $('#'+document.body.id).prepend(CountrySelectionPopupHTML);
+    $('#popupdiv').prepend(CountrySelectionPopupHTML);
+  
+    /**By Kishor 
+        Set cookie for popup in once
+        */
+   
+        var x = getCookie('popup');
+    console.log(country_code2,x);
+        if (!x) {
+          setCookie('popup','popupcookies',1);
+           
+//              $('.dp-modal').addClass('active');
+//               $('.dp-modal').after($('<div class=dp-overlay></div>'));
+//               $('.dp-overlay').addClass('active');
+          
+        }   
+    
+   /*
+    if (country_name === "Germany" && status_value !== "closed") {
+ 
+      $('#daily-paper').prepend("<div class=dp-modal id=dp-modal><div class=dp-modal-header><div class=dp-modal-title><p>Welcome! We noticed that you're visiting from Germany. Do you wish to continue to our webshop in German?</p></div><button class=dp-close-modal-button>&times;</button></div><div class=dp-modal-body><div class=dp-goLocal><a href='http://www.dailypaperclothing.com' class=dp-weglot onclick='sessionStorage.setItem('status_value', 'closed');alert(Weglot.getCurrentLang());Weglot.switchTo(\"de\");'><p>Yes, please!</p></a><a href=#Weglot-de class=dp-weglot><div class=dp-deFlag></div></a></div></div></div>");
+      $('.dp-modal').addClass('active');
+      $('.dp-modal').after($('<div class=dp-overlay></div>'));
+      $('.dp-overlay').addClass('active');
+    };*/
+/*   if (country_name === "United Kingdom" && status_value !== "closed") {
+      $('#daily-paper').prepend("<div class=dp-modal id=dp-modal><div class=dp-modal-header><div class=dp-modal-title><p>Welcome! We noticed that you're visiting from Germany. Do you wish to continue to our webshop in German?</p></div><button class=dp-close-modal-button>&times;</button></div><div class=dp-modal-body><div class=dp-goLocal><a href=#Weglot-de class=dp-weglot><p>Yes, please!</p></a><a href=#Weglot-de class=dp-weglot><div class=dp-deFlag></div></a></div></div></div>");
+      $('.dp-modal').addClass('active');
+      $('.dp-modal').after($('<div class=dp-overlay></div>'));
+      $('.dp-overlay').addClass('active');
+    };
+*/    
+    
+       // Set the date we're counting down to
+        var countDownDate = new Date("June 20, 2020 09:00:00").getTime();
+          // Get today's date and time
+          var now = new Date().getTime();
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
+          // If the count down is finished, write some text
+          if (distance < 0) {
+          } else {
+                if(country_code2 == "US" && status_value !== "closed") {
+                   $('#daily-paper').prepend("<div class=dp-modal id=dp-modal style='background:#000 !important;color:#fff !important;'><div class=dp-modal-header><div class=dp-modal-title><p>WELCOME TO DAILY PAPER </p></div><button class=dp-close-modal-button>&times;</button></div><div class='dp-modal-body' style='display:flex;justify-content:center;align-items:center;'><div class=dp-goLocal style='padding:10px 30px 30px 30px; margin-bottom:40px;text-align:center;'>In honour of Juneteenth, Daily Paper is <b>donating 20%</b> of the US profits from the webshop on the 19th of June. Join us in supporting our global community. Acta non verba.</div><div style='position:absolute;bottom:20px;'><button class='dp-close-button' style='border:none;display:flex;background:white;color:#000;padding:4px 15px;border-radius:1px;'>SHOP NOW</button></div></div></div>");
+                   $('.dp-modal').addClass('active');
+                    $('.dp-modal').after($('<div class=dp-overlay></div>'));
+                    $('.dp-overlay').addClass('active');
+                  };
+                	$(".dp-overlay, .dp-close-modal-button, .dp-weglot, .dp-close-button").click(function() {
+                  $('.dp-modal').fadeOut('.active');
+                  $('.dp-overlay').fadeOut('.active');
+                  sessionStorage.setItem('status_value', 'closed');
+                });
+              /*  if(country_code2 == "US") {
+                   $('.dp-banner-global').hide();
+                   $('.dp-banner-us').show();
+                };*/
+          }
+      /*  if (country_name == "Germany" || country_name == "Spain" || country_name == "France" || country_name == "Italy" ) {
+          $('.dp-banner').hide();
+          $('.dp-slider').hide();
+        };*/
+      $(".dp-overlay, .dp-close-modal-button, .dp-weglot, .dp-close-button").click(function() {
+        $('.dp-modal').fadeOut('.active');
+        $('.dp-overlay').fadeOut('.active');
+        sessionStorage.setItem('status_value', 'closed');
+      });
+    
+    
+   
+    });
+</script>

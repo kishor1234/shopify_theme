@@ -1,0 +1,182 @@
+<script>
+  $(document).ready(function(){
+    /// Main search input
+    $('.search-box-mobile input[type="text"]').bind('focusin focusout', function(e){
+      $(this).closest('.search-box-mobile').toggleClass('focus', e.type == 'focusin');
+    });
+    /// Live search
+    var preLoadLoadGif = $('<img src="{{ 'ajax-load.gif' | asset_url }}" />');
+                           var searchTimeoutThrottle = 10;
+                           var searchTimeoutID = -1;
+                           var currReqObj = null;
+                           var $resultsTitle = $('<div class="mobile_header header_title" />').appendTo('.search_products');
+    var $resultsBox = $('<div class="results-box" />').appendTo('.search_products');
+    var $resultsBoxAuto= $('<div class="search-autocomplete" />').appendTo('.search_products');
+    $('.search-input-dp-mobile').bind('keyup change', function(){ 
+      //Only search if search string longer than 2, and it has changed
+      if($(this).val().length > 2 && $(this).val() != $(this).data('oldval')) {
+        //Reset previous value
+        $(this).data('oldval', $(this).val());          
+        // Kill outstanding ajax request
+        if(currReqObj != null) currReqObj.abort();          
+        // Kill previous search
+        clearTimeout(searchTimeoutID);        
+        var $form = $(this).closest('form');        
+        //Search term
+        var term = '*' + $form.find('input[name="q"]').val() + '*';          
+        //URL for full search page
+        var linkURL = $form.attr('action') + '?type=product&q=' + term;          
+        $(".search_trending, .popular_products,  .more-results").hide();
+        $(" .search_products").show();
+        $resultsBox.html('<div class="load"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto;  display: block; shape-rendering: auto;" width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="4" r="15" stroke-dasharray="70.68583470577033 25.561944901923447" transform="rotate(148.809 50 50)"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.9615384615384615s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform></circle></svg></div>');
+        // Do next search (in X milliseconds)
+        searchTimeoutID = setTimeout(function(){        
+          //Ajax hit on search page
+          currReqObj = $.ajax({
+            url: $form.attr('action'),
+            data: {
+              type: 'product',
+              view: 'json',
+              q: term,
+            },
+            dataType: "json",
+            success: function(data){               
+              currReqObj = null;
+              if(data.results_total == 0) {                       
+                $resultsBox.html('<div class="note">Your search did not yield any results. </div>');
+                //$moreResults.empty();
+                $resultsTitle.empty();                
+              } else {
+                //Numerous results
+                $resultsBox.empty();
+                //$moreResults.empty();
+                $resultsTitle.empty();
+                $(".search_trending , .popular_products").hide();
+                $(" .more-results").show();    
+                $.each(data.results, function(index, item){                      
+                  window.womenImage = false
+                  // Get unisex images if searching for women
+                  if(item.unisex == "true") {
+                    $('.search-input-dp-mobile').each(function(index){
+                      console.log($('.search-input-dp-mobile').val() + ": " + index)
+                      if(index == 0) {
+                        var searchInput = $(this).val();
+                        console.log(searchInput + ": " +index)
+                        if( searchInput.indexOf('women') >= 0 | searchInput.indexOf('Women') >= 0 | searchInput.indexOf('wome') >= 0 | searchInput.indexOf('Wome') >= 0 ){
+                          window.womenImage = true
+                        } 
+                      }                       
+                    });
+                  }   
+                  if(window.womenImage) {
+                    var $row = $('<a class="product-images products_found" style="text-decoration:none;"></a>').attr('href', "/collections/women-all"+ item.url);
+                    $row.append('<div class="img"><img class="product_image" src="' + item.thumb_women + '" /></div>');
+                  } else {                     
+                    var $row = $('<a class="product-images products_found" style="text-decoration:none;"></a>').attr('href', item.url);
+                    $row.append('<div class="img"><img class="product_image" src="' + item.thumb + '" /></div>');                      
+                  }
+                  $resultsBox.append($row);
+                }); 
+                if(window.womenImage){                      
+                  $resultsTitle.append('<span style="margin-top:25px;margin-bottom:25px;">Product results <a href="' + linkURL + '&view=women" style="margin-left:10px;font-weight:800;">See all results (' + data.results_total + ') </a></span>');
+                } else {
+                  $resultsTitle.append('<span style="margin-top:25px;margin-bottom:25px;">Product results <a href="' + linkURL + '" style="margin-left:10px;font-weight:800;">See all results (' + data.results_total + ') </a></span>');
+                }                        
+              }
+            }
+          });
+        }, searchTimeoutThrottle);
+      } else if ($(this).val().length <= 2) {
+        //Deleted text? Clear results
+        $resultsBox.empty();
+        //$moreResults.empty();
+        $resultsTitle.empty();
+        $(".search_trending , .popular_products,  .more-results").show();
+        $(" .search_products").hide();
+      }
+    }).attr('autocomplete', 'off').data('oldval', '').bind('focusin', function(){
+      //Focus, show results
+      $resultsBox.show();
+    }).bind('click', function(e){
+      //Click, prevent body from receiving click event
+      e.stopPropagation();
+    });
+    $('body').bind('click', function(){
+    });
+    //Search box should mimic live search string: products only, partial match
+    $('.search-form, #search-form').on('submit', function(e){
+      e.preventDefault();
+      var term = '*' + $(this).find('input[name="q"]').val() + '*';
+      var linkURL = $(this).attr('action') + '?type=product&q=' + term;
+      window.location = linkURL;
+    });
+    // search ends
+  });
+</script>
+{%- if settings.show_header_search -%}
+<div class="search-box-mobile">
+  <a class="icon-search" href="javascript:void(0)" {% if settings.enable_multilang %}data-translate="general.search.submit"{% endif %}>{{ 'general.search.submit' | t }}</a>
+  <form action="/search" method="get" class="input-group search-bar" role="search">
+    <input type="text" name="q" value="{{ search.terms | escape }}" {% if settings.enable_multilang %}data-translate="general.search.placeholder" translate-item="placeholder"{% endif %} placeholder="Search" class="input-group-field search-input-dp-mobile" aria-label="Search Site" autocomplete="off">
+    <span class="mobile-search-icon-wc">{%- include 'icon-search' -%}</span>
+    <span class="input-group-btn">
+      <input type="submit" class="btn" {% if settings.enable_multilang %}data-translate="general.search.submit"{% endif %} value="{{ 'general.search.submit' | t }}">
+    </span>
+  </form>
+</div>
+{%- endif -%}
+<div class="search_menu">
+  <div class="search_trending">
+    <div class="header_title">Suggestions</div>
+    <div class="all_tags">
+      {%- section 'popular-searches' -%}        
+    </div>
+  </div>
+  <div class="popular_products">
+    <div class="header_title">Popular products</div>
+    <div class="popular-box">
+      {%- for product in collections.popular-products.products limit:2 -%}
+      <a href="{{product.url}}" class="product-images popular-product-images " style="text-decoration:none;" >      <div class="d-img">
+        <img src="{% if product.images[0].alt contains "Packshot" %} {{ product.images[1] | img_url: '500x' }}{%else%} {{product | img_url: '500x'}}{%endif%}" />      
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="search_products">
+  </div>  
+  <div class="more-results"> 
+    <ul class="search_nav">  
+      {%- for link in linklists.search-menu-mobile.links -%}
+      <li>
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      </li>
+      {%- endfor -%}
+      <li>
+        {%- form 'currency' -%}
+        <select class="currency" name="currency">
+          {%- for currency in shop.enabled_currencies -%}
+          {%- if currency == cart.currency -%}
+          <option selected="true" label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+          {%- else -%}
+          <option label="{{currency.iso_code}}">{{currency.iso_code}}</option>
+          {%- endif -%}
+          {%- endfor -%}
+        </select>
+        {%- endform -%}
+      </li>
+    </ul></div>
+</div>
+<script>
+  $( ".search-bar > .input-group-field" ).focus(function() {
+    $(".search_menu").css( "display", "block" ).fadeIn( 1000 );
+    $('.search-box').addClass('wc-focus');
+  });  
+  $( ".search-bar > .input-group-field").bind('keyup change', function(){
+    $(".search_menu").css( "display", "block" ).fadeIn( 1000 );
+    $('.search-box').addClass('wc-focus');
+  });
+  $(document).on('click','.cross-dp',function(){
+    $('.search-box').removeClass('wc-focus');
+  });
+</script>

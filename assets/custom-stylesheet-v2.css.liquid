@@ -1,0 +1,979 @@
+.input-group {
+  top: -5px; 
+}
+
+.template-product span.productcolors {
+  padding: 9px 12px;
+  border-radius: 0px;
+}
+
+.template-product span.productcolors.white {
+ border: 1px solid #A9A9A9; 
+}
+
+span.currentcolor {
+  border: 2px solid #ffffff !important;
+  outline: 1px solid #2c2c2c;
+}
+
+.sidebar-block:last-child { /* sticky sidebar for mens, womens and babies pages */
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 45px;
+}
+
+#dp-sticky-sidebar { /*sticky sidebar for item and account pages*/
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 45px;
+}
+
+/*RESPONSIVENESS SHIPPING PAGE FOR MOBILE AND DESKTOP*/
+
+@media (max-width: 500px) {
+  #shipping .worldwide-shipping-rates .hide-mobile-dp {
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+  }
+}
+
+@media only screen and (max-width: 800px) and (min-width: 700px)  {...}
+#shipping .worldwide-shipping-rates .hide-mobile-dp span.thirdcolumn {
+  display:block;
+}
+}
+
+/*Back in stock message text styling*/
+.BIS-DP {
+  margin-bottom: 8px;
+}
+
+.BIS-DP a {
+  color: #3a3a3a;
+  text-decoration: underline;
+}
+
+/*No blue border if user clicks on any text input or form*/
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  outline: none;
+}
+
+
+/*changes text colour of the title link in careers page*/
+.service-title a {
+  color: #454545;
+}
+
+/*chatbot background color*/
+.chat-container .chat-body {
+  background-color: #f3f3f3;
+  background-image: none;
+}
+
+/*Chatbox icon is made smaller and no chat title*/
+.chat-container .chat-header ul li label {
+  display: none; 
+}
+
+.mobile-chat-container {
+  padding: 8px;
+}
+
+.chat-container .chat-header .fa-comments, .mobile-chat-container .fa-comments {
+  background-size: 18px 18px;
+}
+
+/*Chatbox of bot and user is made more square*/
+
+.chat-container .chat-history .other-message {
+  border-radius: 4px 10px 10px 10px;
+}
+
+.chat-container .chat-history .joe-message-group li:last-of-type .other-message {
+  border-radius: 4px 10px 10px 10px !important;
+}
+
+.chat-container .chat-history .joe-message-group li:first-of-type .my-message {
+  border-radius: 10px 10px 4px 10px;
+}
+
+.form-control--1 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-border-radius: 0px;
+  background-image: url(https://image.flaticon.com/icons/svg/60/60781.svg);
+  background-position: 97% 50%;
+  background-repeat: no-repeat;
+  background-size: 12px; 
+  outline: none;
+  font-size: 12px;
+  margin-bottom: 15px;
+  min-width: 200px;
+  width: 90%;
+}
+
+@media (max-width: 676px) {
+  .form-control--1 {
+    width: 100%;
+  }
+  .header-bottom .top-cart {
+    background: #000;
+  }
+}
+
+.row-names {
+  width: 98%;
+  display: flex;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+#create_customer input {
+  min-width: 150px; 
+}
+
+.dp-email-marketing {
+  margin-bottom: 15px;
+}
+
+#create_customer input[type='checkbox'] {
+  width: 16px;
+  min-width: 0;
+  background: white;
+}
+
+/* ELMAN PEACE x DAILY PAPER PAGE */
+.elmanheading {
+  text-align: left; 
+  color: #353535;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 1em;
+  line-height: 23px;
+}
+
+.elmanparagraph {
+  text-align: left;
+  padding-right: 38px;
+}
+
+@media (max-width: 767px){
+  .elmanheading {
+    margin-bottom: .5em;
+    font-size: 1.1em;
+    padding: 0 10px;
+  }
+
+  .elmanparagraph {
+    font-size: 10px;
+    padding: 0 10px;
+    line-height: 19px;
+  }
+
+  .elman-title {
+    padding: 0 10px;
+  }
+
+  .elmancampaign-image {
+    display: none;
+  }
+}
+
+.elmancampaign-image {
+  width: 100%;
+  height: 95%;
+}
+
+.elmancampaign-video {
+  width: 100%;
+  height: 95%;
+}
+
+.elmantshirt-video {
+  width: 100%;
+  height: 100%;
+}
+
+.elmancampaign-content {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.header-secondary-elman {
+  font-size: 13px;
+  margin-bottom: .5em;
+  color: #3a3a3a;
+  font-weight: 700;
+}
+
+.bx-wrapper{
+  color: #221204;
+
+  border: 0;
+  box-shadow: none;
+
+  align-content: center;
+}
+
+#elmanrow > *{
+  text-align: left;
+}
+
+.u-bottom-small {
+  margin-bottom: 16px !important;
+}
+
+.container-custom {
+  max-width: 100%;
+  margin-bottom: 16px;
+}
+
+.responsive-image {
+  width: 100%;
+  height: auto;
+  padding: 10px 0;
+}
+
+#elmanrow {
+  display: block;
+}
+
+#elmanrow div:nth-child(even){
+  padding-left: 20px;
+}
+
+#elman-row {
+  display: block;
+}
+
+.btn-elman, .btn-elman:link, .btn-elman:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  padding: .5rem;
+  width: 50%;
+  float: right;
+  display: inline-block;
+  border-radius: 0;
+  position: relative;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
+}
+
+@media (min-width: 900px){
+  .container1-custom {
+    margin: auto;
+    width: 33.33%;
+    padding: 0;
+    display: none;
+  }
+}
+
+@media (max-width: 800px){
+
+  .container-custom {
+    padding: 0;
+    margin: 0;
+    display: none;
+  }
+
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .container1-custom {
+    margin: 0;
+    width: auto;
+    padding: 0;
+  }
+
+  .slider-custom img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .bx-pager {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  #elmanrow div:nth-child(odd){
+    margin-bottom: 16px;
+  }
+
+  #elmanrow > *{
+    padding-left: 0px !important;
+  }
+
+  #elman-main {
+    padding-bottom: 16px;
+  }
+
+  .header-secondary-elman {
+    margin-bottom: 1em;
+    line-height: 2em;
+  }
+
+  .btn-elman, .btn-elman:link, .btn-elman:visited {
+    margin-bottom: 16px;
+    float: none;
+    width: 100%;
+  }
+}
+
+/* END ELMAN PEACE x DAILY PAPER PAGE */
+
+/* Index Homepage Images 
+
+ .index-dpimageL {
+margin: 0;
+background-position: 70% 35%;
+background-size: 140%;
+background-repeat: no-repeat;
+background-image: url("https://cdn.shopify.com/s/files/1/0617/1881/files/DAILY_PAPER_GHANA-4.png?v=1580386790");
+  width: 50%;
+height: auto; 
+}
+
+*/
+
+.index-dpimageL {
+  margin: 0;
+  background-position: 100% 25%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url({{ 'DAILY-PAPER-GHANA-copy.jpg' | file_img_url: 'master' }});
+  width: 50%;
+  height: auto; 
+  }
+  .index-dpimageR {
+  margin: 0;
+  background-position: 100% 15%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url({{ 'DAILY-PAPER-GHANA-grade1.jpg' | file_img_url: 'master' }});
+    width: 50%;
+  height: auto; 
+  } 
+ /*
+
+.index-dpimage {
+  margin: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("https://cdn.shopify.com/s/files/1/0617/1881/files/black-friday-purple-reflective-bg-desktop3.jpg?76239");
+  width: 100%;
+  height: auto; 
+  position: relative;
+}
+
+.index-dpimage a {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block;  
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  line-height: 15px;
+} */
+
+.index-dpimage a:hover {
+  text-decoration: none;
+}
+
+/* .index-dpimage a:first-child {
+  left: 0;
+}
+
+.index-dpimage a:last-child {
+  left: 50%;
+}   */
+
+
+
+/* END Index Homepage Images */
+
+.currencySwitch select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url(https://image.flaticon.com/icons/svg/60/60781.svg);
+  background-position: 98% 50%;
+  background-repeat: no-repeat;
+  background-size: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  outline: none;
+  font-size: 12px;
+  height: auto; 
+  min-width: 50px;
+  padding: 0;
+  margin: 0 auto;
+  border: 0;
+  background-color: #fff;
+}
+
+.currencySwitch select {
+  min-width: 58px;
+}
+
+.mobile-search-currency {
+  background-color: #fff;
+  display: block;
+}
+
+@media (max-width: 767px){
+  .currencySwitch select {
+    background-color: rgba(248, 248, 248); 
+    transform: translateX(75%);
+  }
+
+  .currencySwitch select {
+    transform: translateX(50%);
+  }
+
+  .currencySwitch {
+    display: inline-block;
+    top: 0%;
+    right: 0%;
+    width: 33.66%;
+    position: absolute;
+    padding: 8px 0px;
+    background-color: rgba(248, 248, 248);
+    border-left: 1px solid #8686;
+  }
+
+  .input-group {
+    top: 0px; 
+  }
+}
+
+input {
+  background-color: transparent; 
+}
+
+.dp-banner {
+  display: flex;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99999999;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-transform: uppercase;
+  padding: 5px;
+  background: #000;
+  color: #fff;
+  font-size: 11px;
+}
+
+.dp-banner--text {
+  font-weight: 100;
+  z-index: 1;
+} 
+
+.dp-banner--text a {
+  text-decoration: underline;
+  color: #fff;
+} 
+
+.dp-banner--text a:hover {
+  text-decoration: none;
+}
+
+@keyframes moveLeftscroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-2000vw);
+  }
+}
+
+/* Blur animation for lazy loading images, add class .blur-up next to lazyload class  */
+.blur-up {
+  -webkit-filter: blur(2.5px);
+  filter: blur(2.5px);
+  transition: filter 1000ms, -webkit-filter 1000ms;
+}
+
+.blur-up.lazyloaded {
+  -webkit-filter: blur(0);
+  filter: blur(0);
+
+}
+
+/* BEGIN COUNTRY MODAL - LANGUAGE SELECT */
+
+/* .wg-default, .wg-default .country-selector {
+display: none;  
+} */
+
+.dp-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99999;
+  transform: translate(-50%, -50%) scale(0);
+  transition: .2s ease-in-out;
+  background-color: #fff;
+  height: 228px;
+  width: 400px;
+  max-width: 80%;
+}
+
+.dp-modal.active {
+  transform: translate(-50%, -50%) scale(1);  
+}
+
+.dp-modal-title {
+  padding-top: 20px;
+  text-align: center;
+  margin: 0 0 15px 0;
+  padding: 25px 25px 0 25px;
+}
+
+.dp-close-modal-button {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 100%;
+  transform: scale(1.5);
+  border: none;
+  outline: none;
+}
+
+.dp-modal-body {
+  margin: 0 auto;
+}
+
+.dp-modal-body a {
+  color: rgb(45, 45, 45);
+}
+
+.dp-goLocal {
+  width: 50%;
+  height: auto;
+  float: left;
+  text-align: center;
+}
+
+.dp-goInternational {
+  width: 50%;
+  height: auto;
+  float: left;
+  text-align: center;
+}
+
+.dp-deFlag {
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url("https://cdn.shopify.com/s/files/1/0617/1881/files/de-flag.png?74120");
+  width: 90px;
+  height: 67.5px;  
+  transform: translateX(60%);
+}
+
+.dp-enFlag {
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url("https://cdn.shopify.com/s/files/1/0617/1881/files/gb-flag.png?74120");
+  width: 90px;
+  height: 67.5px;  
+  transform: translateX(60%);
+}
+
+.dp-overlay {
+  position: fixed;
+  opacity: 0; 
+  top: 0;
+  left: 0;
+  transition: .2s ease-in-out;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 50%);
+  pointer-events: none;
+  z-index: 99998;
+
+}
+
+.dp-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media (max-width: 500px) {
+
+  .dp-modal {
+    width: 380px;
+    height: 228px;
+    max-width: 80%;
+  }
+
+  .dp-deFlag {
+    width: 72px;
+    height: 54px;  
+  }
+
+  .dp-enFlag {
+    width: 72px;
+    height: 54px;    
+  }
+
+  .template-product span.productcolors {
+    padding: 7px 10px;
+  }
+
+  .template-product span.productcolors {
+    margin-right: 12px;
+  }
+
+}
+
+@media (max-width: 350px) {
+
+  .dp-deFlag {
+    width: 60px;
+    height: 45px;  
+    transform: translateX(50%);
+  }
+
+  .dp-enFlag {
+    width: 60px;
+    height: 45px;    
+    transform: translateX(50%);
+  }
+
+}
+
+/* END COUNTRY MODAL - LANGUAGE SELECT */
+
+.selectize-dropdown, .selectize-dropdown.form-control {
+  width: 100%;
+  top: 80%;
+}
+
+#product-variants {
+  margin: 18px 0 0 0;
+}
+
+/* Country/Currency Select Desktop */
+
+.dp-country-select, .dp-main, .dp-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dp-main {
+  position: relative;
+  background-color: #fff;
+  transition: 0.5s;
+  overflow: hidden;
+  outline: none;
+  padding-right: 8px;
+}
+.dp-menu {
+  margin: 0;
+  padding: 0;
+  width: 0;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.dp-main input:checked ~ .dp-menu {
+  width: 140px;
+}
+
+.dp-menu li {
+  display: none;
+  list-style: none;
+  width: 0;
+  padding: 0;
+}
+
+.dp-menu li select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url(https://image.flaticon.com/icons/svg/60/60781.svg);
+  background-position: 80% 50%;
+  background-repeat: no-repeat;
+  background-size: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  outline: none;
+  font-size: 0;
+  height: auto; 
+  padding: 0;
+  margin: 0 auto;
+  border: 0;
+  background-color: #fff;
+}
+
+@-moz-document url-prefix() { 
+  .dp-menu li select  {
+    background-position: 100% 50%;
+    padding: 0 6px 0 0;
+  }
+}
+
+.dp-menu li:nth-child(1) {
+  display: none;
+  list-style: none;
+  width: 0;
+  padding: 0;
+}
+
+.dp-menu li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.dp-menu li a:hover {
+  color: #161919;
+}
+
+.dp-main input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.dp-country-desk--toggle:checked ~ .dp-menu li select {
+  font-size: 12px; 
+  background-size: 4px;
+  min-width: 20px;
+}
+
+.dp-country-desk--toggle:checked ~ .dp-menu li {
+  display: inline-block;
+  width: inherit;
+  padding-right: 0;
+/*   padding-left: 15px;  */
+}
+
+.dp-country-desk--toggle:checked ~ .dp-menu li:nth-child(1) {
+  padding-left: 5px;
+}
+
+
+.dp-main input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url(https://cdn.shopify.com/s/files/1/0617/1881/files/daily-paper-world.png?74120);
+  background-position: 85% 50%;
+  background-repeat: no-repeat;
+  background-size: 14px;  
+  transform: translate(-25%, -3%);
+  margin: 0;
+  outline: none;
+}
+
+/* END Country/Currency Select Desktop */
+
+/* Country/Currency Select Mobile */
+
+.countrySelect {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  padding: 0;
+  border-left: 1px solid #8686;
+  width: 33.66%;
+  overflow: hidden;
+  background-color: rgba(248, 248, 248); 
+}
+
+.countrySelect .dp-country-dropbtn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url(https://cdn.shopify.com/s/files/1/0617/1881/files/daily-paper-world.png?74120), url(https://image.flaticon.com/icons/svg/60/60781.svg);
+  background-position: 50% 80%, 70% 70%;
+  background-repeat: no-repeat;
+  background-size: 14px, 10px;
+  font-size: 17px;    
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 64px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dp-drop-content {
+  display: none;
+  background-color: rgba(248, 248, 248); 
+  min-width: 58px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dp-drop-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+} 
+
+.dp-drop-content li {
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.dp-drop-content li:nth-child(2) {
+  border-bottom: 1px solid #8686;
+}
+
+.dp-drop-content li:nth-child(odd){
+  background-color: #F1F1F1;
+}
+
+.dp-drop-content li:last-child {
+  border-bottom: 1px solid #8686;
+}
+
+.dp-drop-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dp-country-dropbtn--toggle,
+.dp-drop-content {
+  display: none;
+}
+
+.dp-country-dropbtn--toggle:checked ~ .dp-drop-content {
+  display: block;
+}
+
+@media (max-width: 320px) {
+  .countrySelect .dp-country-dropbtn {
+    background-position: 40% 80%, 60% 70%;
+}
+}
+  /* END Country/Currency Select Mobile */
+
+  /* Subscribe Page Early Access */
+
+#subscribe, #subscribe .wrapper-container, #subscribe-usa, #subscribe-usa .wrapper-container, #subscribe-complete, #subscribe-complete .wrapper-container {
+    height: 100%;
+    overflow: hidden;
+}
+
+#subscribe .main-content, #subscribe-usa .main-content, #subscribe-complete .main-content {
+	height: 100%;
+}
+
+.subscribe-page {
+	width: 100%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding-bottom: 0%;
+  	color: #fff;
+  	background-image: url('https://cdn.shopify.com/s/files/1/0617/1881/files/black-friday-purple-reflective-bg-desktop3.jpg?74361');
+	background-size: cover;
+	background-position: center;
+}
+
+.subscribe-page p {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 20px 0;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.subscribe-page p.acceptterms {
+  font-size: 12px;
+}
+
+#subscribe header, #subscribe-usa header, #subscribe-complete header {
+    height: 45px;
+    background: #fff;
+}
+
+#subscribe .header-bottom, #subscribe-usa .header-bottom, #subscribe-complete .header-bottom {
+	background: transparent none repeat scroll 0 0;
+}
+
+#subscribe .header-logo, #subscribe-usa .header-logo, #subscribe-complete .header-logo  {
+    background: transparent none repeat scroll 0 0;
+    padding: 3px 0px 0px 50px;
+}
+
+#subscribe .header-panel-bottom, #subscribe-usa .header-panel-bottom, #subscribe-complete .header-panel-bottom {
+    margin-top: 12px;
+}
+
+#subscribe h1.service-title, #subscribe h3.service-title, #subscribe-usa h1.service-title, #subscribe-usa h3.service-title, #subscribe-complete h1.service-title, #subscribe-complete h3.service-title {
+  color: #fff;
+}
+
+#subscribe h1.service-title, #subscribe-usa h1.service-title, #subscribe-complete h1.service-title {
+  font-size: 20px;
+}
+
+#subscribe h3.service-title, #subscribe-usa h3.service-title, #subscribe-complete h3.service-title {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.subscribe-page img {
+  display: none;
+}
+
+#subscribe-usa h3.service-title {
+    font-weight: bold;
+    letter-spacing: 0.4px;
+  	margin-top: 3px;
+}
+
+#subscribe-usa h1.service-title {
+    margin-bottom: 0;
+}
+
+#subscribe-complete h4.service-title {
+  font-size: 15px;
+  margin: 15px 0;
+}
+
+  /* END Subscribe Page Early Access */
+
+.dp-blackfriday-container {
+  position: relative;
+}
+
+.dp-blackfriday-text {
+    position: absolute;
+    top: 47%;
+    left: 39%;
+    color: white;
+    font-weight: 700;
+}

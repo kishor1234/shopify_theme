@@ -1,0 +1,87 @@
+<script>
+  // 2. This code loads the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  // 3. This function creates an <iframe> (and YouTube player)
+  //    after the API code downloads.
+  var player;
+  var player2;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player-dp', {
+      width: 1920,               // Player width (in px)
+      height: 1080,              // Player height (in px)
+      videoId: 'hNDgUkGgrlU',
+      playerVars: {
+        playlist: 'hNDgUkGgrlU',
+        autoplay: 1,        // Auto-play the video on load
+        autohide: 1,
+        disablekb: 0, 
+        controls: 0,        // Hide pause/play buttons in player
+        showinfo: 0,        // Hide the video title
+        modestbranding: 0,  // Hide the Youtube Logo
+        loop: 1,            // Run the video in a loop
+        fs: 0,              // Hide the full screen button
+        autohide: 0,         // Hide video controls when playing
+        rel: 0,
+        enablejsapi: 0,
+
+      },
+      events: {
+        onReady: function(e) {
+          e.target.mute();
+          e.target.setPlaybackQuality('hd1080');
+          console.log("ready:" + player.getPlayerState())
+        },
+        onStateChange: function (e) {
+          if(YT.PlayerState.PLAYING) {
+            $('#index-video-overlay').fadeOut('slow');
+            setTimeout( $('.video-background').fadeIn('fast'), 2000);
+            //setTimeout(function(){  document.getElementById('index-video-overlay').style.display = 'none' }, 1000);
+          } 
+          if(YT.PlayerState.BUFFERING) {
+            document.getElementById('index-video-overlay').style.display = 'flex' 
+          }
+        }
+      }
+    });
+    player = new YT.Player('player-dp2', {
+      width: 1920,               // Player width (in px)
+      height: 1080,              // Player height (in px)
+      videoId: '3ibSA11-Mq8',
+      playerVars: {
+        playlist: '3ibSA11-Mq8',
+        autoplay: 1,        // Auto-play the video on load
+        autohide: 1,
+        disablekb: 0, 
+        controls: 0,        // Hide pause/play buttons in player
+        showinfo: 0,        // Hide the video title
+        modestbranding: 0,  // Hide the Youtube Logo
+        loop: 1,            // Run the video in a loop
+        fs: 0,              // Hide the full screen button
+        autohide: 0,         // Hide video controls when playing
+        rel: 0,
+        enablejsapi: 0,
+      },
+      events: {
+        onReady: function(e) {
+          e.target.mute();
+          e.target.setPlaybackQuality('hd1080');
+          console.log("ready:" + player.getPlayerState())
+        },
+        onStateChange: function (e) {
+          if(YT.PlayerState.PLAYING) {
+            $('#index-video-overlay').fadeOut('slow');
+            setTimeout( $('.video-background').fadeIn('fast'), 2000);
+            //setTimeout(function(){  document.getElementById('index-video-overlay').style.display = 'none' }, 1000);
+          } 
+          if(YT.PlayerState.BUFFERING) {
+            document.getElementById('index-video-overlay').style.display = 'flex' 
+          }
+        }
+      }
+    });
+  }
+</script>
+    

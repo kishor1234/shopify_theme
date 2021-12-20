@@ -1,0 +1,66 @@
+<section class="main-slideshow">
+  <div class="flexslider">
+    <ul class="slides">
+      <li class="slide">
+        <div id="country-message"> 
+          <div id="NL"><strong>Free shipping</strong> in the Netherlands on all orders!</div> 
+          <div id="DE"><strong>Free shipping</strong> to Germany on all orders!</div>
+          <div id="GB"><strong>Free shipping</strong> to the United Kingdom on orders!</div>
+          <div id="BE"><strong>Free shipping</strong> to Belgium on all orders!</div>
+          <div id="FR"><strong>Free shipping</strong> to France on all orders!</div>
+          <div id="US">Shipping to the US for only $11!</div>
+          <div id="CH"><strong>Free shipping</strong> to Switzerland on orders over €99</div>
+          <div id="AT"><strong>Free shipping</strong> to Austria on orders over €99</div>
+          <div id="DK"><strong>Free shipping</strong> to Denmark on orders over €99</div>
+          <div id="CA">Shipping to Canada for only €10!</div>
+          <div id="IT"><strong>Free shipping</strong> to Italy on orders over €99</div>
+          <div id="SE"><strong>Free shipping</strong> to Sweden on orders over €99</div>
+          <div id="ES"><strong>Free shipping</strong> to Spain on orders over €99</div>
+		  <div id="AU">Shipping to Australia for only €10!</div>
+          <div id="AE">Shipping to the UAE for only €10!</div>
+          <div id="IE"><strong>Free shipping</strong> to Ireland on orders over €99</div>
+          <div id="NO"><strong>Free shipping</strong> to Norway on orders over €99</div>
+          <div id="NG">Shipping to the Nigeria for only €10!</div>
+          <div id="FI"><strong>Free shipping</strong> to Finland on orders over €99</div>
+		</div>
+	  </li>
+	  <li class="slide">Return your item within 30 days and get a full refund</li>
+    </ul>
+  </div>
+</section>
+<!-- /#slideshow.row -->
+<script>
+$(function() {
+	var slider, // Global slider value to force playing and pausing by direct access of the slider control
+		canSlide = true; // Global switch to monitor video state
+	// Setup the slider control
+	slider = $(".flexslider")
+		.flexslider({
+	    	animation: "slide",
+			easing: "swing",
+			slideshowSpeed: {{ settings.slideshow_speed }},
+			animationSpeed: 900,
+			pauseOnHover: false,
+			pauseOnAction: true,
+			touch: true,
+			video: true,
+			controlNav: true,
+			directionNav: true,
+			keyboardNav: true,
+			{% if settings.slideshow_transition == "slide" %}
+			animationLoop: false,
+			{% endif %}
+			slideshow: true,
+			useCSS: false,
+	    	// Before you go to change slides, make sure you can!
+	    	before: function(){			    		
+	    		if(!canSlide)
+	    			slider.flexslider("stop");
+	    	}
+		});
+	jQuery('.flexslider li img').click(function(){
+      var url = jQuery(this).attr('data-url');
+      if (url.length > 0) {window.location.href = url;}
+    });
+});
+</script>

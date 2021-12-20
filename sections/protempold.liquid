@@ -1,0 +1,919 @@
+{% comment %}
+{%- include 'fullPage' -%}
+{{ 'https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js' | script_tag }}
+{{ 'fullpage.js' | asset_url | script_tag }}
+{% endcomment %}
+{%- include 'TouchSwipe' -%}
+<script>
+  $(document).ready(function () {
+    $(document).on("scroll", onScroll);
+    $('.product-desktop-dots a[href^="#"]').on('click', function (e) {
+      e.preventDefault();
+      $(document).off("scroll");
+
+      $('.product-desktop-dots li').each(function () {
+        $(this).removeClass('active');
+      })
+      $(this).addClass('active');
+
+      var target = this.hash,
+          menu = target;
+      $target = $(target);
+      $('html, body').stop().animate({
+        'scrollTop': $target.offset().top+2
+      }, 500, 'swing', function () {
+        window.location.hash = target;
+        $(document).on("scroll", onScroll);
+      });
+    });
+  });
+  
+  $(document.body).on('touchmove', onScroll1); // for mobile
+  $(window).on('scroll', onScroll1); 
+  
+  function onScroll1(event){
+    var scrollPos = $(document).scrollTop();
+    $('.product-desktop-dots li a').each(function () {
+        var currLink = $(this);
+        var refElement = $(currLink.attr("href"));
+        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+            $('.product-desktop-dots li a').removeClass("active");
+            currLink.addClass("active");
+        }
+        else{
+            currLink.removeClass("active");
+        }
+    });
+}
+  
+  $(document.body).on('touchmove', onScroll); // for mobile
+  $(window).on('scroll', onScroll); 
+
+  // callback
+  function onScroll(){ 
+    var window_h = window.innerHeight + $(window).scrollTop();
+    var prod_img_h = $('#product_photo_thumbs').innerHeight() + 47;
+    if($('body').hasClass('swipe-desc-top')){
+    if(window_h >= prod_img_h){
+      $('.template-product .product-shop.mobile-prod-detail').css({'top':'42px'});
+      $('body').addClass('swipe-desc-top');
+      $('body').removeClass('scrroll');
+    }
+    }else{
+      if(window_h >= prod_img_h){
+      /* indigo mobile bottom popup */
+      $('.template-product .product-shop.mobile-prod-detail').css({'top':'42px', 'height':'100%', 'position':'fixed', 'bottom':'auto', 'overflow':'visible'});
+        /* indigo mobile bottom popup */
+      $('body').addClass('swipe-desc-top');
+      $('body').removeClass('scrroll');
+    }else{
+      /* indigo mobile bottom popup */
+      $('.template-product .product-shop.mobile-prod-detail').css({'height':'150px', 'position':'sticky', 'bottom':'-30px', 'overflow':'visible'});
+      /* indigo mobile bottom popup */
+        $('body').removeClass('swipe-desc-top');
+      $('body').addClass('scrroll');
+    }
+    }
+  }
+  
+  $(document).ready(function(){
+    $(function() {
+      $(document).on('click', '.product-desc-close-wc', function(){
+        $(".mobile-full-height").animate({scrollTop: 0}, 100);
+        /* indigo mobile bottom popup */
+        $('.template-product .product-shop.mobile-prod-detail').css({'top':'0', 'height':'150px', 'position':'sticky', 'bottom':'-30px', 'overflow':'visible'});
+        /* indigo mobile bottom popup */
+        $('body').removeClass('swipe-desc-top');
+        $(window).scrollTop(0);
+      });   
+      $(".template-product .product-shop.mobile-prod-detail").swipe({
+        swipeStatus:function(event, phase, direction, distance, duration, fingers)
+        {
+          if (phase=="move" && direction =="up") {
+            $('.template-product .product-shop.mobile-prod-detail').css({'top':'42px'});
+            $('body').addClass('swipe-desc-top');     
+            $('body').removeClass('scrroll');
+            return false;          
+          }
+          if($('.mobile-full-height').hasClass('wc_inactive')){
+            if (direction =="down") {
+              $('.template-product .product-shop.mobile-prod-detail').css({'top':'calc(100% - 132px - 0px - 0px + 7px)'});
+              $('body').removeClass('swipe-desc-top');        
+              $(window).scrollTop(0);
+              return false;
+            }
+          }  
+          $('.mobile-full-height').scroll(function(){
+            if($(this).scrollTop() == 0){
+              $('.mobile-full-height').addClass('wc_inactive');
+
+            }else{
+              $('.mobile-full-height').removeClass('wc_inactive');
+            }         
+          });
+        }
+      });     
+    }); 
+    $(document).on('click', '.top-line-wc', function(){
+      $('.template-product .product-shop.mobile-prod-detail').css({'top':'42px'});
+      $(window).scrollTop(0);
+            $('body').addClass('swipe-desc-top');     
+            $('body').removeClass('scrroll');
+    });
+    $(document).on('click', '.selectize-dropdown-content .option .variant-title-wc', function(){
+      var opt_t = $(this).text();
+      console.log(opt_t);
+      $('.selectize-input .item .variant-title-wc').text(opt_t);
+    });
+    
+  });
+</script>
+<div class="row">  
+  <div class="product-back-btn-wc">
+    {%- if collection -%}
+    <a href="{{ collection.url }}">{%- include 'icon-long-arrow' -%}<span>Back</span></a>
+    {%- else -%}
+    <a href="/collections/all">{%- include 'icon-long-arrow' -%}<span>Back</span></a>
+    {%- endif -%}
+  </div>
+  <div class="col-xs-12 prod-main">
+    <div itemscope itemtype="https://schema.org/Product" class="product">
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'master' }}">
+      <div class="row row-block">
+        
+        {% for tag in product.tags %}
+            {% if tag contains 'Organic-cotton' %}
+              <div class="product-comingsoon-label">Organic Cotton</div>
+            {% comment %}{%elsif tag contains 'LOWSTOCK' %}
+              <div class="product-comingsoon-label">Low in Stock</div>{% endcomment %}
+            {%elsif tag contains 'Fatboy' %}
+        {% if product.available %}
+        
+            {% else %}
+              <div class="product-comingsoon-label">Sold Out</div>{%endif%}{%endif%}
+          {%endfor%}
+        <div class="col-xs-12 col-sm-5 product-img-box {% if settings.product_image_border%} grid-item-border {% endif %}">
+           {% if product.images.size > 0 %}
+          <ul class="product-desktop-dots">
+            {% if product.images.size == 0 %}
+            <li data-id="sectionwc1"><a href="#sectionwc1" class="active"></a></li>
+            {% else %}
+            {% if product.images.size > 0 %}
+            {% if collection.handle contains 'women' or product.type contains 'Women' %}
+            {% for image in product.images %}
+            {% unless image.alt contains "Men" or image.alt contains "New" or image.alt contains "Google" or image.alt contains "Packshot" or image.alt contains "Long-"%}
+            <li data-id="section{{ forloop.index }}"><a href="#section{{ forloop.index }}"></a></li>
+            {% endunless %}
+            {% endfor %}            
+            {% elsif product.type contains 'Women' %}          
+            {% for image in product.images %}
+            {% unless image.alt contains "Men" or image.alt contains "New" or image.alt contains "Google" or image.alt contains "Packshot" or image.alt contains "Long-"%}
+            <li data-id="section{{ forloop.index }}"><a href="#section{{ forloop.index }}"></a></li>
+            {% endunless %}
+            {% endfor %}
+            {% else %}            
+            {% for image in product.images %}
+            {% unless image.alt contains "Women" or image.alt contains "New" or image.alt contains "Google" or image.alt contains "Packshot" or image.alt contains "Long-"%}
+            <li data-id="section{{ forloop.index }}"><a href="#section{{ forloop.index }}"></a></li>
+            {% endunless %}
+            {% endfor %}
+            {% endif %}
+            {% endif %}                
+            {% endif %}                 
+          </ul>
+          {%- endif -%}
+          {% if product.images.size > 0 %}
+          <div class="product-main-mobile-list-wc">            
+            <ul id="product_photo_thumbs" class="product-photo-thumbs{% if settings.style_moreview == 'vertical' %} jcarousel-skin-tango{% endif %} {% if product.images.size == 1 %}single-product-image-extras{% endif %}">
+              {% if product.images.size == 0 %}
+              <li class="product-photo-container" id="sectionwc1">
+                <img src="{{ '' | product_img_url: 'master' }}" alt="">
+              </li>
+              {% else %}
+              <li class="product-photo-container" id="sectionwc2">
+                {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+                <a href="{{ featured_image | img_url: 'master' }}" rel="gallery1" class="popup-img-wc">
+                  <img id="product-featured-image" src="{{ featured_image | img_url: 'master' }}" alt="{{ featured_image.alt | escape }}" data-zoom-image="{{ featured_image.src | img_url: 'master' }}"/>
+                </a>
+              </li>
+              {% if product.images.size > 0 %}
+              {% if collection.handle contains 'women' or product.type contains 'Women' %}
+              {% for image in product.images %}
+              {% unless image.alt contains "Men" or image.alt contains "New" or image.alt contains "Google" or image.alt contains "Packshot" or image.alt contains "Long-"%}
+              <li class="grid-item" id="section{{ forloop.index }}">
+                <a href="{{ image.src | product_img_url: 'master' }}" data-image="{{ image.src | product_img_url: 'master' }}" rel="gallery1" class="popup-img-wc">
+                  <img src="{{ image.src | product_img_url: 'master' }}" alt="{{ image.alt | escape }}"  data-zoom-image="{{ image.src | product_img_url: 'master' }}" class="zoom-img-{{ forloop.index }}">
+                </a>
+              </li>
+              {% endunless %}
+              {% endfor %}            
+              {% elsif product.type contains 'Women' %}          
+              {% for image in product.images %}
+              {% unless image.alt contains "Men" or image.alt contains "New" or image.alt contains "Google" or image.alt contains "Packshot" or image.alt contains "Long-"%}
+              <li class="grid-item" id="section{{ forloop.index }}">
+                <a href="{{ image.src | product_img_url: 'master' }}" data-image="{{ image.src | product_img_url: 'master' }}" rel="gallery1" class="popup-img-wc">
+                  <img class="lazy" src="{{ image.src | product_img_url: 'master' }}" alt="{{ image.alt | escape }}" data-zoom-image="{{ image.src | product_img_url: 'master' }}" class="zoom-img-{{ forloop.index }}">
+                </a>
+              </li>
+              {% endunless %}
+              {% endfor %}
+              {% else %}            
+              {% for image in product.images %}
+              {% unless image.alt contains "Women" or image.alt contains "New" or image.alt contains "Google" or image.alt contains "Packshot" or image.alt contains "Long-"%}
+              <li class="grid-item" id="section{{ forloop.index }}">
+                <a href="{{ image.src | product_img_url: 'master' }}" data-image="{{ image.src | product_img_url: 'master' }}" rel="gallery1" class="popup-img-wc">
+                  <img src="{{ image.src | product_img_url: 'master' }}" alt="{{ image.alt | escape }}" data-zoom-image="{{ image.src | product_img_url: 'master' }}" class="zoom-img-{{ forloop.index }}">
+                </a>
+              </li>
+              {% endunless %}
+              {% endfor %}
+              {% endif %}
+              {% endif %}
+              {% endif %}             
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-xs-12 col-sm-7 product-shop desktop-prod-detail">    
+          <div class="prod-detail-part-wc">
+          <div class="product-title {% if collection.previous_product or collection.next_product and settings.display_prev_next_product and collection %}has-btn{% endif %}">
+            <h2 itemprop="name">
+              <span>{{ product.title | split: '|' | first }}</span>   
+            </h2>
+            <div class="prices">
+              {% if product.compare_at_price > product.price %}
+              <span class="compare-price">{{ product.compare_at_price_max | money }}</span>
+              <span class="price on-sale" itemprop="price">{{ product.price | money }}</span>
+              {% else %}
+              <span class="price" itemprop="price">{{ product.price | money }}</span>
+              {% endif %}
+            </div>          
+          </div>
+          {% if settings.display_product_reviews %}       
+          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+          {% endif %}
+          <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+            <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+            {% if product.description contains '[countdown]' %}
+            {% assign des = product.description | split:'[/countdown]' | last %}
+            {% if settings.show_desc == 'short' %}
+            <div class="short-description">{{ product.description | split: '[lang2]' | first }}</div>
+            {% elsif settings.show_desc == 'full' %}
+            <div class="short-description">{{ product.description | split: '[lang2]' | first }}{{ product.description | split: '[lang2]' | last }}</div>   
+            {% endif %}
+            {% else %}
+            {% if settings.show_desc == 'short' %}
+            <div class="short-description">{{ product.description | split: '[lang2]' | first }}</div>              
+            {% elsif settings.show_desc == 'full' %}
+            <div class="short-description">{{ product.description | split: '[lang2]' | first }}{{ product.description | split: '[lang2]' | last }}</div>
+            {% endif %}
+            {% endif %}
+
+            {% assign has_sold_out_variants = false %}
+            {% for variant in product.variants %}
+            {% if variant.available == false %}
+            {% assign has_sold_out_variants = true %}
+            {% endif %}
+            {% endfor %}
+            <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form" class="main-product-form">         
+
+              {% assign has_sold_out_variants = false %}
+              {% for variant in product.variants %}
+              {% if variant.available == false %}
+              {% assign has_sold_out_variants = true %}
+              {% endif %}
+              {% endfor %}
+              <div class="soldout-list hide"></div>
+              {%- for tag in product.tags -%}
+              {%- if tag contains 'size up' or tag contains 'size-up' or tag contains 'Size Up' or tag contains 'Size up' or tag contains 'size Up' or tag contains 'sizeup' -%}
+              <p class="notify-me-wc {% unless product.available %}hide{% endunless %}"><span>{%- include 'icon-help' -%}</span> This product has a smaller fit. We recommend to size up.</p>
+              {%- endif -%}
+              {%- if tag contains 'size down' or tag contains 'size-down' or tag contains 'Size Down' or tag contains 'Size down' or tag contains 'size Down' or tag contains 'sizedown' -%}
+              <p class="notify-me-wc {% unless product.available %}hide{% endunless %}"><span>{%- include 'icon-help' -%}</span> This product has a larger fit. We recommend to size down.</p>
+              {%- endif -%}
+              {%- endfor -%}
+              {% if has_sold_out_variants %}
+              {% if product.tags contains 'Comingsoon' %}
+              {%else%}
+              <p class="notify-me-wc BIS-DP {% unless has_sold_out_variants %}hide{% endunless %}"><span>{%- include 'icon-mail' -%}</span> <a href="#" id="BIS_trigger">Size sold out? Notify me when available.</a></p>
+              {%- endif -%}
+              {%- endif -%} 
+              
+              {%- if section.settings.enabled_size_chart -%}
+              <div class="size-chart-text"><a href="javascript:void(0)" class="size-chart-a">Size Guide</a></div>
+              {%- endif -%}
+              
+              <div id="product-variants">   
+                {%- if product.metafields.product-1.product-1 != blank or product.metafields.product-2.product-2 != blank or product.metafields.product-3.product-3 != blank or product.metafields.product-4.product-4 != blank or product.metafields.product-5.product-5 != blank or product.metafields.product-6.product-6 != blank or product.metafields.product-7.product-7 != blank or product.metafields.product-8.product-8 != blank or product.metafields.product-9.product-9 != blank or product.metafields.product-10.product-10 != blank -%}
+                <div class="selector-wrapper">                
+                  <div class="wc_color_swatch">                                  
+                    <div class="sub-li-color-wc-active">
+                      <a href="javascript:void(0)"><span class="color-span" style="background:{% if product.metafields.swatch_color.swatch_color != blank %}{{product.metafields.swatch_color.swatch_color}}{% else %}url({{product.metafields.swatch_image.swatch_image}}) no-repeat{% endif %};"></span><span class="variant-title-wc">{{product.metafields.product-color-name.product-color-name}}</span></a>
+                    </div>
+                     <div class="dropdown-color-wc"> 
+                    {% for i in (1..10) %}
+                    {% capture groupProduct %}product-{{i}}{% endcapture %}
+                    {% assign temp_product = all_products[product.metafields[groupProduct][groupProduct]] %}
+                    {%- if temp_product != blank -%}                   
+                      {% assign swatchImage = temp_product.metafields.swatch_image.swatch_image %}
+                      {% assign swatchColor = temp_product.metafields.swatch_color.swatch_color %}
+                      {% assign color_name = temp_product.metafields.product-color-name.product-color-name %}
+                      <div class="sub-li-color-wc {% if product.metafields.product-1.product-1 == product.handle %}active{% endif %}">
+                        {% if collection.handle contains 'sale' %}
+                        <a href="{% if collection.handle contains 'women' or product.type contains 'Women' %}/collections/sale-women{% elsif collection.handle contains 'kids' %}/collections/sale-kids{% else %}/collections/sale-men{% endif %}{{ temp_product.url }}"><span class="color-span" style="background:{% if swatchImage != blank %}url({{ swatchImage }}) no-repeat{% else %}{{ swatchColor }}{% endif %};"></span><span class="variant-title-wc">{{ color_name }}</span></a>
+                      	{% else %}
+                        <a href="{% if collection.handle contains 'women' or product.type contains 'Women' %}/collections/women-all{% endif %}{{ temp_product.url }}"><span class="color-span" style="background:{% if swatchImage != blank %}url({{ swatchImage }}) no-repeat{% else %}{{ swatchColor }}{% endif %};"></span><span class="variant-title-wc">{{ color_name }}</span></a>
+                        {% endif %}
+                       </div>   
+                    {%- endif -%}
+                    {% endfor %}  
+                       </div>
+                  </div>
+                </div>
+                {%- endif -%}
+                {% assign variantCount = product.variants | size %}            
+                {% if variantCount > 1 %} 
+                <select id="product-selectors" class="option-select-wc" name="id" style="display:block">
+                  <option selected="selected">Select Your Size</option>
+                  {% for variant in product.variants %}
+                  <option value="{{ variant.id }}" data-id="{{ variant.title }}">{{ variant.title }} - {{ variant.price | money }} - {{ variant.inventory_quantity }}</option>
+                  {% endfor %}
+                </select>  
+                {% else %}
+                <select id="product-selectors" class="option-select-wc" name="id" style="display:none">
+                  <option value="" data-id="Select Your Size" selected="selected">Select Your Size</option>
+                  {% for variant in product.variants %}
+                  <option value="{{ variant.id }}" data-id="{{ variant.title }}">{{ variant.title }} - {{ variant.price | money }} - {{ variant.inventory_quantity }}</option>
+                  {% endfor %}
+                </select>  
+                <!--<style>.selector-wrapper{display:none !important;}</style>-->
+                {% endif %}
+                {% if product.available %} 
+                <input type="submit" name="add" class="btn" id="product-add-to-cart" value="{{ 'products.product.add_to_cart' | t }}">
+                {% else %}
+                <input type="submit" name="add" class="btn" id="product-add-to-cart" disabled value="{{ 'products.product.add_to_cart' | t }}">          
+                {% endif %}
+                {% if settings.use_color_swatch %}
+                {% for option in product.options %}
+                {% include 'swatch' with option %}
+                {% endfor %}
+                {% endif %}
+              </div>
+              
+            </form>  
+          </div>          
+          <ul class="usp-section">
+            <li class="shipping_section">
+            <span class="usp-sec">{%- include 'icon-usp-01' -%}</span> 
+            <div id="country-message">
+            <div id="NL">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="NL">Shipping to the UK only for £10 </div></div></div> 
+            <div id="DE">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="DE">Shipping to the UK only for £10</div></div></div>
+            
+            <div id="BE">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="BE">Shipping to the UK only for £10</div></div></div>
+            
+            <div id="GB">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="GB">Shipping to the UK only for £10</div></div></div>
+            <div id="FR">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="FR">Shipping to the UK only for £10 </div></div></div>
+            <div id="US">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="US">Shipping to the UK only for £10</div></div></div>
+			<div id="CH">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="CH">Shipping to the UK only for £10 </div></div></div>
+            <div id="AT">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="AT">Shipping to the UK only for £10</div></div></div>
+            <div id="DK">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="DK">Shipping to the UK only for £10</div></div></div>
+            <div id="CA">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="CA">Shipping to the UK only for £10</div></div></div>
+            <div id="IT">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="IT">Shipping to the UK only for £10</div></div></div>
+            <div id="SE">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="SE">Shipping to the UK only for £10</div></div></div>
+            <div id="ES">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="ES">Shipping to the UK only for £10</div></div></div>
+			<div id="AU">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="AU">Shipping to the UK only for £10</div></div></div>
+            <div id="AE">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="AE">Shipping to the UK only for £10</div></div></div>
+            <div id="IE">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span>  <div class="IE">Shipping to the UK only for £10</div></div></div>
+            <div id="NO">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="NO">Shipping to the UK only for £10</div></div></div>
+            <div id="NG">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="NG">Shipping to the UK only for £10</div></div></div>
+            <div id="FI">Shipped within 3 - 12 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="FI">Shipping to the UK only for £10</div></div></div>  
+              <div id="IN"> be shipped the same day (on working days) <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="IN">Free shipping to Finland on orders over €99</div></div></div>
+            </div>
+            </li>
+            <li><span>{%- include 'icon-usp-03' -%}</span> Secure payment with iDeal, Paypal, Bancontact, Visa/Mastercard & Sofort</li>
+            {%- if product.metafields.description-04.description-04 != blank -%}
+            <li><span>{%- include 'icon-usp-04' -%}</span> {{product.metafields.description-04.description-04}}</li>
+            {%- endif -%}
+          </ul>
+          <!-- AJAX CART MESSAGE -->
+          <div class="accordion-wrap" id="accordion">
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Shipping</h4></a>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    {%- if product.metafields.tab-desc-01.tab-desc-01 != blank -%}
+                    <div>{{product.metafields.tab-desc-01.tab-desc-01}}</div>
+                    {% else %}
+                    {{ settings.custom_tab_content }}
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Returns</h4></a>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    {%- if product.metafields.tab-desc-02.tab-desc-02 != blank -%}
+                    <div>{{product.metafields.tab-desc-02.tab-desc-02}}</div>
+                    {% else %}
+                 
+                    {{ settings.custom_tab_content_returns }}
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse8"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Sizing</h4></a>
+                </div>
+                <div id="collapse8" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    {%- if product.metafields.tab-desc-03.tab-desc-03 != blank -%}
+                    {{product.metafields.tab-desc-03.tab-desc-03}}
+                    {%- else -%}
+                    {% include 'sizechart' %}
+                    {%- endif -%}
+                    <div id="KiwiSizingChart"
+                         data-collections="{{ product.collections | map: 'id' | join: ','}}"
+                         data-tags="{{ product.tags | join: ',' | escape}}"
+                         data-product="{{product.id}}"
+                         data-vendor="{{product.vendor | escape}}"
+                         data-product-name="{{product.title}}"
+                         data-product-images="{{product.images | json| escape}}"
+                         data-type="{{product.type | escape}}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <a href="/pages/faq" target="_blank"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Need Help?</h4></a>
+                </div>
+                {% comment %}<div id="collapse7" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    {%- if product.metafields.tab-desc-04.tab-desc-04 != blank -%}
+                    <div>{{product.metafields.tab-desc-04.tab-desc-04}}</div>
+                    {%- endif -%}
+                  </div>
+                </div>{% endcomment %}
+              </div>
+            </div>
+          </div>
+          <!-- END MOBILE ROW -->
+          <script>
+            $( "#add-to-cart-form" ).one("click", function() {     
+              if($('.toggle-sizedown:visible').length)
+                $('.toggle-sizedown').hide();
+              else
+                $('.toggle-sizedown').show();        
+            });
+          </script>
+          <script>
+            jQuery('#myTab a').click(function (e) {
+              e.preventDefault();
+              jQuery(this).tab('show');
+            })
+          </script>  
+          </div>
+        </div>
+      </div>
+      <div class="product-desc-close-wc">
+        <a href="javascript:void(0)">{%- include 'icon-close' -%}</a>
+      </div>
+      <div class="col-xs-12 product-shop mobile-prod-detail"> 
+        <div class="top-line-wc"></div>
+        <div class="mobile-full-height">
+          <div class="mobile-prod-grid-part">
+            <div class="product-title {% if collection.previous_product or collection.next_product and settings.display_prev_next_product and collection %}has-btn{% endif %}">
+              <h2 itemprop="name">
+                <span>{{ product.title | split: '|' | first }}</span>   
+              </h2>
+              <div class="prices">
+                {% if product.compare_at_price > product.price %}
+                <span class="compare-price">{{ product.compare_at_price_max | money }}</span>
+                <span class="price on-sale" itemprop="price">{{ product.price | money }}</span>
+                {% else %}
+                <span class="price" itemprop="price">{{ product.price | money }}</span>
+                {% endif %}
+              </div>          
+            </div>
+            {% if settings.display_product_reviews %}       
+            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+            {% endif %}
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+              <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+              <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">   
+              {% assign has_sold_out_variants = false %}
+              {% for variant in product.variants %}
+              {% if variant.available == false %}
+              {% assign has_sold_out_variants = true %}
+              {% endif %}
+              {% endfor %}
+
+              <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form" class="main-product-form">       
+                <div id="product-variants">                  
+                  {%- if product.metafields.product-1.product-1 != blank or product.metafields.product-2.product-2 != blank or product.metafields.product-3.product-3 != blank or product.metafields.product-4.product-4 != blank or product.metafields.product-5.product-5 != blank or product.metafields.product-6.product-6 != blank or product.metafields.product-7.product-7 != blank or product.metafields.product-8.product-8 != blank or product.metafields.product-9.product-9 != blank or product.metafields.product-10.product-10 != blank -%}
+                 {%- assign color_var = true -%}
+                  <div class="selector-wrapper color-select-wrapper">                  
+                  <div class="wc_color_swatch">                                  
+                    <div class="sub-li-color-wc-active">
+                      <a href="javascript:void(0)"><span class="color-span" style="background:{% if product.metafields.swatch_color.swatch_color != blank %}{{product.metafields.swatch_color.swatch_color}}{% else %}url({{product.metafields.swatch_image.swatch_image}}) no-repeat{% endif %};"></span><span class="variant-title-wc">{{product.metafields.product-color-name.product-color-name}}</span></a>
+                    </div>
+                    <div class="dropdown-color-wc"> 
+                    {% for i in (1..10) %}
+                    {% capture groupProduct %}product-{{i}}{% endcapture %}
+                    {% assign temp_product = all_products[product.metafields[groupProduct][groupProduct]] %}
+                    {%- if temp_product != blank -%}                    
+                      {% assign swatchImage = temp_product.metafields.swatch_image.swatch_image %}
+                      {% assign swatchColor = temp_product.metafields.swatch_color.swatch_color %}
+                      {% assign color_name = temp_product.metafields.product-color-name.product-color-name %}
+                      <div class="sub-li-color-wc {% if product.metafields.product-1.product-1 == product.handle %}active{% endif %}">
+                        {% if collection.handle contains 'sale' %}
+                        <a href="{% if collection.handle contains 'women' or product.type contains 'Women' %}/collections/sale-women{% elsif collection.handle contains 'kids' %}/collections/sale-kids{% else %}/collections/sale-men{% endif %}{{ temp_product.url }}"><span class="color-span" style="background:{% if swatchImage != blank %}url({{ swatchImage }}) no-repeat{% else %}{{ swatchColor }}{% endif %};"></span><span class="variant-title-wc">{{ color_name }}</span></a>
+                      	{% else %}
+                        <a href="{% if collection.handle contains 'women' or product.type contains 'Women' %}/collections/women-all{% endif %}{{ temp_product.url }}"><span class="color-span" style="background:{% if swatchImage != blank %}url({{ swatchImage }}) no-repeat{% else %}{{ swatchColor }}{% endif %};"></span><span class="variant-title-wc">{{ color_name }}</span></a>
+                        {% endif %}
+                      </div>   
+                    {%- endif -%}
+                    {% endfor %}  
+                      </div>
+                  </div>
+                </div>
+                {%- endif -%}                 
+                  
+                  {% assign variantCount = product.variants | size %}            
+                  {% if variantCount > 1 %} 
+                  <select id="product-selectors" class="option-select-wc" name="id" style="display:block">
+                    <option value="" data-id="Select Your Size" selected="selected">Select Your Size</option>
+                    {% for variant in product.variants %}
+                    <option value="{{ variant.id }}" data-id="{{ variant.title }}">{{ variant.title }} - {{ variant.price | money }} - {{ variant.quantity }}</option>
+                    {% endfor %}
+                  </select>  
+                  {% else %}
+                  <select id="product-selectors" class="option-select-wc" name="id" style="display:none">                    
+                    <option value="" data-id="Select Your Size" selected="selected">Select Your Size</option>
+                    {% for variant in product.variants %}
+                    <option value="{{ variant.id }}" data-id="{{ variant.title }}">{{ variant.title }} - {{ variant.price | money }} - {{ variant.quantity }}</option>
+                    {% endfor %}
+                  </select>  
+                  <!--<style>.selector-wrapper{display:none !important;}</style>-->
+                  {% endif %}
+                  {% if product.available %} 
+                  <input type="submit" name="add" class="btn {% unless color_var %}big-cart-btn{% endunless %}" id="product-add-to-cart" value="add">
+                  {% else %}
+                  <input type="submit" name="add" class="btn {% unless color_var %}big-cart-btn{% endunless %}" id="product-add-to-cart" disabled value="add">          
+                  {% endif %}
+                  {% if settings.use_color_swatch %}
+                  {% for option in product.options %}
+                  {% include 'swatch' with option %}
+                  {% endfor %}
+                  {% endif %}
+                </div>
+
+                {% assign has_sold_out_variants = false %}
+                {% for variant in product.variants %}
+                {% if variant.available == false %}
+                {% assign has_sold_out_variants = true %}
+                {% endif %}
+                {% endfor %}
+                {%- for tag in product.tags -%}
+                {%- if tag contains 'size up' or tag contains 'size-up' or tag contains 'Size Up' or tag contains 'Size up' or tag contains 'size Up' or tag contains 'sizeup' -%}
+                <p class="notify-me-wc {% unless product.available %}hide{% endunless %}"><span>{%- include 'icon-help' -%}</span> This product has a smaller fit. We recommend to size up.</p>
+                {%- endif -%}
+                {%- if tag contains 'size down' or tag contains 'size-down' or tag contains 'Size Down' or tag contains 'Size down' or tag contains 'size Down' or tag contains 'sizedown' -%}
+                <p class="notify-me-wc {% unless product.available %}hide{% endunless %}"><span>{%- include 'icon-help' -%}</span> This product has a larger fit. We recommend to size down.</p>
+                {%- endif -%}
+                {%- endfor -%}
+                {% if has_sold_out_variants %}
+                {% if product.tags contains 'Comingsoon' %}
+                {%else%}
+                <p class="notify-me-wc BIS-DP {% unless has_sold_out_variants %}hide{% endunless %}"><span>{%- include 'icon-mail' -%}</span> <a href="#" id="BIS_trigger">Size sold out? Notify me when available.</a></p>
+                {%- endif -%}
+                {%- endif -%}               
+                
+              </form> 
+                            {%- if section.settings.enabled_size_chart -%}
+              <div class="size-chart-text"><a href="javascript:void(0)" class="size-chart-a">Size Guide</a></div>
+              {%- endif -%}
+              {% if product.description contains '[countdown]' %}
+              {% assign des = product.description | split:'[/countdown]' | last %}
+              {% if settings.show_desc == 'short' %}
+              <div class="short-description">{{ product.description | split: '[lang2]' | first }}</div>
+              {% elsif settings.show_desc == 'full' %}
+              <div class="short-description">{{ product.description | split: '[lang2]' | first }}{{ product.description | split: '[lang2]' | last }}</div>   
+              {% endif %}
+              {% else %}
+              {% if settings.show_desc == 'short' %}
+              <div class="short-description">{{ product.description | split: '[lang2]' | first }}</div>              
+              {% elsif settings.show_desc == 'full' %}
+              <div class="short-description">{{ product.description | split: '[lang2]' | first }}{{ product.description | split: '[lang2]' | last }}</div>
+              {% endif %}
+              {% endif %}
+            </div>
+
+            <!-- AJAX CART MESSAGE -->
+            <div class="accordion-wrap" id="accordion">
+              <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Shipping</h4></a>
+                  </div>
+                  <div id="collapse5" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      {%- if product.metafields.tab-desc-01.tab-desc-01 != blank -%}
+                      <div>{{product.metafields.tab-desc-01.tab-desc-01}}</div>
+                     {% else %}
+                    {{ settings.custom_tab_content }}
+                    {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Returns</h4></a>
+                  </div>
+                  <div id="collapse6" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      {%- if product.metafields.tab-desc-02.tab-desc-02 != blank -%}
+                      <div>{{product.metafields.tab-desc-02.tab-desc-02}}</div>
+                    {% else %}
+                    {{ settings.custom_tab_content_returns }}
+                    {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse8"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Sizing</h4></a>
+                  </div>
+                  <div id="collapse8" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      {%- if product.metafields.tab-desc-03.tab-desc-03 != blank -%}
+                      {{product.metafields.tab-desc-03.tab-desc-03}}
+                      {%- else -%}
+                      {% include 'sizechart' %}
+                      {%- endif -%}
+                      <div id="KiwiSizingChart"
+                           data-collections="{{ product.collections | map: 'id' | join: ','}}"
+                           data-tags="{{ product.tags | join: ',' | escape}}"
+                           data-product="{{product.id}}"
+                           data-vendor="{{product.vendor | escape}}"
+                           data-product-name="{{product.title}}"
+                           data-product-images="{{product.images | json| escape}}"
+                           data-type="{{product.type | escape}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <a href="/pages/faq" target="_blank"><h4 class="panel-title"><span>{%- include 'icon-arrow-long' -%}</span>Need Help?</h4></a>
+                  </div>
+                  {% comment %}<div id="collapse7" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      {%- if product.metafields.tab-desc-04.tab-desc-04 != blank -%}
+                      <div>{{product.metafields.tab-desc-04.tab-desc-04}}</div>
+                      {%- endif -%}
+                    </div>
+                  </div>{% endcomment %}
+                </div>
+              </div>
+            </div>
+            <!-- END MOBILE ROW -->
+            <script>
+              $( "#add-to-cart-form" ).one("click", function() {     
+                if($('.toggle-sizedown:visible').length)
+                  $('.toggle-sizedown').hide();
+                else
+                  $('.toggle-sizedown').show();        
+              });
+            </script>
+            <script>
+              jQuery('#myTab a').click(function (e) {
+                e.preventDefault();
+                jQuery(this).tab('show');
+              })
+            </script>  
+
+            <ul class="usp-section">
+            <li class="shipping_section"><span class="usp-sec">{%- include 'icon-usp-01' -%}</span> 
+            <div id="country-message">
+            <div id="NL">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="NL">Shipping to the UK only for £10 </div></div></div> 
+            <div id="DE">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="DE">Shipping to the UK only for £10</div></div></div>
+            
+            <div id="BE">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="BE">Shipping to the UK only for £10</div></div></div>
+            
+            <div id="GB">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="GB">Shipping to the UK only for £10</div></div></div>
+            <div id="FR">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="FR">Shipping to the UK only for £10 </div></div></div>
+            <div id="US">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="US">Shipping to the UK only for £10</div></div></div>
+			<div id="CH">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="CH">Shipping to the UK only for £10 </div></div></div>
+            <div id="AT">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="AT">Shipping to the UK only for £10</div></div></div>
+            <div id="DK">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="DK">Shipping to the UK only for £10</div></div></div>
+            <div id="CA">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="CA">Shipping to the UK only for £10</div></div></div>
+            <div id="IT">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="IT">Shipping to the UK only for £10</div></div></div>
+            <div id="SE">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="SE">Shipping to the UK only for £10</div></div></div>
+            <div id="ES">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="ES">Shipping to the UK only for £10</div></div></div>
+			<div id="AU">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="AU">Shipping to the UK only for £10</div></div></div>
+            <div id="AE">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="AE">Shipping to the UK only for £10</div></div></div>
+            <div id="IE">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span>  <div class="IE">Shipping to the UK only for £10</div></div></div>
+            <div id="NO">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="NO">Shipping to the UK only for £10</div></div></div>
+            <div id="NG">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="NG">Shipping to the UK only for £10</div></div></div>
+            <div id="FI">Shipped within 3 - 7 working days. <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="FI">Shipping to the UK only for £10</div></div></div>  
+              <div id="IN"> be shipped the same day (on working days) <div class="shipping_one"><span class="usp-sec">{%- include 'icon-usp-02' -%}</span> <div class="IN">Free shipping to Finland on orders over €99</div></div></div>
+            </div>
+            </li>
+            <li><span>{%- include 'icon-usp-03' -%}</span> Secure payment with iDeal, Paypal, Bancontact, Visa/Mastercard & Sofort</li>
+            {%- if product.metafields.description-04.description-04 != blank -%}
+            <li><span>{%- include 'icon-usp-04' -%}</span> {{product.metafields.description-04.description-04}}</li>
+            {%- endif -%}
+          </ul>
+          </div>
+          <div class="col-xs-12 p-0">
+            {% if settings.display_related_products %} 
+            {% if settings.related_products_type == "tags" %}
+            {% include 'related-products-by-tags' %}
+            {% else %}
+            {% include 'related-products' %}
+            {% endif %}
+            {% endif %}
+          </div>
+        </div>        
+      </div>
+       <div class="col-xs-12 p-0 desktop-prod-detail">
+            {% if settings.display_related_products %} 
+            {% if settings.related_products_type == "tags" %}
+            {% include 'related-products-by-tags' %}
+            {% else %}
+            {% include 'related-products' %}
+            {% endif %}
+            {% endif %}
+          </div>
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.enabled_size_chart -%}
+<div class="size-chart-section">
+  <div class="size-chart">
+    <a href="javascript:void(0)" class="close-size-chart"></a>
+    <div class="size-chart-part">
+      <p>{%- if product.metafields.size-desc.size-desc != blank -%}
+        {{product.metafields.size-desc.size-desc}}
+      {%- else -%}
+      The size chart is a guide to help you find the right size for you. As many pieces are designed in a unique way, we suggest you also refer to the specific product lengths and measurements provided in the description.
+        {%- endif -%}</p>
+      <div class="size-chart-wrap">
+        <h2>{%- if product.metafields.size-title-01.size-title-01 != blank -%}
+          {{product.metafields.size-title-01.size-title-01}}
+        {%- else -%}
+          Size Conversion
+        {%- endif -%}</h2>
+        {%- if product.metafields.size-desc-01.size-desc-01 -%}
+        {{product.metafields.size-desc-01.size-desc-01}}
+        {%- else -%}
+        <table style="width: 100%;"><tbody><tr><th style="width: 19%;">SIZE <br></th><th style="width: 13.5%;">XS <br></th><th style="width: 13.5%;">S <br></th><th style="width: 13.5%;">M <br></th><th style="width: 13.5%;">L <br></th><th style="width: 13.5%;">XL <br></th><th style="width: 13.5%;">XXL <br></th></tr><tr><td style="width: 19%;">EU <br></td><td style="width: 13.5%;">42 <br></td><td style="width: 13.5%;">44 - 46 <br></td><td style="width: 13.5%;">48 - 50 <br></td><td style="width: 13.5%;">52 - 54 <br></td><td style="width: 13.5%;">56 <br></td><td style="width: 13.5%;">58 <br></td></tr><tr><td style="width: 19%;">UK &amp; US <br></td><td style="width: 13.5%;">32 <br></td><td style="width: 13.5%;">34 - 36 <br></td><td style="width: 13.5%;">38 - 40 <br></td><td style="width: 13.5%;">42 - 44 <br></td><td style="width: 13.5%;">46 <br></td><td style="width: 13.5%;">48 <br></td></tr><tr><td style="width: 19%;">FR &amp; JP <br></td><td style="width: 13.5%;">34 <br></td><td style="width: 13.5%;">36 - 38 <br></td><td style="width: 13.5%;">40 - 42 <br></td><td style="width: 13.5%;">44 - 46 <br></td><td style="width: 13.5%;">48 <br></td><td style="width: 13.5%;">50 <br></td></tr></tbody></table>
+        {%- endif -%}
+      </div>
+      <div class="size-chart-wrap">
+        <h2>{%- if product.metafields.size-title-02.size-title-02 != blank -%}
+          {{product.metafields.size-title-02.size-title-02}}
+        {%- else -%}
+          Body Measurements
+        {%- endif -%}</h2>
+        <div class="size-chart-tab"><a href="javascript:void(0)" class="active" data="wc-cm">cm</a><a href="javascript:void(0)" data="wc-inches">inches</a></div>
+        <div class="size-table size-chart-cm active" id="wc-cm">
+        {{product.metafields.size-desc-02.size-desc-02}}
+        </div>
+        <div class="size-table size-chart-inches" id="wc-inches">
+        {{product.metafields.size-desc-03.size-desc-03}}      
+        </div>
+      </div>
+      <div class="size-chart-wrap">
+        <h2>{%- if product.metafields.size-title-03.size-title-03 != blank -%}
+          {{product.metafields.size-title-03.size-title-03}}
+        {%- else -%}
+          How to measure
+        {%- endif -%}</h2>
+        {{product.metafields.size-desc-04.size-desc-04}}
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).on('click', '.size-chart-tab a', function(){
+      var data = $(this).attr('data');
+      $('.size-chart-tab a').removeClass('active');
+      $(this).addClass('active');       
+      $('.size-table').removeClass('active');
+      $('.size-table').each(function(){
+      var id = $(this).attr('id');
+        if(data == id){
+          $(this).addClass('active');
+        }
+      });
+    });
+    $(document).on('click', '.close-size-chart', function(){
+      $('body').removeClass('size-chart-body');
+    });
+    $(document).on('click', '.size-chart-text', function(){
+      $('body').addClass('size-chart-body');
+    });
+    
+  </script>
+</div>
+{%- endif -%}
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script src="{{ 'elevate-zoom.js' | asset_url }}"></script>
+{{ 'fancybox.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'fancybox.js' | asset_url }}"></script>
+
+<script>
+  {%- if product.variants.size > 1 -%}
+  {%- else -%}
+  /*$(window).on('load', function(){
+    setTimeout(function(){
+  $('#product-add-to-cart').removeClass('disabled');
+      }, 500);
+  });*/
+  {%- endif -%}
+  {%- comment -%}
+  $(document).ready(function(){
+    if($(window).width() >= 768){
+      $('.product-photo-thumbs li').each(function(){
+        var class_item = $(this).find('img').attr('class');
+     $("."+class_item).elevateZoom({
+      zoomType: "inner",
+      cursor: "crosshair"
+    });
+      });
+    }
+  });
+  {%- endcomment -%}
+  
+  $(document).ready(function() {
+	$(".popup-img-wc").fancybox({
+		openEffect	: 'none',
+		closeEffect	: 'none'
+	});
+});
+  
+  
+  if($(window).width() >= 768){
+    $('.mobile-prod-detail').html('');    
+  }else{
+    $('.desktop-prod-detail').html('');
+  }  
+</script>
+
+<script>
+  $(document).on('click', '.wc_color_swatch', function(){
+    $(this).toggleClass('wc_color_swatch_open');
+  });
+  $('body').click(function(e){
+    var container = $(".wc_color_swatch");
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+      $('.wc_color_swatch').removeClass('wc_color_swatch_open');
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enabled_size_chart",
+        "label": "Show Size Chart",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,30 @@
+<h2 class="featuredblogtitle">Check out our blog to learn more about us:</h2>
+{%- assign featuredBlogs = 'editors-pick,daily-life,icons,inspirtion,friends,retailers,releases' | split:',' -%}
+{%- assign featuredArticles = false -%}
+{%- for featuredBlog in featuredBlogs -%}
+{%- if blogs[featuredBlog].articles -%}
+{%- if featuredArticles -%}
+{%- assign featuredArticles = featuredArticles | concat:blogs[featuredBlog].articles -%}
+{%- else -%}
+{%- assign featuredArticles = blogs[featuredBlog].articles -%}
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if featuredArticles -%}
+{%- assign featuredArticles = featuredArticles | sort:'published_at' | reverse -%}
+{%- for article in featuredArticles limit:3 -%}        
+<li class="featured-blog-articles">
+  {%- if article.title contains 'PUMA x Daily Paper Spring Summer 2017' -%}<a class="article-featured-image" href="/pages/daily-paper-x-puma">
+  {%- elsif article.title contains 'Denham' -%}<a class="article-featured-image" href="/pages/daily-paper-x-denham">
+  {%- elsif article.title contains 'Sandalboyz' -%}<a class="article-featured-image" href="/pages/daily-paper-x-sandalboyz">
+  {%- elsif article.title contains 'GOGO' -%}<a class="article-featured-image" href="/pages/GOGO">
+  {%- elsif article.title contains 'Wanye' -%}<a class="article-featured-image" href="/pages/wanye">
+  {%- elsif article.title contains 'PUMA x Daily Paper Fall/Winter 2017' -%}<a class="article-featured-image" href="/pages/daily-paper-x-puma-fw17">
+  {%- else -%}
+  <a class="article-featured-image" href="{{ article.url }}">
+    {%- endif -%}
+    {{ article | img_url: '1024x1024' | img_tag: article.title }}          		
+    <div class="featured-article-title"><h2 class="servicesidebar">{{ article.title }}</h2>    
+    </div></a></a></a></a></a></a></a></li>
+{%- endfor -%}
+{%- endif -%}

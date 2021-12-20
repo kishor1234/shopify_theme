@@ -1,0 +1,87 @@
+<div class="row">
+  {% include 'service-page-sidebar' %}
+  <div class="col-main">  
+
+    {% if settings.enable_multilang %}
+    <div class="rte lang1">{{ page.content | split: '[lang2]' | first }}</div>
+    <div class="rte lang2">{{ page.content | split: '[lang2]' | last }}</div>
+    {% else %}
+    <div class="rte">{{ page.content | split: '[lang2]' | first }}</div>
+    {% endif %}
+
+    {% if section.settings.title != blank or section.settings.text != blank or section.settings.title_1 != blank or section.settings.text_1 != blank %}
+    <div class="right-sidebar">
+      {% if section.settings.title_1 != blank %}
+      <h1 class="service-title">{{ section.settings.title_1 }}</h1>
+      {% endif %}
+
+{% comment %}
+      <div id="NL"><p>Free shipping in the Netherlands on all orders!</p></div> 
+      <div id="DE"><p>Free shipping to Germany on all orders!</p></div>
+      <div id="BE"><p>Free shipping to Belgium on all orders!</p></div>
+      <div id="FR"><p>Free shipping to France on all orders!</p></div>
+      <div id="US"><p>Shipping to the US for only $11!</p></div>
+      <div id="CH"><p>Free shipping to Switzerland on orders over €99</p></div>
+      <div id="AT"><p>Free shipping to Austria on orders over €99</p></div>
+      <div id="DK"><p>Free shipping to Denmark on orders over €99</p></div>
+      <div id="CA"><p>Shipping to Canada for only €10!</p></div>
+      <div id="IT"><p>Free shipping to Italy on orders over €99</p></div>
+      <div id="SE"><p>Free shipping to Sweden on orders over €99</p></div>
+      <div id="ES"><p>Free shipping to Spain on orders over €99</p></div>
+      <div id="AU"><p>Shipping to Australia for only €10!</p></div>
+      <div id="AE"><p>Shipping to the UAE for only €10!</p></div>
+      <div id="IE"><p>Free shipping to Ireland on orders over €99</p></div>
+      <div id="NO"><p>Free shipping to Norway on orders over €99</p></div>
+      <div id="NG"><p>Shipping to the Nigeria for only €10!</p></div>
+      <div id="FI"><p>Free shipping to Finland on orders over €99</p></div>
+{% endcomment %}
+      {{ section.settings.text_1 }}
+
+
+      {% if section.settings.title != blank %}
+      <h1 class="service-title">{{ section.settings.title }}</h1>
+      {% endif %}
+      {% if section.settings.text != blank %}
+      {{ section.settings.text }}
+      {% endif %} 
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Service",
+    "settings": [
+	  {
+		"type": "header",
+		"content": "Customer service"
+	  },
+	  {
+		"type": "text",
+		"id": "title_1",
+		"label": "Title",
+		"default": "Customer Service"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text_1",
+		"label": "text"
+	  },
+	  {
+		"type": "header",
+		"content": "Right sidebar"
+	  },
+	  {
+		"type": "text",
+		"id": "title",
+		"label": "Title",
+		"default": "Get to know us!"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text",
+		"label": "text"
+	  }
+	]
+  }
+{% endschema %}

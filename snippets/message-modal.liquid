@@ -1,0 +1,39 @@
+<div class="loading-modal modal" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.loading"{% endif %}>{{ 'cart.ajax_cart.loading' | t }}...</div>
+<div class="ajax-error-modal modal">
+  <div class="modal-inner">
+    <div class="ajax-error-title" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.error"{% endif %}>{{ 'cart.ajax_cart.error' | t }}</div>
+    <div class="ajax-error-message"></div>
+  </div>
+</div>
+<div class="ajax-success-modal modal">
+    <div class="overlay"></div>
+  <div class="content">
+    	<a href="javascript:void(0)" class="close-modal" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.close"{% endif %}>{{ 'cart.ajax_cart.close' | t }}</a>
+      <p class="success-message" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.success_text"{% endif %}>Added to Cart</p>
+      <div class="ajax-left">
+   		  {% unless image.alt contains "Men" %}            
+            {% assign index = 0 %}
+            {% assign found_image = false %}
+            	{% for image in product.images %}
+            		{% unless found_image %}
+            			{% if image.alt contains "Women" and image.alt contains "Front" %}
+            			{% assign index = forloop.index0 %}
+            			{% assign found_image = true %}
+            			{% endif %}
+            		{% endunless %}
+            	{% endfor %}
+            {% endunless%}
+        {% if collection.handle contains 'women' %}
+         <img src="{{ product.images[index] | product_img_url: 'master' }}" alt="{{ product.images[index].alt | escape }}" style="max-width:75px; max-height:115px"/>
+        {% else %}
+         <img src="{{ product.images[0] | product_img_url: 'master' }}" alt="{{ product.images.alt | escape }}" style="max-width:75px; max-height:115px"/>
+		{% endif %}
+      </div>
+      <div class="ajax-right">
+        <p class="ajax-product-title"></p>
+        <div class="actions">
+          <button class="btn-secondary btn-go-to-cart" onclick="window.location='/cart'" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.go_to_cart"{% endif %}>View Cart</button>
+        </div>
+      </div>
+  </div>    
+</div>

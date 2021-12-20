@@ -1,0 +1,11 @@
+{% include 'breadcrumb' %}
+<header class="page-header">
+  <h2 {% if settings.enable_multilang %}data-translate="collections.general.title"{%endif%}>{{ 'collections.general.title' | t }}</h2>
+</header>
+<div class="list-category row">
+  {% for collection in collections %}
+    {% if collection.handle != 'frontpage' and collection.all_products_count > 0 %}
+      {% include 'collection-grid-item' %}
+    {% endif %}
+  {% endfor %}
+</div>

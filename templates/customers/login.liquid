@@ -1,0 +1,154 @@
+<div class="row">
+  {% include 'account-page-sidebar' %}
+  <div class="col-main"> 
+    <div class="login-page">
+      <div class="note form-success" id="resetSuccess" style="display:none;">
+        We've sent you an email with a link to update your password.
+      </div>
+      {% form 'customer_login' %}
+
+      <h1 class="service-title">Log in to my account</h1>
+      <p>If you have already registered at Daily Paper then sign in here.</p> <p class="login-p">If you have any questions about your order(s) you can login to your account to check your order history which contains all the necessary order information. Also if you like to make some changes in your address(es), you can edit your address(es) here.</p> 
+      {{ form.errors | default_errors }}
+      <label for="customer_email"><span {% if settings.enable_multilang %}data-translate="customer.login.email"{%endif%}>{{ 'customer.login.email' | t }}</span><em>*</em></label>
+      <input type="email" value="" placeholder="Your registered email" name="customer[email]" id="customer_email" {% if form.errors contains "email" %}class="error"{% endif %} >
+
+      {% if form.password_needed %}
+      <label for="customer_password"><span {% if settings.enable_multilang %}data-translate="customer.login.password"{%endif%}>{{ 'customer.login.password' | t }}</span><em>*</em></label>
+      <input type="password" value="" placeholder="Your password" name="customer[password]" id="customer_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+      {% endif %}
+
+      <div class="action-btn">
+        <p><input type="submit" {% if settings.enable_multilang %}data-translate="customer.login.login"{%endif%} class="btn" value="{{ 'customer.login.login' | t }}"></p>
+        <p class="last">
+          <a href="#" onclick="showRecoverPasswordForm();return false;" {% if settings.enable_multilang %}data-translate="customer.login.forgot_password"{%endif%}>{{ 'customer.login.forgot_password' | t }}</a>
+        </p>
+      </div>
+      {% endform %}
+
+      <div id="recover_password" style="display: none;">
+        <h1 class="service-title">{% if settings.enable_multilang %}data-translate="customer.recover_password.title"{%endif%}{{ 'customer.recover_password.title' | t }}</h1>
+
+        <p class="login-p">{% if settings.enable_multilang %}data-translate="customer.recover_password.subtext"{%endif%}{{ 'customer.recover_password.subtext' | t }}</p>
+
+        {% form 'recover_customer_password' %}
+
+        {{ form.errors | default_errors }}
+
+        {% if form.posted_successfully? %}
+        {% assign resetPassword = true %}
+        {% endif %}
+
+        <label for="recover-email" {% if settings.enable_multilang %}data-translate="customer.recover_password.email"{%endif%}>{{ 'customer.recover_password.email' | t }}</label>
+        <input type="email" value="" name="email" id="recover-email" {% if settings.enable_multilang %}data-translate="customer.recover_password.email" translate-item="placeholder" {%endif%} placeholder="{{ 'customer.recover_password.email' | t }}" >
+
+        <div class="action-btn">
+          <p><input type="submit" class="btn" {% if settings.enable_multilang %}data-translate="customer.recover_password.submit"{%endif%} value="{{ 'customer.recover_password.submit' | t }}"></p>
+          <span {% if settings.enable_multilang %}data-translate="cart.label.or"{%endif%} >{{ 'cart.label.or' | t }}</span> <a href="#" onclick="hideRecoverPasswordForm();return false;" {% if settings.enable_multilang %}data-translate="customer.recover_password.cancel"{%endif%}>{{ 'customer.recover_password.cancel' | t }}</a>
+        </div>
+        {% endform %}
+
+        {% if shop.checkout.guest_login %}
+        <hr>
+        <h2 {% if settings.enable_multilang %}data-translate="customer.login.guest_title"{%endif%}>{{ 'customer.login.guest_title' | t }}</h2>
+        {% form 'guest_login' %}
+        <input type="submit" {% if settings.enable_multilang %}data-translate="customer.login.guest_continue"{%endif%} class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+        {% endform %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="create-an-account">
+      <h1 class="service-title">Create a free account</h1>
+      <p>If you're new to our webstore, you can register for a free Daily Paper account here.<p>
+      <ul>
+        <li>Save multiple addresses</li>
+        <li>Manage your order history</li>
+        <li>Save Payment details for faster shopping</li>
+      </ul>
+
+      {% form 'create_customer' %}
+      {% include 'form-errors-custom' %}
+      <div id="title">
+        <label for="title"><span>Title</span><em>*</em></label>
+        <select id="title" name="customer[note][Demographic]" required class="form-control--1">
+          <option disabled selected value="">Select your title</option>
+          <option value="Male">Mr</option>
+          <option value="Female">Ms</option>
+        </select>
+      </div>
+
+      <div class="container">
+        <div class="row-names">
+          <div id="firstname" class="col-xs-6">
+            <label for="firstname"><span {% if settings.enable_multilang %}data-translate="customer.register.first_name"{%endif%}>{{ 'customer.register.first_name' | t }}</span><em>*</em></label>
+            <input type="text" value="" placeholder="Enter your first name" name="customer[first_name]" id="firstname" {% if form.errors contains "first_name" %}class="error"{% endif %}  >
+          </div>
+
+          <div id="lastname" class="col-xs-6">
+            <label for="lastname"><span {% if settings.enable_multilang %}data-translate="customer.register.last_name"{%endif%}>{{ 'customer.register.last_name' | t }}</span><em>*</em></label>
+            <input type="text" value="" placeholder="Enter your last name" name="customer[last_name]" id="lastname" {% if form.errors contains "last_name" %}class="error"{% endif %}  >
+          </div>
+
+        </div>
+      </div>
+
+      <div id="email">
+        <label for="email"><span {% if settings.enable_multilang %}data-translate="customer.register.email"{%endif%}>{{ 'customer.register.email' | t }}</span><em>*</em></label>
+        <input type="email" value="" placeholder="Enter your email address" name="customer[email]" id="email" {% if form.errors contains "email" %}class="error"{% endif %}  >
+      </div>
+
+      <div id="create_password">
+        <label for="password"><span {% if settings.enable_multilang %}data-translate="customer.register.password"{%endif%}>{{ 'customer.register.password' | t }}</span><em>*</em></label>
+        <input type="password" value="" placeholder="Create a password" name="customer[password]" id="create_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+      </div>
+
+      <div class="dp-email-marketing">
+        <input type="hidden" name="customer[accepts_marketing]"  value="false" />
+        <input type="checkbox" name="customer[accepts_marketing]" unchecked="unchecked" value="true" />
+        I would like to receive news and special promotions by email from Daily Paper.
+      </div>
+
+      <div class="dp-email-marketing">
+ By creating your account, you agree to our <a href="/pages/terms-of-service" class="">Terms of service</a>. For full details on how and why Daily Paper uses your personal data please see our <a href="/pages/privacy-policy" class=""><span>Privacy Policy.</span></a>
+      </div>
+      
+      
+          
+          
+          
+        
+      
+
+      
+      <div class="action-btn">
+        <p><input type="submit" {% if settings.enable_multilang %}data-translate="customer.register.submit"{%endif%} value="{{ 'customer.register.submit' | t }}" class="btn"></p>
+      </div>
+      {% endform %}
+    </div>
+
+  </div>
+</div>
+<script>
+  /*
+    Show/hide the recover password form when requested.
+    I'd suggest using some CSS3 transitions to make this change look cool,
+    but this gets the job done for now.
+  */
+  function showRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'block';
+    document.getElementById('customer_login').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'none';
+    document.getElementById('customer_login').style.display = 'block';
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+    document.getElementById('resetSuccess').style.display = 'block';
+  {% endif %}
+</script>

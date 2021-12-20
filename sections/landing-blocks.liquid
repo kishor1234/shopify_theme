@@ -1,0 +1,504 @@
+{% if section.settings.video_yv == 'bannerimg' %}
+  {% if section.settings.banner-image != blank %}
+    <section class="banner-images">
+      <div class="banner-image-content" style="background-image: url('{{ section.settings.banner-image | img_url: 'master' }}');">
+        {% if section.settings.logo-image != blank %}
+          <div class="banner-content-area wc-content-position">
+            <img src="{{ section.settings.logo-image | img_url: 'master' }}" class="img-fluid" alt="{{ section.settings.logo-image.alt }}">
+          </div>
+        {% endif %}
+        {% if section.settings.text-content != blank  %}
+          {% if section.settings.arrow_down != blank %}
+            <div class="wc-arrow-down wc-content-position">
+              {% comment %}<img src="{{ section.settings.arrow_down | img_url: 'master' }}" class="img-fluid arrow--down" alt="{{ section.settings.arrow_down.alt }}">{% endcomment %}
+              <span class="arrow--down">{{ section.settings.arrow_down }}</span>
+            </div>
+          {% endif %}
+          <div class="wc-arrow-content wc-content-position">
+            <div class="content-area">{{ section.settings.text-content }}</div>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+{% else %}
+  <div class="video-wrapper{% if section.settings.video_yv == 'youtube-vimeo' %} youtube-vimeo{% endif %}">
+    {% if section.settings.video_yv == 'youtube-vimeo' %}
+      <div class="section-hura-video">
+        {% if section.settings.video_url == blank %}
+          <iframe src="//www.youtube.com/embed/_9VUPq3SxOc" width="100%" height="1050" frameborder="0" allowfullscreen class="video-loop-sections youtube-video"></iframe>
+        {% else %}
+          {% if section.settings.video_url.type == 'youtube' %}
+            <iframe src="//www.youtube.com/embed/{{ section.settings.video_url.id }}" allow="autoplay" width="100%" height="1050" frameborder="0" allowfullscreen class="video-loop-sections youtube-video" ></iframe>
+          {% endif %}
+          {% if section.settings.video_url.type == 'vimeo' %}
+            <iframe src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=0&loop=1" width="100%" height="1050" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="video-loop-sections"></iframe>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% else %}
+      {% if section.settings.videofile %}
+        <div class="section-hura-video">
+          <video loop playsinline width="100%" height="1050" controls="controls" autoplay="autoplay" class="video-loop-sections">
+            <source src="{{ section.settings.videofile }}" type="video/mp4" id="{{ section.id }}">
+          </video>
+        </div>
+      {% endif %}
+    {% endif %}
+    
+    {% if section.settings.text-content != blank  %}
+      {% if section.settings.arrow_down != blank %}
+        <div class="wc-arrow-down wc-content-position">
+          <span class="arrow--down">{{ section.settings.arrow_down }}</span>
+        </div>
+      {% endif %}
+      <div class="wc-arrow-content wc-content-position">
+        <div class="content-area">{{ section.settings.text-content }}</div>
+      </div>
+    {% endif %}
+    
+  </div>
+{% endif %}
+
+<section class="block-content-area">
+  <div class="block-position">
+    <div class="blocks-container">
+      {% for block in section.blocks %}
+        {% if block.type == 'spotlight' %}
+          <div class="block-sections__area">
+            <div class="spotlight-content__area">
+              {% if block.settings.section-title %}
+                <h1 class="section-title__spotlight">{{ block.settings.section-title }}</h1>
+              {% endif %}
+              <div class="block-contents">
+                {% capture image %}
+                  {% if block.settings.block-image %}
+                    <div class="figure-image"><figure class="wc-m0"><img src="{{ block.settings.block-image | img_url: 'master' }}" class="img-fluid w-100"></figure></div>
+                  {% endif %}
+                  <div class="row wc-m0 bottom-quote mediam-small-show">
+                    {% if block.settings.btn-text != blank %}<div class="col-md-6 col-12 text-right"><div class="button-content"><a href="{{ block.settings.btn-link }}" class="button-style">{{ block.settings.btn-text }}</a></div></div>{% endif %}
+                    {% if block.settings.subtitle != blank %}<div class="col-md-6 col-12"><div class="sub-title">{{ block.settings.subtitle }}</div></div>{% endif %}
+                  </div>
+                {% endcapture %}
+
+                <div class="row block-flex">
+                  {% if block.settings.image-position == 'left' %}
+                    <div class="col-md-6 col-12">
+                      {{ image }}
+                    </div>
+                  {% endif %}
+
+                  <div class="col-md-6 col-12">
+                    <div class="max-content__width">
+                      {% if block.settings.quote-content %}
+                        <div class="content-quote">{{ block.settings.quote-content }}</div>
+                        <div class="row wc-m0 bottom-quote mediam-small-hide">
+                          {% if block.settings.subtitle != blank %}<div class="col-md-6 col-12"><div class="sub-title">{{ block.settings.subtitle }}</div></div>{% endif %}
+                          {% if block.settings.btn-text != blank %}<div class="col-md-6 col-12 text-right"><div class="button-content"><a href="{{ block.settings.btn-link }}" class="button-style">{{ block.settings.btn-text }}</a></div></div>{% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  {% if block.settings.image-position == 'right' %}
+                    <div class="col-md-6 col-12">
+                      {{ image }}
+                    </div>
+                  {% endif %}
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      
+      	{% if block.type == 'blog-categories' %}
+      	  <div class="blog-categories-area">
+            
+            <div class="blog-container">
+              <div class="blog-title-area row">
+                
+                {%- assign articles = blogs[block.settings.blog_articles] -%}
+                {% if articles %}
+                  <div class="col-md-6 col-10 blog-space">
+                    <h3 class="categories-title">{{ articles.title }}</h3></div>
+                  <div class="col-md-6 col-2 text-right blog-space">
+                    <a href="{{ articles.url }}" class="categories-link">more <span class="mediam-small-hide">{{ articles.title }}</span></a></div>
+                {% endif %}
+                
+              </div>
+            </div>
+            
+            <div class="row blog-cat__sections">
+              {% for article in articles.articles limit: 3 %}
+                <div class="col-md-4 blog-space">
+                  
+                  <div class="article">
+                    {% if article.image %}
+                      <div class="blog-img">
+                        <a href="{{ article.url }}" class="d-inline-block w-100">
+                          <img src="{{ article | img_url: '1024x1024' }}" alt="" class="img-fluid w-100">
+                        </a>
+                      </div>
+                    {% endif %}
+                    <div class="blog-details">
+                      <div class="art-contains">
+                        <a href="{{ article.url }}" class="blog-title">{{ article.title }}</a>
+                        <div class="blog-content">{{ article.content | strip_html | truncatewords: '17' }}</div>
+                      </div>
+                    </div>
+                    <a href="{{ articles.url }}" class="art-type">{{ articles.title }} <span>({{ article.published_at | time_tag: format: 'date' }})</span></a>
+                  </div>
+                  
+                </div>
+              {% endfor %}
+            </div>
+            
+          </div>
+        {% endif %}
+      
+        {% if block.type == 'blog-article' %}
+      	  <div class="blog-article-area">
+            <div class="blog-container">
+              <div class="blog-title-area row">
+
+                {% if block.settings.blog_title %}
+                  <div class="col-md-12 blog-article-space">
+                    <h3 class="categories-title">{{ block.settings.blog_title }}</h3>
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
+
+            <!-- start articles by latest date from all blogs by ashwini -->
+            {%- assign main_menu_handle = block.settings.link_menu -%}
+            {%- assign main_menu = linklists[main_menu_handle] -%}
+            {% capture blog_handles %}
+  			{% for link in main_menu.links%}
+    		{{link.title | handleize}}
+  			{% endfor %}
+			{% endcapture %}
+			{% assign blog_list = blog_handles | split: ' ' %}
+            {% assign featuredArticles = false %}
+            {% for featuredBlog in blog_list %}
+			{% if blogs[featuredBlog].articles %}
+			{% if featuredArticles %}
+			{% assign featuredArticles = featuredArticles | concat:blogs[featuredBlog].articles %}
+			{% else %}
+			{% assign featuredArticles = blogs[featuredBlog].articles %}
+			{% endif %}
+			{% endif %}
+			{% endfor %}
+            {% comment %} 
+            {% assign article_list = '' %}
+           {% for blog_handle in blog_list %}
+  			{% for article in blogs[blog_handle].articles limit: 1 %}
+    		{% capture article_list %}{{ article_list }}%%%{{ blog_handle }}@%{{ article.published_at }}{% endcapture %}
+  			{% endfor %}
+			{% endfor %}
+            {% assign article_array = article_list | split: '%%%' %}
+
+            {% assign latest_date = '' %}
+            {% assign latest_blog = '' %}
+
+
+            {% for article_set in article_array %}
+              {% unless forloop.first %}
+
+                {% assign article_item = article_set | split: '@%' %}
+
+            {% if article_item[1] > latest_date %}
+              {% assign latest_blog = article_item[0] %}
+              {% assign latest_date = article_item[1] %}
+            {% endif %}
+
+          {% endunless %}
+        {% endfor %}{% endcomment %}
+            <div class="mt-5">
+              <div class="row wc-flex--wrap wc-m0">
+                
+                {% if featuredArticles %}
+			{% assign featuredArticles = featuredArticles | sort:'published_at' | reverse %}
+
+			
+
+			{% for article in featuredArticles limit:10 %}
+                    {% comment %}
+                {% for article in blogs[latest_blog].articles limit: 10 %}
+                {% endfor %}
+                {% endcomment %}
+                      <div class="col-md-4 col-sm-4 col-6 blog-article-space">
+                        <div class="article">
+                          {% if article.image %}
+                            <div class="blog-img">
+                              <a href="{{ article.url }}" class="d-inline-block w-100">
+                                <img src="{{ article | img_url: '1024x1024' }}" alt="" class="img-fluid w-100">
+                              </a>
+                            </div>
+                          {% endif %}
+                          <div class="blog-details">
+                            <div class="art-contains">
+                              <a href="{{ article.url }}" class="blog-title">{{ article.title }}</a>
+                              <div class="blog-content">{{ article.content | strip_html | truncatewords: '17' }}</div>
+                            </div>
+                          </div>
+                          <a href="{{ blog.url }}" class="art-type">{{ blog.title }} <span>({{ article.published_at | time_tag: format: 'date' }})</span></a>
+                        </div>
+                      </div>
+                    {% endfor %}
+                {% endif %}
+
+              
+                
+                <div class="load-more-button">
+                  <a href="#" id="loadMore" class="btn-style-load">Load More</a>
+                </div>
+                
+              </div>
+            </div>
+            <!-- end articles by latest date from all blogs by ashwini -->
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  
+</section>
+
+
+{% schema %}
+  {
+    "name": "Block Home Landing",
+	"class": "blog-home-landing",
+    "settings": [
+	  {
+		"type": "header",
+		"content": "Banner Section"
+	  },
+      {
+        "type": "select",
+        "id": "video_yv",
+        "label": "Video Formate and Image Banner",
+        "options": [
+          {"label": "Youtube or Vimeo", "value": "youtube-vimeo"},
+          {"label": ".mp4", "value": "mp4"},
+		  {"label": "Banner Image", "value": "bannerimg"}
+        ],
+        "default": "bannerimg"
+      },
+	  {
+		"type": "image_picker",
+		"id": "banner-image",
+		"label": "Banner Image"
+	  },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "YouTube or Vimeo video URL",
+        "accept": ["youtube", "vimeo"],
+        "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+      },
+      {
+        "type": "text",
+        "id": "videofile",
+        "label": "Video URL mp4"
+      },
+	  {
+		"type": "color",
+		"id": "bg_color",
+		"label": "Background Color",
+		"default": "#000"
+	  },
+	  {
+		"type": "range",
+		"id": "bg_opacity",
+		"label": "Background Opacity",
+		"min": 0,
+		"max": 10,
+		"step": 1,
+		"default": 4
+	  },
+	  {
+		"type": "header",
+		"content": "Banner Content"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "logo-image",
+		"label": "Image"
+	  },
+	  {
+		"type": "textarea",
+		"id": "arrow_down",
+		"label": "Arrow Down"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text-content",
+		"label": "Content"
+	  }
+	],
+	"blocks": [
+	  {
+		"type": "spotlight",
+		"name": "Spotlight",
+		"settings": [
+		  {
+			"type": "text",
+			"id": "section-title",
+			"label": "Section Title"
+		  },
+		  {
+			"type": "select",
+			"id": "image-position",
+			"label": "Image Position",
+			"options": [
+			  {"label": "Left", "value": "left"},
+			  {"label": "Right", "value": "right"}
+		    ],
+			"default": "right"
+		  },
+		  {
+			"type": "image_picker",
+			"id": "block-image",
+			"label": "Block Images"
+		  },
+	 	  {
+			"type": "textarea",
+			"id": "quote-content",
+			"label": "Quote Text"
+		  },
+	 	  {
+			"type": "text",
+			"id": "subtitle",
+			"label": "SubTitle"
+		  },
+		  {
+			"type": "text",
+			"id": "btn-text",
+			"label": "Button Text"
+		  },
+	 	  {
+			"type": "url",
+			"id": "btn-link",
+			"label": "Button Link"
+		  }
+		]
+	  },
+	  {
+		"type": "blog-categories",
+		"name": "Blog Category",
+		"settings": [
+		  {
+			"type": "blog",
+			"id": "blog_articles",
+			"label": "Blog Articles"
+		  }
+		]
+	  },
+	  {
+		"type": "blog-article",
+		"name": "Blog Article",
+		"settings": [
+		  {
+            "type": "text",
+            "id": "blog_title",
+            "label": "Label",
+            "default": "All Blogs"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Title",
+            "default": "View All"
+          },
+          {
+            "type": "link_list",
+            "id": "link_menu",
+            "label": "Blog Menu"
+          }
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+<style>
+  .blog-home-landing .banner-image-content:before {background-color: {{ section.settings.bg_color }}; opacity: 0.{{ section.settings.bg_opacity }}; }
+</style>
+
+<script>
+  $('.wc-arrow-down').click(function() {
+    $(this).parents('.banner-image-content').find('.content-area').addClass('active');
+  });
+  function MatchHeight() {
+  }
+
+  //Functions that run when all HTML is loaded
+  $(document).ready(function() {
+    MatchHeight(); 
+    
+    $(".wc-arrow-down").click(function() {
+      $('html, body').animate({
+        scrollTop: $(".wc-arrow-content").offset().top
+      }, 1000);
+    });
+    
+  });
+  
+  $(function () {
+    $("div.blog-article-space").slice(0, 4).show();
+    $("#loadMore").on('click', function (e) {
+      e.preventDefault();
+      $("div.blog-article-space:hidden").slice(0, 3).slideDown();
+      if ($("div.blog-article-space:hidden").length == 0) {
+        $("#loadMore").fadeOut('slow');
+      }
+      $('html,body').animate({
+        scrollTop: $(this).offset().top
+      }, 1500);
+    });
+  });
+  
+  if ($(window).width() >= 576) {
+    $(window).scroll(function () {
+      var scroll = $(this).scrollTop();
+      if (scroll >= 270) {
+        $('.blog-home-landing .content-area').addClass('active');
+      } else {
+        $('.blog-home-landing .content-area').removeClass('active');
+      }
+    });
+  } else {
+    $(window).scroll(function () {
+      var scroll = $(this).scrollTop();
+      if (scroll >= 100) {
+        $('.blog-home-landing .content-area').addClass('active');
+      } else {
+        $('.blog-home-landing .content-area').removeClass('active');
+      }
+    });
+  }
+  
+</script>
+<script>
+  jQuery(document).ready(function(){
+    jQuery("a.open-unity-menu.title").click(function(){
+      jQuery("body").addClass("for_about_menu_only");
+    });
+    jQuery(".cross-close-icon").click(function(){
+      jQuery("body").removeClass("for_about_menu_only");
+    });
+  });
+</script>
+<style>
+.for_about_menu_only .sidebar-navigation {
+    width: 100% !important;
+}
+  .for_about_menu_only main.main-content {
+    transform: translate(0) !important;
+}
+</style>

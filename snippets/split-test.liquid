@@ -1,0 +1,18 @@
+{%- if load_tracking %}{% unless tracking_loaded -%}
+<script type="text/javascript">
+  var zst_settings={{shop.metafields.zst.settings}},_paq=_paq||[];{% if template.name == 'product' %}{% for collection in product.collections limit:5 %}{% if forloop.last %}{% assign product_collections = product_collections | append: '|' | append: collection.title | split: '|' %}{% else %}{% assign product_collections = product_collections | append: '|' | append: collection.title %}{% endif %}{% endfor %}{% for product_collection in product_collections %}{% if forloop.length > 1 %}{% if forloop.first %}{% if product_collection != '' %}{% assign product_array = '["' | append: product_collection | append: '",' %}{% else %}{% assign product_array = '[' %}{% endif %}{% elsif forloop.last %}{% assign product_array = product_array | append: '"' | append: product_collection | append: '"]' %}{% else %}{% assign product_array = product_array | append: '"' | append: product_collection | append: '",' %}{% endif %}{% else %}{% assign product_array = '"' | append: product_collection | append: '"' %}{% endif %}{% endfor %}_paq.push(['setEcommerceView', '{{ product.id }}', '{{ product.title }}', {{ product_array }}, '{{ product.price | money_without_currency }}']);{% endif %}_paq.push(["trackPageView"]),_paq.push(["enableLinkTracking"]),function(){var e="//a.zyberlabs.co.nz/";_paq.push(["setTrackerUrl",e+"piwik.php"]),_paq.push(["setSiteId",zst_settings.piwik_id]);var t=document,s=t.createElement("script"),a=t.getElementsByTagName("script")[0];s.type="text/javascript",s.async=!0,s.defer=!0,s.src=e+"piwik.js",a.parentNode.insertBefore(s,a)}();
+  {%- unless splitTestFunctionsLoaded -%}{%- include 'split-test-functions' -%}{%- endunless -%} 
+</script>
+{%- assign tracking_loaded = true -%}{%- endunless -%}{%- endif -%}
+{%- if execute_logic -%}
+<script type="text/javascript">
+  "use strict";var _iteratorNormalCompletion=!0,_didIteratorError=!1,_iteratorError=void 0;try{for(var _iterator=workerList[Symbol.iterator](),_step;!(_iteratorNormalCompletion=(_step=_iterator.next()).done);_iteratorNormalCompletion=!0){var val=_step.value;!function(r){var t=getWorker(r.id,r.product_id);null!=t&&(matchesGroup(r.meta.group)?(_paq.push(["trackContentImpression","SplitTest",r.product_id,r.url]),t.addEventListener("click",function(){_paq.push(["trackContentInteraction","clicked","SplitTest",r.product_id,r.url])},!1)):t.parentNode.removeChild(t))}(val),val=null}}catch(err){_didIteratorError=!0,_iteratorError=err}finally{try{!_iteratorNormalCompletion&&_iterator["return"]&&_iterator["return"]()}finally{if(_didIteratorError)throw _iteratorError}}
+</script>
+{%- else -%}
+{%- assign splitTestArraySize = product.metafields.z-split-test | size -%}
+{%- if splitTestArraySize > 0 -%}
+<script type="text/javascript" id="splitTestWorker-{{product.id}}">
+  workerList.push({id: 'splitTestWorker-{{product.id}}', product_id: {{ product.id }}, meta: {{ product.metafields.z-split-test | json }}, url: '{{ product.url }}'});
+</script>
+{%- endif -%}
+{%- endif -%}

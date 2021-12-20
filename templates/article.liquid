@@ -1,0 +1,54 @@
+
+{% section 'article-template' %}
+
+{% comment %}
+<div class="row">
+  {% include 'article-sidebar-dp' %}
+  <div class="col-main">  
+
+<div class="rte">
+  <div class="featured-article-text">
+<div class="featured-article-title2">{{ article.title }}</div>
+  </div>
+{{ article | img_url: '1024x1024' | img_tag: article.title }}
+<img src="https://cdn.shopify.com/s/files/1/1697/9691/t/2/assets/pattern-strook.jpg?10678117017071448374" class="article-pattern">
+            <div class="featured-article-text-photo">  
+<div class="featured-article-text">
+<div class="des">{{ article.content | split: '[lang2]' | first}}</div>
+</div>
+</div>
+   {% if blog.next_article or blog.previous_article %}
+
+    <div class="action-btn">
+      {% if blog.previous_article %}
+      <span class="left">
+        &larr; {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+      </span>
+      {% endif %}
+      {% if blog.next_article %}
+      <span class="right">
+        {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }} &rarr;
+      </span>
+      {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+  <div class="right-sidebar">
+<h2 class="featuredblogtitle">Latest stories</h2>
+      <div class="show-recent-articles-div">
+      {% include 'show-recent-articles-article' %}
+      </div>
+<h2 class="featuredblogtitle">Share this story</h2>
+    <ul class="share-buttons">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.dailypaperclothing.com&t=" target="_blank" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><li class="fbshare">Facebook</li></a>
+  <a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fwww.dailypaperclothing.com&text=:%20http%3A%2F%2Fwww.dailypaperclothing.com&via=dailypaper_" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><li class="twittershare">Twitter</li></a>
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.dailypaperclothing.com" target="_blank" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=' + encodeURIComponent(document.URL)); return false;"><li class="googleshare">Google+</li></a>
+  <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.dailypaperclothing.com&description=" target="_blank" title="Pin it" onclick="window.open('http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(document.URL) + '&description=' +  encodeURIComponent(document.title)); return false;"><li class="pinshare">Pinterest</li></a>
+</ul>
+    
+    </div>
+    
+  </div>
+</div>
+{% endcomment %}

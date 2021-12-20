@@ -1,0 +1,203 @@
+{%- render 'blog-temp-page' -%}
+
+{% schema %}
+  {
+    "name": "Section name",
+	"class": "blog-template-index",
+    "settings": [
+	  {
+		"type": "header",
+		"content": "Banner Section"
+	  },
+      {
+        "type": "select",
+        "id": "video_yv",
+        "label": "Video Formate and Image Banner",
+        "options": [
+          {"label": "Youtube or Vimeo", "value": "youtube-vimeo"},
+          {"label": ".mp4", "value": "mp4"},
+		  {"label": "Banner Image", "value": "bannerimg"}
+        ],
+        "default": "bannerimg"
+      },
+	  {
+		"type": "image_picker",
+		"id": "banner-image",
+		"label": "Banner Image"
+	  },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "YouTube or Vimeo video URL",
+        "accept": ["youtube", "vimeo"],
+        "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+      },
+      {
+        "type": "text",
+        "id": "videofile",
+        "label": "Video URL mp4"
+      },
+	  {
+		"type": "text",
+		"id": "blog_title",
+		"label": "Blog Title"
+	  },
+	  {
+		"type": "color",
+		"id": "bg_color",
+		"label": "Background Color",
+		"default": "#000"
+	  },
+	  {
+		"type": "range",
+		"id": "bg_opacity",
+		"label": "Background Opacity",
+		"min": 0,
+		"max": 10,
+		"step": 1,
+		"default": 4
+	  },
+	  {
+		"type": "header",
+		"content": "Banner Content"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "logo-image",
+		"label": "Image"
+	  },
+	  {
+		"type": "textarea",
+		"id": "arrow_down",
+		"label": "Arrow Down"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text-content",
+		"label": "Content"
+	  },
+	  {
+		"type": "header",
+		"content": "Blog Header Text"
+	  },
+	  {
+		"type": "text",
+		"id": "latest_content",
+		"label": "Latest Blog Label",
+		"default": "Latest From"
+	  },
+	  {
+		"type": "header",
+		"content": "Lodder Button"
+	  },
+	  {
+		"type": "text",
+		"id": "btn-text",
+		"label": "Button Text",
+		"default": "More Articles in"
+	  },
+	  {
+		"type": "header",
+		"content": "Unity Section"
+	  },
+	  {
+		"type": "text",
+		"id": "unity_label",
+		"label" : "Unity Label"
+	  }
+	],
+	"blocks": [
+	  {
+		"type": "more-category",
+		"name": "More Blog Category",
+		"settings": [
+		  {
+			"type": "image_picker",
+			"id": "cat_img",
+			"label": "Category Image"
+		  },
+		  {
+			"type": "text",
+			"id": "cat_title",
+			"label": "Category Title"
+		  },
+		  {
+			"type": "url",
+			"id": "cat_link",
+			"label": "Category Link"
+		  }
+		]
+	  },
+	  {
+		"type": "spotlight",
+		"name": "Spotlight",
+		"settings": [
+          {
+            "type": "header",
+            "content": "Spotlight Position"
+          },
+          {
+            "type": "number",
+            "id": "spotlight_position",
+            "label": "Spotlight Position"
+          },
+	 	  {
+            "type": "header",
+            "content": "Spotlight Content"
+          },
+		  {
+			"type": "text",
+			"id": "section-title",
+			"label": "Section Title"
+		  },
+		  {
+			"type": "select",
+			"id": "image-position",
+			"label": "Image Position",
+			"options": [
+			  {"label": "Left", "value": "left"},
+			  {"label": "Right", "value": "right"}
+		    ],
+			"default": "right"
+		  },
+		  {
+			"type": "image_picker",
+			"id": "block-image",
+			"label": "Block Images"
+		  },
+	 	  {
+			"type": "textarea",
+			"id": "quote-content",
+			"label": "Quote Text"
+		  },
+	 	  {
+			"type": "text",
+			"id": "subtitle",
+			"label": "SubTitle"
+		  },
+		  {
+			"type": "text",
+			"id": "btn-text",
+			"label": "Button Text"
+		  },
+	 	  {
+			"type": "url",
+			"id": "btn-link",
+			"label": "Button Link"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+<script>
+  jQuery(document).ready(function(){
+    jQuery("a.open-unity-menu.title").click(function(){
+      jQuery("body").addClass("for_about_menu_only");
+    });
+    jQuery(".cross-close-icon").click(function(){
+      jQuery("body").removeClass("for_about_menu_only");
+    });
+  });
+</script>

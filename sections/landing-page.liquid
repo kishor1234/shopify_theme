@@ -1,0 +1,466 @@
+{%- comment -%}
+{{ 'fullpage.js' | asset_url | script_tag }}
+{%- endcomment -%}
+
+<div class="landing-slider-section">
+  <ul class="landing-slider-part-wc">
+    {%- for block in section.blocks -%}
+    {%- if block.type == 'Slider' -%}
+    <li>      
+      <img src="{{ block.settings.image | img_url: 'master' }}" alt="slide_{{ forloop.index }}" title="slide_{{ forloop.index }}" class="desktop-product-landing-img" />
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+
+<div id="fullpage" class="landing-desktop-section">  
+  {%- if section.settings.col-collection-image != blank or section.settings.col-collection-image2 != blank -%}
+  <div id="section0" class="index-section section active"> 
+    <div  style="width:100%;position:relative;background:url({{ section.settings.col-collection-image | img_url: 'master' }}) no-repeat center center;background-size:cover;float:left;">
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"><img src="{{ section.settings.col-collection-image | img_url: 'master' }}" style="width:100%;"></a>
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"></a>
+      {%- if section.settings.col-button-link != blank -%}
+      <div class="button-box button-box-01">
+        <a href="{{ section.settings.col-button-link }}" style="text-decoration:none;">
+          <div class="button-big men-dp {{ section.settings.col-button-color }}">
+            {{ section.settings.col-button-text }}
+          </div>
+        </a>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- comment -%}<div  style="width:50%;position:relative;background:url({{ section.settings.col-collection-image2 | img_url: 'master' }}) no-repeat center center;background-size:cover;float:left;">
+      <a class="index-pimageL" href="{{ section.settings.col-button-link2 }}" alt="DailyPaperSS20Women"><img src="{{ section.settings.col-collection-image2 | img_url: 'master' }}" style="width:100%;"></a>
+      <a class="index-pimageL" href="{{ section.settings.col-button-link2 }}" alt="DailyPaperSS20Women"></a>
+      <div class="button-box button-box-02">
+        <a href="{{ section.settings.col-button-link2 }}" style="text-decoration:none;">
+          <div class="button-big women-dp {{ section.settings.col-button-color }}">
+            {{ section.settings.col-button-text2 }}
+          </div>
+        </a>
+      </div>
+    </div>{%- endcomment -%}
+  </div>
+  {%- endif -%}
+  {%- for block in section.blocks -%}
+  {%- if block.type == 'image-text' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="wc-image-text-part">
+      {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank or block.settings.image_01 != blank -%}
+      <div class="wc-image-text-left"{% if block.settings.image_01 != blank %} style="background:url({{ block.settings.image_01 | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% endif %}> 
+        {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank -%}
+        <div class="wc-image-text-wrap">
+          {%- if block.settings.title_01 != blank -%}
+          <h2>{{ block.settings.title_01 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_01 != blank -%}
+          <p>{{ block.settings.desc_01 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_01 != blank and block.settings.btn_title_01 != blank -%}
+          <a href="{{ block.settings.btn_link_01 }}" class="{{ block.settings.btn_bg_color_01 }}">{{ block.settings.btn_title_01 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+      {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank or block.settings.image_02 != blank -%}
+      <div class="wc-image-text-right"{% if block.settings.image_02 != blank %} style="background:url({{ block.settings.image_02 | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% endif %}>
+<img src="{{ block.settings.image_02 | img_url: 'master' }}" style="width:100%;">
+        {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank -%}
+        <div class="wc-image-text-wrap">
+          {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_02 != blank and block.settings.btn_title_02 != blank -%}
+          <a href="{{ block.settings.btn_link_02 }}" class="{{ block.settings.btn_bg_color_02 }}">{{ block.settings.btn_title_02 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+    </div>  
+  </div>
+    {%- elsif block.type == 'image-text-overlay' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="wc-image-text-part-test">
+      {%- if block.settings.title_03 != blank or block.settings.desc_03 != blank or block.settings.btn_link_03 != blank or block.settings.btn_title_03 != blank or block.settings.image_03 != blank -%}
+      <div class="wc-image-text-left-test" style="position:relative;text-align:center;"> 
+        {% if block.settings.image_03 != blank %}<img src="{{ block.settings.image_03 | img_url: 'master' }}" style="width:100%;">{% else %}<div style="background-color:{{ block.settings.bgcolor_03 }};width:100%;min-height:50vh;"></div>{% endif %}
+        {%- if block.settings.title_03 != blank or block.settings.desc_03 != blank or block.settings.btn_link_03 != blank or block.settings.btn_title_03 != blank -%}
+        <div class="wc-image-text-wrap-test" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width:100%;">
+          {%- if block.settings.title_03 != blank -%}
+          <h2 style="color:{{ block.settings.headercolor_03}};font-size:{{ block.settings.title_03_size }}px;">{{ block.settings.title_03 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_03 != blank -%}
+          <p style="color:{{ block.settings.textcolor_03 }};">{{ block.settings.desc_03 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_03 != blank and block.settings.btn_title_03 != blank -%}
+          <a  onclick="show()" style="cursor:pointer;" class="overlay-btn {{ block.settings.btn_bg_color_03 }}">{{ block.settings.btn_title_03 }}</a>
+
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+    </div>  
+  </div>  
+  {%- elsif block.type == 'collections' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="landing-product-list">
+      {%- assign collection = collections[block.settings.collection] -%}
+      {%- assign prod_limit = block.settings.show_product -%}
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }}">
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+    <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ forloop.index }}').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+  </div>
+  {%- endif -%}  
+  {%- endfor -%}
+  </div>
+
+    <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ forloop.index }}').slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+        $('.landing-slider-part-wc').slick({
+          infinite: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          dots: true
+        });
+      });
+    </script>
+  
+{%- comment -%}
+  {%- if section.settings.full_image != blank -%}
+
+  <div id="full-image" class="index-section section"> 
+    <div class="wc-image-text-part" style="background:url({{ section.settings.full_image | img_url: 'master' }}) no-repeat center center;background-size:cover;">
+      {%- if section.settings.full_image_logo != blank -%}
+      <figure class="wc-full-img-logo-center"><img src="{{ section.settings.full_image_logo | img_url: 'master' }}" alt="" title="" /></figure>
+      {%- endif -%}
+    </div>  
+  </div>
+  {%- endif -%}
+  <div id="home-footer" class="index-section section index-footer">
+    {% include 'footer-dp' %}  
+  </div>
+
+<script type="text/javascript">
+  /*$(document).ready(function(){
+    if($(window).width() >= 768){
+    $('#fullpage').fullpage({
+    });
+    }
+  });*/
+</script>
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Landing Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Section"
+    },
+    {
+      "id": "col-collection-name",
+      "type": "text",
+      "label": "Title",
+      "default": "SS20 RESORT",
+      "info": "Section title in center"
+    },
+    {
+      "type": "color",
+      "id": "col-background_color",
+      "label": "Text color",
+      "default": "#ffffff",
+      "info":"Collection name text color."
+    },
+    {
+      "type": "select",
+      "id": "col-button-color",
+      "options": [
+        {
+         "value": "white",
+         "label": "White"
+        },
+        {
+         "value": "black",
+         "label": "Black"
+        }
+      ],
+      "label": "Button Color"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image",
+     "label": "Left Image"
+    },
+    {
+     "id": "col-button-text",
+     "type": "text",
+     "label": "Button text",
+     "default": "SHOP MEN",
+     "info": "If button text is empty it won't show."
+    },
+    {
+     "id": "col-button-link",
+     "type": "url",
+     "label": "Button link"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image2",
+     "label": "Right Image"
+    },
+    {
+     "id": "col-button-text2",
+     "type": "text",
+     "label": "Button text",
+     "default": "SHOP WOMEN",
+     "info": "If button text is empty it won't show."
+    },
+    {
+     "id": "col-button-link2",
+     "type": "url",
+     "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-text",
+      "name": "Image Text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_01",
+          "label": "Image 01"
+        },
+        {
+          "type": "text",
+          "id": "title_01",
+          "label": "Heading 01"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_01",
+          "label": "Description 01"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_01",
+          "label": "Button Heading 01"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_01",
+          "label": "Button Link 01"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_01",
+          "label": "Button Background Color 01",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image_02",
+          "label": "Image 02"
+        },
+        {
+          "type": "text",
+          "id": "title_02",
+          "label": "Heading 02"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_02",
+          "label": "Description 02"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_02",
+          "label": "Button Heading 02"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link 02"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_02",
+          "label": "Button Background Color 02",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        }
+      ]
+    },
+{
+      "type": "image-text-overlay",
+      "name": "Image Text Overlay",
+      "settings": [
+            {
+      "type": "color",
+      "id": "bgcolor_03",
+      "label": "Background color",
+      "default": "#f2f2f2",
+      "info":"Background color if no image is selected"
+    }, 
+            {
+      "type": "color",
+      "id": "headercolor_03",
+      "label": "Heading color",
+      "default": "#fff",
+      "info":"Heading color"
+    }, 
+            {
+      "type": "color",
+      "id": "textcolor_03",
+      "label": "Text color",
+      "default": "#fff",
+      "info":"Text color"
+    },
+{
+          "type": "image_picker",
+          "id": "image_03",
+          "label": "Image 03"
+        },
+        {
+          "type": "text",
+          "id": "title_03",
+          "label": "Heading 03"
+        },
+      {
+        "type": "text",
+        "id": "title_03_size",
+        "label": "Heading Font Size",
+        "default": "16",
+        "info": "Default Value: 16"
+      },
+        {
+          "type": "textarea",
+          "id": "desc_03",
+          "label": "Description 03"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_03",
+          "label": "Button Heading 03"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_03",
+          "label": "Button Link 03"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_03",
+          "label": "Button Background Color 03",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "collections",
+      "name": "Collections",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "show_product",
+          "label": "No of Product display"
+        }
+      ]
+    },
+    {
+      "type": "Slider",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+} 
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

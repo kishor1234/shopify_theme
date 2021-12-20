@@ -1,0 +1,40 @@
+{% if shop.customer_accounts_enabled %}
+{%- comment -%}
+<ul class="customer-links">
+  <li>
+    <a id="customer_login_link" href="/account" {% if settings.enable_multilang %}data-translate="customer.login.sign_in"{% endif %}>{{ 'customer.login.sign_in' | t }}</a>
+  </li>
+</ul>
+{%- endcomment -%}
+{% include 'site-nav' %}
+<ul class="customer-links2">
+  <li>{% include 'search-bar' %}</li>
+{% comment %} 
+<div class="dp-country-select">
+    <div class="dp-main">
+      <input id="dp-l-deskcontent" class="dp-country-desk--toggle" type="checkbox">
+      <label for="dp-l-deskcontent" class="dp-country-desk"></label>
+      <div class="dp-menu">
+        <li><a href="#Weglot-en">EN</a></li>
+        <li><a href="#Weglot-de">DE</a></li>
+        <li>
+        {% form 'currency' %}
+          <select name="currency">
+            {% for currency in shop.enabled_currencies %}
+              {% if currency == cart.currency %}
+                <option selected="true" label="{{currency.symbol}}">{{currency.iso_code}}</option>
+                {% else %}
+                <option label="{{currency.symbol}}">{{currency.iso_code}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        {% endform %}
+        </li>
+      </div>
+    </div>
+  </div> 
+{% endcomment %}
+
+
+</ul>
+{% endif %}

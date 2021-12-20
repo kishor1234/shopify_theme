@@ -1,0 +1,28 @@
+{%- assign featuredBlogs = 'releases' | split:',' -%}
+{%- assign featuredArticles = false -%}
+{%- for featuredBlog in featuredBlogs -%}
+{%- if blogs[featuredBlog].articles -%}
+{%- if featuredArticles -%}
+{%- assign featuredArticles = featuredArticles | concat:blogs[featuredBlog].articles -%}
+{%- else -%}
+{%- assign featuredArticles = blogs[featuredBlog].articles -%}
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if featuredArticles -%}
+{%- assign featuredArticles = featuredArticles | sort:'published_at' | reverse -%}
+{%- for article in featuredArticles limit:1 -%}
+<div class="featured-article-text-photo">    
+  <div class="featured-article-text">
+    <div class="featured-article-title2">{{ article.title }}</div>
+    <div class="des">{{ article.content | split:"[lang1]" | first | split:"|" |first}}</div>
+    <p class="button">
+      <a href="/pages/daily-paper-x-puma-fw17" {% if settings.enable_multilang %}data-translate="blogs.article.read_more"{%endif%}><span class="arrow2">/</span>{{ 'blogs.article.read_more' | t }}</a>
+    </p>
+  </div>
+  <div class="featured-article-photo"><a class="article-featured-image" href="/pages/daily-paper-x-puma-fw17">
+    {{ article | img_url: '1024x1024' | img_tag: article.title }}
+    </a>	</div>
+  {%- endfor -%}
+  {%- endif -%}
+</div>

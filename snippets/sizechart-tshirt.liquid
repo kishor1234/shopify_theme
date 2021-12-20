@@ -1,0 +1,34 @@
+<button id="sizechartBtn">View Size Chart</button>
+<div id="sizechart" class="sizechart">
+  <div class="sizechart-content">
+    <span class="sizechart-close">&times;</span>
+    Product Measurements    
+    <div class="sizechart-col-container">
+      <div class="sizechart-col">
+        <div class="results2">
+          <div class="size-blank">
+            <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/T-shirt-m.jpg?60899"></div>    
+          <div class="size-xs">
+            <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/T-shirt-xs.jpg?60899"></div>
+          <div class="size-s">
+            <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/T-shirt-s.jpg?60899"></div>     
+          <div class="size-m">
+            <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/T-shirt-m.jpg?60899"></div>     
+          <div class="size-l">
+            <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/T-shirt-l.jpg?60899"></div>
+          <div class="size-xl">
+            <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/T-shirt-xl.jpg?60899"></div>	
+        </div>  
+      </div>
+      <div class="sizechart-col">  
+        <p>Displaying measurements for size:</p>
+        <button id="size-xs" class="switchBtn">XS</button>
+        <button id="size-s" class="switchBtn">S</button>
+        <button id="size-m" class="switchBtn">M</button>
+        <button id="size-l" class="switchBtn">L</button>
+        <button id="size-xl" class="switchBtn">XL</button>   
+        {%- include 'sizechart--model-details' -%}
+      </div>
+    </div>
+  </div>
+  {%- include 'sizechart-buttons' -%}

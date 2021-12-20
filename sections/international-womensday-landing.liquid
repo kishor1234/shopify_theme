@@ -1,0 +1,452 @@
+<div class="landing-slider-section">
+  <ul class="landing-slider-part-wc">
+    {%- for block in section.blocks -%}
+    {%- if block.type == 'Slider' -%}
+    <li>      
+      <img src="{{ block.settings.image | img_url: 'master' }}" alt="slide_{{ forloop.index }}" title="slide_{{ forloop.index }}" class="desktop-product-landing-img" />
+    <img src="{{ block.settings.mobile_image | img_url: 'master' }}" alt="slide_{{ forloop.index }}" title="slide_{{ forloop.index }}" class="mobile-product-landing-img" />
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+{%- for block in section.blocks -%}
+  {%- if block.type == 'image-text' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="wc-image-text-part">
+      {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank or block.settings.image_01 != blank -%}
+      <div class="wc-image-text-left"{% if block.settings.image_01 != blank %} style="background:url({{ block.settings.image_01 | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% endif %}> 
+        {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank -%}
+        <div class="wc-image-text-wrap">
+          {%- if block.settings.title_01 != blank -%}
+          <h2>{{ block.settings.title_01 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_01 != blank -%}
+          <p>{{ block.settings.desc_01 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_01 != blank and block.settings.btn_title_01 != blank -%}
+          <a href="{{ block.settings.btn_link_01 }}" class="{{ block.settings.btn_bg_color_01 }}">{{ block.settings.btn_title_01 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+      {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank or block.settings.image_02 != blank -%}
+      
+      <div class="wc-image-text-right desktop-image"{% if block.settings.image_02 != blank %} style="background:url({{ block.settings.image_02 | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% else %}style="background-color:{{ block.settings.bgcolor_02 }};"{% endif %}>
+<!--         {% if block.settings.image_02 != blank %}<img src="{{ block.settings.image_02 | img_url: 'master' }}" style="width:100%;">{% else %}<div style="background-color:{{ block.settings.bgcolor_02 }};width:100%;min-height:75vh;"></div>{% endif %} -->
+        {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank -%}
+        <div class="wc-image-text-wrap text-{{ block.settings.text_color_02 }}">
+          {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_02 != blank and block.settings.btn_title_02 != blank -%}
+          <a href="{{ block.settings.btn_link_02 }}" class="{{ block.settings.btn_bg_color_02 }}">{{ block.settings.btn_title_02 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      
+            <div class="wc-image-text-right mobile-image"{% if block.settings.image_02_mobile != blank %} style="background:url({{ block.settings.image_02_mobile | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% else %}style="background-color:{{ block.settings.bgcolor_02 }};"{% endif %}>
+<!--         {% if block.settings.image_02_mobile != blank %}<img src="{{ block.settings.image_02_mobile | img_url: 'master' }}" style="width:100%;">{% else %}<div style="background-color:{{ block.settings.bgcolor_02 }};width:100%;min-height:75vh;"></div>{% endif %} -->
+        {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank -%}
+        <div class="wc-image-text-wrap text-{{ block.settings.text_color_02 }}">
+          {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_02 != blank and block.settings.btn_title_02 != blank -%}
+          <a href="{{ block.settings.btn_link_02 }}" class="{{ block.settings.btn_bg_color_02 }}">{{ block.settings.btn_title_02 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      
+      {%- endif -%}
+    </div>  
+  </div>
+  {%- elsif block.type == 'collections' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="landing-product-list">
+      <div class="grid-item col-xs-12 p-0 product-wrap m-0 posi-ab-wc">
+        <div class="row">
+      {%- assign collection = collections[block.settings.collection] -%}
+      {%- assign prod_limit = block.settings.show_product -%}
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }} left-products">
+        {%- for product in collection.products limit: prod_limit -%}
+ 
+        {%- include 'product-landing-grid' -%}
+
+        {%- endfor -%}
+      </ul>
+
+      </div>
+      </div>
+    </div>
+    <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ forloop.index }}').slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+        $('.landing-slider-part-wc').slick({
+          infinite: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          dots: true
+        });
+      });
+    </script>
+    <style>
+      .landing-product-list .slick-track{width:100% !important;}
+      .landing-product-list .landing-product-list-slider.left-products li{width:25% !important;}
+      .landing-product-list .landing-product-list-slider.right-products li{width:100% !important;}
+      .landing-product-list .row {margin:0;}
+      .wc-image-text-part .wc-image-text-wrap{text-align: center;position: static;padding: 120px 60px;}
+      .wc-image-text-part .wc-image-text-wrap p {max-width: 70%;word-wrap: break-word;text-align: center;margin: 0 auto;padding-top: 50px;}
+      .wc-image-text-part .wc-image-text-wrap a.white { margin-top: 3%;}
+      .mobile-image,.wc-image-text-right.mobile-image{display:none;}
+      .wc-image-text-part .wc-image-text-right {width: 100%;overflow: auto;}
+      .wc-image-text-wrap.text-white h2,.wc-image-text-wrap.text-white p{color:#fff;}
+	  #product-of-ghana .wc-image-text-part .wc-image-text-wrap h2{font-size: 22px;line-height: 26px;}
+      .wc-image-text-part .wc-image-text-wrap h2 { font-size: 16px; line-height: 20px;}
+      
+      @media (max-width: 767px) {
+        .landing-desktop-section {display: block;}
+        .products-grid .grid-item .product-image {padding:0;}
+        .landing-product-list .row {flex-direction: column;}
+        #fullpage{margin-top:45px;}
+        .mobile-image,.wc-image-text-right.mobile-image{display:block;}
+        .desktop-image,.wc-image-text-right.desktop-image{display:none;}
+        .wc-image-text-part .wc-image-text-wrap p {max-width: 100%;padding-bottom: 20px;padding-top: 10px;}
+        .wc-image-text-part .wc-image-text-wrap{padding: 100px 40px;}
+      }
+    </style>
+  </div>
+  {%- endif -%}
+  {%- endfor -%}
+
+<script>
+  $(document).ready(function(){
+    
+  });
+</script>
+{%- comment -%}
+<div id="fullpage" class="landing-desktop-section">  
+  
+  
+  {%- if section.settings.col-collection-image != blank or section.settings.col-collection-image2 != blank -%}
+  <div id="section0" class="index-section section active desktop-image"> 
+    <div  style="width:100%;position:relative;background:url({{ section.settings.col-collection-image | img_url: 'master' }}) no-repeat center center;background-size:cover;float:left;">
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"><img src="{{ section.settings.col-collection-image | img_url: 'master' }}" style="width:100%;"></a>
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"></a>
+      {%- if section.settings.col-button-link != blank -%}
+      <div class="button-box button-box-01">
+        <a href="{{ section.settings.col-button-link }}" style="text-decoration:none;">
+          <div class="button-big men-dp {{ section.settings.col-button-color }}">
+            {{ section.settings.col-button-text }}
+          </div>
+        </a>
+      </div>
+       {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+  
+    {%- if section.settings.col-collection-image-mobile != blank -%}
+  <div id="section0" class="index-section section active mobile-image"> 
+    <div  style="width:100%;position:relative;background:url({{ section.settings.col-collection-image-mobile-mobile | img_url: 'master' }}) no-repeat center center;background-size:cover;float:left;">
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"><img src="{{ section.settings.col-collection-image-mobile | img_url: 'master' }}" style="width:100%;"></a>
+      <a class="index-pimageR" href="{{ section.settings.col-button-link }}" alt="DailyPaperSS20Men"></a>
+      {%- if section.settings.col-button-link != blank -%}
+      <div class="button-box button-box-01">
+        <a href="{{ section.settings.col-button-link }}" style="text-decoration:none;">
+          <div class="button-big men-dp {{ section.settings.col-button-color }}">
+            {{ section.settings.col-button-text }}
+          </div>
+        </a>
+      </div>
+       {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+  
+  {%- for block in section.blocks -%}
+  {%- if block.type == 'image-text' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="wc-image-text-part">
+      {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank or block.settings.image_01 != blank -%}
+      <div class="wc-image-text-left"{% if block.settings.image_01 != blank %} style="background:url({{ block.settings.image_01 | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% endif %}> 
+        {%- if block.settings.title_01 != blank or block.settings.desc_01 != blank or block.settings.btn_link_01 != blank or block.settings.btn_title_01 != blank -%}
+        <div class="wc-image-text-wrap">
+          {%- if block.settings.title_01 != blank -%}
+          <h2>{{ block.settings.title_01 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_01 != blank -%}
+          <p>{{ block.settings.desc_01 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_01 != blank and block.settings.btn_title_01 != blank -%}
+          <a href="{{ block.settings.btn_link_01 }}" class="{{ block.settings.btn_bg_color_01 }}">{{ block.settings.btn_title_01 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+      {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank or block.settings.image_02 != blank -%}
+      
+      <div class="wc-image-text-right desktop-image"{% if block.settings.image_02 != blank %} style="background:url({{ block.settings.image_02 | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% else %}style="background-color:{{ block.settings.bgcolor_02 }};"{% endif %}>
+        {% if block.settings.image_02 != blank %}<img src="{{ block.settings.image_02 | img_url: 'master' }}" style="width:100%;">{% else %}<div style="background-color:{{ block.settings.bgcolor_02 }};width:100%;min-height:75vh;"></div>{% endif %}
+        {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank -%}
+        <div class="wc-image-text-wrap text-{{ block.settings.text_color_02 }}">
+          {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_02 != blank and block.settings.btn_title_02 != blank -%}
+          <a href="{{ block.settings.btn_link_02 }}" class="{{ block.settings.btn_bg_color_02 }}">{{ block.settings.btn_title_02 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      
+            <div class="wc-image-text-right mobile-image"{% if block.settings.image_02_mobile != blank %} style="background:url({{ block.settings.image_02_mobile | img_url: 'master' }}) no-repeat center center;background-size:cover;"{% else %}style="background-color:{{ block.settings.bgcolor_02 }};"{% endif %}>
+        {% if block.settings.image_02_mobile != blank %}<img src="{{ block.settings.image_02_mobile | img_url: 'master' }}" style="width:100%;">{% else %}<div style="background-color:{{ block.settings.bgcolor_02 }};width:100%;min-height:75vh;"></div>{% endif %}
+        {%- if block.settings.title_02 != blank or block.settings.desc_02 != blank or block.settings.btn_link_02 != blank or block.settings.btn_title_02 != blank -%}
+        <div class="wc-image-text-wrap text-{{ block.settings.text_color_02 }}">
+          {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_link_02 != blank and block.settings.btn_title_02 != blank -%}
+          <a href="{{ block.settings.btn_link_02 }}" class="{{ block.settings.btn_bg_color_02 }}">{{ block.settings.btn_title_02 }}</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      
+      {%- endif -%}
+    </div>  
+  </div>
+  {%- elsif block.type == 'collections' -%}
+  <div id="section{{ forloop.index }}" class="index-section section">   
+    <div class="landing-product-list">
+      <div class="grid-item col-xs-12 p-0 product-wrap m-0 posi-ab-wc">
+        <div class="row">
+      {%- assign collection = collections[block.settings.collection] -%}
+      {%- assign prod_limit = block.settings.show_product -%}
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }} left-products">
+        {%- for product in collection.products limit: prod_limit -%}
+
+        {%- include 'product-landing-grid' -%}
+
+        {%- endfor -%}
+      </ul>
+ 
+      </div>
+      </div>
+    </div>
+    <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ forloop.index }}').slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+    <style>
+      .slick-track{width:100% !important;}
+      .landing-product-list .landing-product-list-slider.left-products li{width:50% !important;}
+      .landing-product-list .landing-product-list-slider.right-products li{width:100% !important;}
+      .landing-product-list .row {margin:0;}
+      .wc-image-text-part .wc-image-text-wrap{bottom:50%;transform:translateY(50%);text-align:center;}
+      .wc-image-text-part .wc-image-text-wrap p {max-width: 70%;word-wrap: break-word;text-align: center;margin: 0 auto;padding-bottom: 70px;padding-top: 50px;}
+      .mobile-image,.wc-image-text-right.mobile-image{display:none;}
+      .wc-image-text-part .wc-image-text-right {width: 100%;}
+      .wc-image-text-wrap.text-white h2,.wc-image-text-wrap.text-white p{color:#fff;}
+      
+
+      
+      @media (max-width: 767px) {
+        .landing-desktop-section {display: block;}
+        .products-grid .grid-item .product-image {padding:0;}
+        .landing-product-list .row {flex-direction: column;}
+        #fullpage{margin-top:45px;}
+        .mobile-image,.wc-image-text-right.mobile-image{display:block;}
+        .desktop-image,.wc-image-text-right.desktop-image{display:none;}
+        .wc-image-text-part .wc-image-text-wrap p {max-width: 100%;padding-bottom: 20px;padding-top: 10px;}
+        .wc-image-text-part .wc-image-text-wrap{padding:25px;}
+      }
+    </style>
+  </div>
+  {%- endif -%}
+  {%- endfor -%}
+  </div>
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Landing Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Section"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image",
+     "label": "Image"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image-mobile",
+     "label": "Image Mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-text",
+      "name": "Image Text",
+      "settings": [
+    {
+      "type": "color",
+      "id": "bgcolor_02",
+      "label": "Background color",
+      "default": "#f2f2f2",
+      "info":"Background color if no image is selected"
+    },       
+		{
+          "type": "image_picker",
+          "id": "image_02",
+          "label": "Image"
+        },
+		{
+          "type": "image_picker",
+          "id": "image_02_mobile",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "select",
+          "id": "text_color_02",
+          "label": "Text Color",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title_02",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_02",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_02",
+          "label": "Button Heading"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_02",
+          "label": "Button Background Color",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "collections",
+      "name": "Collections",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "show_product",
+          "label": "No of Product display"
+        }
+      ]
+    },
+    {
+      "type": "Slider",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        }
+      ]
+    }
+  ]
+} 
+{% endschema %}
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

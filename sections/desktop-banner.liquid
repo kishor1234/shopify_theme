@@ -1,0 +1,197 @@
+{% if section.settings.dp-banner-enable == true %}
+  <style>
+    span#countdown {
+    font-weight: bold;
+}
+    @media only screen and (max-width: 768px) {
+      .hide-dp-mobile {
+        display:none;
+      }
+    }
+  </style>
+  <a class="dp-banner-link topbar-part-wc" href="{{ section.settings.dp-banner-link }}">
+  <div class="dp-banner">
+    <div class="dp-banner--text" >
+   
+<span style="top:-5px;">{% if collection.handle contains 'sale' %}{{ section.settings.dp-banner-title-ea }}{% else %}{{ section.settings.dp-banner-title }}{% endif %} {% if section.settings.dp-countdown-enable == true %}<span id="countdown"></span>{% endif %}</span>
+    </div>
+    </div>
+</a>
+
+<script>
+  $(window).on('load', function(){
+    var top_height = $('#shopify-section-desktop-banner .dp-banner').innerHeight();
+    var head_height = $('header.site-header').innerHeight();
+    var total_h = top_height + head_height;    
+    $('.mobile-logo').css({'top':top_height});
+    //$('.main-content').css({'margin-top':total_h});
+    if($(window).width() <= 767){
+      var back_btn = top_height + 60;
+      $('.product-back-btn-wc').css({'top':back_btn});
+      $('header').css({'top':top_height});
+    }else{
+      {% if template == 'index' %}
+    $('header').css({'top':'30'});
+    {% else %}
+    $('header').css({'top':top_height});
+      
+    {% endif %}
+    }
+
+  });
+  $(document).scroll(function() {
+     var top_height = $('#shopify-section-desktop-banner .dp-banner').innerHeight();
+    
+     if($(window).scrollTop() > 30){
+       {%- if template == 'index' -%}
+       $('header').css({'top':'30px'});
+       $('.mobile-logo').css({'top':'30'});
+       {%- else -%}
+       $('header').css({'top':'30'});
+       $('.mobile-logo').css({'top':'30'});
+      console.log('else');
+       {%- endif -%}
+       if($(window).width() <= 767){
+         $('header').css({'top':'30'});
+       }
+        
+     }else{
+       {%- if template == 'index' -%}
+       $('header').css({'top':'30'});
+       $('.mobile-logo').css({'top':top_height});
+       {%- else -%}
+        $('header').css({'top':top_height});
+       $('.mobile-logo').css({'top':top_height});
+       console.log(top_height,'else if');
+       
+       {%- endif -%}
+       if($(window).width() <= 767){
+         $('header').css({'top':top_height});
+       }
+     }
+   });
+</script>
+
+<script>// <![CDATA[
+//   var end = new Date('{% if collection.handle contains 'sale' %}{{ section.settings.sale_countdown_ea }}{% else %}{{ section.settings.sale_countdown }}{% endif %}');
+  
+//     var _second = 1000;
+//       var _minute = _second * 60;
+//       var _hour = _minute * 60;
+//       var _day = _hour;
+//       var timer;
+  
+//       function showRemaining() {
+//           var now = new Date();
+//           var distance = end - now;
+//           if (distance < 0) {
+  
+//               clearInterval(timer);
+//               document.getElementById('countdown').innerHTML = 'ended';
+  
+//               return;
+//           }
+//           var days = Math.floor(distance / _day);
+//           var hours = Math.floor((distance % _day) / _hour);
+//           var minutes = Math.floor((distance % _hour) / _minute);
+//           var seconds = Math.floor((distance % _minute) / _second);
+  
+//           document.getElementById('countdown').innerHTML = days + ':';
+//           document.getElementById('countdown').innerHTML += minutes + ':';
+//           document.getElementById('countdown').innerHTML += seconds;
+//       }
+  
+//       timer = setInterval(showRemaining, 1000);
+// Set the date we're counting down to
+var countDownDate = new Date("{% if collection.handle contains 'sale' %}{{ section.settings.sale_countdown_ea }}{% else %}{{ section.settings.sale_countdown }}{% endif %}").getTime();
+
+
+// Update the count down every 1 second
+
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  var elms=document.querySelectorAll("[id='countdown']");
+  
+  for(var i = 0; i < elms.length; i++) {
+    elms[i].innerHTML = days + "d : " + hours + "h : "
+  + minutes + "m : " + seconds + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    elms[i].innerHTML = "Refresh";
+  }
+ }
+}, 1000);
+  // ]]></script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Top Bar Text",
+  "settings": [
+ {
+      "id": "dp-banner-enable",
+      "type": "checkbox",
+      "label": "Show Banner",
+      "default": false
+    },
+    {
+      "id": "dp-banner-title",
+      "type": "text",
+      "label": "Banner Text",
+      "default": "Daily Paper"
+    },
+    {
+      "id": "dp-banner-title-ea",
+      "type": "text",
+      "label": "Banner EA Text",
+      "default": "Daily Paper"
+    },
+ {
+      "id": "dp-countdown-enable",
+      "type": "checkbox",
+      "label": "Show Countdown",
+      "default": false
+    },
+      {
+        "type": "text",
+        "id": "sale_countdown_ea",
+        "label": "Sale EA countdown",
+        "placeholder": "April 24, 2020 11:00 AM",
+        "info": "Format: April 24, 2020 11:00 AM"
+      },
+      {
+        "type": "text",
+        "id": "sale_countdown",
+        "label": "Sale countdown",
+        "placeholder": "April 24, 2020 11:00 AM",
+        "info": "Format: April 24, 2020 11:00 AM"
+      },
+{
+      "id": "dp-banner-link",
+      "type": "url",
+      "label": "Banner Link"
+    }
+  ]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,18 @@
+{% if form.errors %}
+  <div class="note form-error">
+    <p{% if settings.enable_multilang %} data-translate="customer.form.error_message"{% endif %}>{{ 'customer.form.error_message' | t }}</p>
+    <ul class="disc">
+      {% for field in form.errors %}
+        {% if field == 'form' %}
+          <li>
+            {{ form.errors.messages[field] }}
+          </li>
+        {% else %}
+          <li>
+            The <strong>{{ field | replace: 'body', 'Message' }}</strong> field {{ form.errors.messages[field] }}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

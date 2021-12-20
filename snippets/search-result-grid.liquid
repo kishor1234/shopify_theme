@@ -1,0 +1,26 @@
+<!-- SEARCH RESULST GRID-->
+<div style="{% for tag in item.tags %}{% if tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}" class="grid-item search-result">
+  {%- if item.featured_image -%}
+  <a href="{{ item.url }}" title="{{ item.title | escape }}">
+    {{ item.featured_image.src | product_img_url: 'medium' | img_tag: item.featured_image.alt }}
+  </a>
+  {%- endif -%}  
+  <h5>{{ item.title | link_to: item.url }}</h5>  
+  <h6>
+    {%- if item.compare_at_price > item.price -%}
+    <span class="on-sale" itemprop="price">
+      {{ item.price | money }}
+    </span>
+    <small>
+      <span {% if settings.enable_multilang %}data-translate="products.product.compare_at"{% endif %}>
+        {{ 'products.product.compare_at' | t }}
+      </span>
+      {{ item.compare_at_price_max | money }}
+    </small>
+    {%- else -%}
+    <span itemprop="price">
+      {{ item.price | money }}
+    </span>
+    {%- endif -%}
+  </h6>
+</div>

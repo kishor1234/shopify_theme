@@ -1,0 +1,11 @@
+<div class="row">
+  {% include 'page-sidebar' %}
+  <div class="block-row col-xs-9 col-main">  
+    {% if settings.enable_multilang %}
+      <div class="rte lang1">{{ page.content | split: '[lang2]' | first }}</div>
+      <div class="rte lang2">{{ page.content | split: '[lang2]' | last }}</div>
+    {% else %}
+      <div class="rte">{{ page.content | split: '[lang2]' | first }}</div>
+    {% endif %}
+  </div>
+</div>

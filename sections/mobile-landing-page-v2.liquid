@@ -1,0 +1,235 @@
+<div id="mobile-fullpage" class="landing-mobile-section">
+{% for block in section.blocks %}  
+  {%- if block.type == 'image' -%}
+<div class="landing-page-sections more-view-wrapper section{% if forloop.index == 1 %} active{% endif %}" style="margin-top:0" id="wc-section{{ forloop.index }}">  
+  <div class="mobile-slider">
+    {%- if block.settings.image_01 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_01 }}">
+        <div class="landing-page-overlay-mobile-section-overlay" style="position: absolute;bottom: 0;top: 0;right: 0;left: 0;z-index: 1;background:#000;opacity: 0.4;"></div>
+        <img class="lazy blur" src="{{ block.settings.image_01 | img_url: 'master' }}" data-src="{{ block.settings.image_01 | img_url: 'master' }}"  alt="image_01">
+      </a> 
+      <div class="landing-page-overlay-mobile">
+      {%- if block.settings.title_01 != blank -%}
+          <h2>{{ block.settings.title_01 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_01 != blank -%}
+          <p>{{ block.settings.desc_01 }}</p>
+          {%- endif -%}
+      {%- if block.settings.btn_link_01 != blank and block.settings.btn_text_01 != blank -%}
+      <a href="{{ block.settings.btn_link_01 }}" class="btn {{ block.settings.button_color_01 }}">{{ block.settings.btn_text_01 }}</a>
+      {%- endif -%}
+      </div>
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_02 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_02 }}">
+        <div class="landing-page-overlay-mobile-section-overlay" style="position: absolute;bottom: 0;top: 0;right: 0;left: 0;z-index: 1;background:#000;opacity: 0.4;"></div>
+        <img class="lazy blur" src="{{ block.settings.image_02 | img_url: 'master' }}" data-src="{{ block.settings.image_02 | img_url: 'master' }}"  alt="image_02">
+      </a> 
+      <div class="landing-page-overlay-mobile">
+      {%- if block.settings.title_02 != blank -%}
+          <h2>{{ block.settings.title_02 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_02 != blank -%}
+          <p>{{ block.settings.desc_02 }}</p>
+          {%- endif -%}
+      {%- if block.settings.btn_link_02 != blank and block.settings.btn_text_02 != blank -%}
+      <a href="{{ block.settings.btn_link_02 }}" class="btn {{ block.settings.button_color_02 }}">{{ block.settings.btn_text_02 }}</a>
+      {%- endif -%}
+      </div>
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_03 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_03 }}">b
+        <div class="landing-page-overlay-mobile-section-overlay" style="position: absolute;bottom: 0;top: 0;right: 0;left: 0;z-index: 1;background:#000;opacity: 0.4;"></div>
+        <img class="lazy blur" src="{{ block.settings.image_03 | img_url: 'master' }}" data-src="{{ block.settings.image_03 | img_url: 'master' }}"  alt="image_03">
+      </a> 
+      <div class="landing-page-overlay-mobile">
+      {%- if block.settings.title_03 != blank -%}
+          <h2>{{ block.settings.title_03 }}</h2>
+          {%- endif -%}
+          {%- if block.settings.desc_03 != blank -%}
+          <p>{{ block.settings.desc_03 }}</p>
+          {%- endif -%}
+      {%- if block.settings.btn_link_03 != blank and block.settings.btn_text_03 != blank -%}
+      <a href="{{ block.settings.btn_link_03 }}" class="btn {{ block.settings.button_color_03 }}">{{ block.settings.btn_text_03 }}</a>
+      {%- endif -%}
+      </div>
+    </div>
+    {%- endif -%}
+    
+  </div>
+</div>
+  {%- elsif block.type == 'collections' -%}
+  <div id="section{{ forloop.index }}" class="index-section section {% if forloop.index == 1 %} active{% endif %}">   
+    <div class="landing-product-list">
+      {%- assign collection = collections[block.settings.collection] -%}
+      {%- assign prod_limit = block.settings.show_product -%}
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }}">
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+  {%- endif -%}
+{%endfor%}
+   
+</div>
+
+
+
+{% schema %}
+ {
+  "name": "Mobile Landing Sections",
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_01",
+          "label": "Image 01"
+        },
+        {
+          "type": "text",
+          "id": "title_01",
+          "label": "Title 01"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_01",
+          "label": "Description 01"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_01",
+          "label": "Button Text 01"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_01",
+          "label": "Button Link 01"
+        },
+        {
+          "type": "select",
+          "id": "button_color_01",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 01"
+        },
+{
+          "type": "image_picker",
+          "id": "image_02",
+          "label": "Image 02"
+        },
+        {
+          "type": "text",
+          "id": "title_02",
+          "label": "Title 02"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_02",
+          "label": "Description 02"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_02",
+          "label": "Button Text 02"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link 02"
+        },
+        {
+          "type": "select",
+          "id": "button_color_02",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 02"
+        },
+{
+          "type": "image_picker",
+          "id": "image_03",
+          "label": "Image 03"
+        },
+        {
+          "type": "text",
+          "id": "title_03",
+          "label": "Title 03"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_03",
+          "label": "Description 03"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_03",
+          "label": "Button Text 03"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_03",
+          "label": "Button Link 03"
+        },
+        {
+          "type": "select",
+          "id": "button_color_03",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 03"
+        }
+      ]
+    },
+    {
+      "type": "collections",
+      "name": "Collections",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "show_product",
+          "label": "No of Product display"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

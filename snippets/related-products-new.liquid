@@ -1,0 +1,26 @@
+{%- if collection.handle contains 'kids-line' or product.title contains "Kids" or product.tags contains "Kids"  -%}
+{%- include 'related-products-by-col-dp' -%}  
+{%- elsif collection.handle contains 'accessories' or product.tags contains 'Accessories' -%}
+{%- include 'related-products-by-col-dp' -%}
+{%- elsif collection.handle contains 'women' -%}
+{%- section 'product-recommendations-women' -%}
+{%- else -%}
+{%- if product.tags contains 'UNISEX' -%}
+{%- section 'product-recommendations-men' -%}
+{%- elsif product.tags contains 'Women' -%}
+{%- section 'product-recommendations-women' -%}
+{%- else -%}
+{%- section 'product-recommendations-men' -%}
+{%- endif -%}
+{%- endif -%}
+<script type="text/javascript">   
+  jQuery(document).ready(function () {
+    jQuery(".related-products .products-grid").owlCarousel({
+      navigation: true,
+      items: 3,
+      itemsDesktop: [1200, 3],
+      itemsTablet: [767, 3],
+      itemsTabletSmall: [721, 2]
+    });
+  });
+</script>

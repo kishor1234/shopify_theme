@@ -1,0 +1,74 @@
+<div class="row">
+{% include 'service-page-sidebar' %}
+  <div class="col-main">  
+    <div class="rte">{{ page.content | split: '[lang2]' | first }}
+    {% form 'contact' %}
+      {% if form.posted_successfully? %}
+      <p class="note form-success" {% if settings.enable_multilang %}data-translate="contact.form.post_success"{% endif %}>
+      {{ 'contact.form.post_success' | t }}
+      </p>
+      {% endif %}
+    {{ form.errors | default_errors }}
+      <div id="contactFormWrapper">
+        <div class="contactFormLayout">
+          <label for="ContactFormSubject"><span>Subject</span><em>*</em></label>
+          <select id="contactFormSubject" required name="contact[subject]">
+            <option disabled selected value="">Choose a Subject</option>
+            <option>Order Status</option>
+            <option>Product Information</option>
+            <option>Returns/Refunds</option>
+            <option>Other</option>
+          </select>
+          <label id="contactFormOrder"><span>Order Number</span></label>
+          <input type="text" id="contactFormOrder" name="contact[ordernumber]" autocapitalize="words" placeholder="Order Number">
+          <label id="contactFormMessage"><span>Your Message</span><em>*</em></label>
+          <textarea rows="10" required name="contact[message]" id="contactFormMessage" placeholder="Please leave your message, problem or feedback here"></textarea>
+        </div>
+        <div class="contactFormLayout">
+          <label id="contactFormFName"><span>First Name</span><em>*</em></label>
+          <input type="text" id="contactFormFName" required name="contact[firstName]" autocapitalize="words" placeholder="First Name">
+          <label id="contactFormLName"><span>Last Name</span><em>*</em></label>
+          <input type="text" id="contactFormLName" required name="contact[lastName]" autocapitalize="words" placeholder="Last Name">
+          <label id="contactFormEmail"><span>Email</span><em>*</em></label>
+          <input type="email" value="" required="required" name="contact[email]" id="contactFormEmail" autocorrect="off" autocapitalize="off" placeholder="Email">
+          <label id="contactFormPhone"><span>Phone</span></label>
+          <input type="tel" id="contactFormPhone" name="contact[phone]" placeholder="Phone Number">
+          <input type="submit" id="contactFormButton" class="btn left" value="{{ 'contact.form.submit_contact' | t }}">
+        </div>
+      </div>
+    </div>
+    {% endform %}
+    {% if section.settings.title != blank or section.settings.text != blank %}
+    <div class="right-sidebar">
+      {% if section.settings.title != blank %}
+      <h1 class="service-title">{{ section.settings.title }}</h1>
+      {% endif %}
+      {% if section.settings.text != blank %}
+      {{ section.settings.text }}
+      {% endif %}     
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Contact",
+    "settings": [
+	  {
+		"type": "header",
+		"content": "Right sidebar"
+	  },
+	  {
+		"type": "text",
+		"id": "title",
+		"label": "Title",
+		"default": "Get to know us!"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text",
+		"label": "text"
+	  }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,250 @@
+<div id="mobile-fullpage">
+    {% for block in section.blocks %}  
+    {% comment %} {{block.type}} {% endcomment %}
+    {% comment %} <div class="more-view-wrapper section{% if forloop.index == 1 %} active{% endif %}" style="margin-top:0" id="wc-section{{ forloop.index }}">   {% endcomment %}
+    <div class="section">
+        {%- if block.type == 'mobile_banner' -%}
+            <div class="mobile-banner">
+                {%- if block.settings.image_01 != blank -%}
+                    <img class="lazy blur" src="{{ block.settings.image_01 | img_url: 'master' }}" data-src="{{ block.settings.image_01 | img_url: 'master' }}"  alt="image_01">
+                  {%-endif-%}   
+            </div>
+         {%-elsif block.type == 'header_text' -%}   
+            {%- if block.settings.header_line != blank -%}
+                <h1 class="banner_header">{{ block.settings.header_line  }}</h1>
+            {%-endif-%}
+            {%- if block.settings.header_message != blank -%}
+                <div class="banner_msg">
+                    {{ block.settings.header_message  }}
+                </div>
+            {%-endif-%}
+         {%-elsif block.type == 'desktop_banner' -%}   
+         <div class="desktop-banner">
+            {%- if block.settings.image_02 == blank and block.settings.image_01 != blank -%}
+             <img class="lazy blur" src="{{ block.settings.image_01 | img_url: 'master' }}" data-src="{{ block.settings.image_01 | img_url: 'master' }}"  alt="image_01">
+            {%-else-%}   
+            <div class="wc-image-text-part">
+                <div class="wc-image-text-left " style="background:url('{{ block.settings.image_01 | img_url: 'master' }}') no-repeat;    background-size: 100% 100%;">
+                    <br> <br> <br>{% comment %} <img class="lazy blur" id="imageg" src="{{ block.settings.image_01 | img_url: 'master' }}" data-src="{{ block.settings.image_01 | img_url: 'master' }}"  alt="image_01"> {% endcomment %}
+                </div>
+                <div class="wc-image-text-right " style="background:url('{{ block.settings.image_02 | img_url: 'master' }}')no-repeat;   background-size: 100% 100%;">
+                    <br> <br> <br> {% comment %} <img class="lazy blur" id="imageg" src="{{ block.settings.image_02 | img_url: 'master' }}" data-src="{{ block.settings.image_02 | img_url: 'master' }}"  alt="image_02"> {% endcomment %}
+                </div>
+                
+            </div>
+             {%-endif-%}
+         </div>
+         {%- else -%}
+         <div class="short-prodcut">
+           <div class="products-grid row">
+         {% for product in collections[block.settings.featured_collection].products limit:4 %}
+            {%- assign count = count | plus: 1 -%} 
+            {%- assign count_1 = count_1 | plus:1 -%}
+            <div class="grid-item col-xs-6 col-sm-4 col-md-3 product-wrap" style="{% for tag in product.tags %}{% if tag contains 'FEBSALE21' or tag contains 'JUNE21SALE' %}display:none;{% endif %}{% endfor %}">
+              {% include 'product-main-grid' %}
+            </div>
+            {%- endfor -%}
+      		</div>
+        </div>
+        {%-endif-%}
+    </div>
+      {% comment %} <div class="mobile-slider">
+        {%- if block.settings.image_01 != blank -%}
+        <div>
+          <a href="{{ block.settings.btn_link_01 }}">
+            <div class="mobile-section-overlay {{ block.settings.image_01_overlay }}"></div>
+            
+          </a>  
+         
+        </div>
+        {%- endif -%}
+     </div> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+    {%endfor%}
+       
+</div>
+    
+    <style>
+    .mobile-section-overlay.disable{opacity:0;display:none;}
+    .mobile-section-overlay.enable {opacity: 0.5;position: absolute;left: 0;right: 0;top: 0;bottom: 0;background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgb(0,0,0,1));z-index: 1;}
+    .mobile-section-text-overlay {z-index:2;position:relative;}
+    </style>
+    
+    {% schema %}
+     {
+      "name": "Collection Banner",
+      "max_blocks": 999,
+    
+      "blocks": [
+        {
+          "type": "mobile_banner",
+          "name": "Mobile Section",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image_01",
+              "label": "Image 01"
+            }            
+          ]
+        },
+        {
+            "type": "desktop_banner",
+            "name": "Desktop Section",
+            "settings": [
+              {
+                "type": "image_picker",
+                "id": "image_01",
+                "label": "Image 01"
+              },
+              {
+                "type": "image_picker",
+                "id": "image_02",
+                "label": "Image 02"
+              }
+            ]
+        },
+        {
+            "type": "header_text",
+            "name": "Header Text Section",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "header_line",
+                    "label": "Heading",
+                    "default": "Daily Paper x Wekafore"
+                },
+                {
+                    "type": "textarea",
+                    "id": "header_message",
+                    "label": "Header message",
+                    "default": "Test"
+                 }
+                             
+            ]
+        },
+        {
+            "type": "collection_selector",
+            "name": "collection",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "featured_collection",
+                    "label": "Featured collection"
+                  }
+                          
+            ]
+        }
+      ]
+    }
+    {% endschema %}
+    {% style %}
+    .product-bottom-wc {
+        width: 100%;
+        float: left;
+        margin-top: 10px;
+    }
+    .wc-image-text-part .wc-image-text-left {
+        width: 50%;
+        display: table-cell;
+        vertical-align: middle;
+        position: relative;
+        /* height: 100%; */
+        padding: 20%;
+    }
+    .wc-image-text-part .wc-image-text-right {
+        width: 50%;
+        display: table-cell;
+        vertical-align: middle;
+        position: relative;
+        /* height: 100%; */
+        padding: 20%;
+    }
+    .banner_header {
+        text-align: center;
+		font-size:28px;
+        font-family: commuters-sans;
+		font-wight:600;
+        color: #000;
+        opacity: 1;
+        margin: 40px auto;
+    }
+    .banner_msg p {
+        text-align: center;
+        font-family: 'Avenir LT Std';
+		font-size: 16px;
+    	font-weight: 400;
+        letter-spacing: 0px;
+        color: #222222;
+        opacity: 1;
+        margin: 20px auto;
+		width:61%;
+		line-height:24px;
+    }
+    .section {
+        margin: 1px auto;
+    }
+    .desktop-banner{
+        display:block;
+    }
+    .mobile-banner {
+        display: none;
+    }
+.col-md-3 {
+    
+    z-index: 999999 !important;
+	padding: 0 0 0 7px;
+}
+.products-grid .grid-item {
+    padding: 0 0 0 7px;
+    margin-bottom: 12px;
+}
+.coll-top-bar {
+    margin: 30px auto;
+}
+    @media only screen and (max-width: 767px) {
+		div#mobile-fullpage {
+            margin-top: 48px;
+        }
+        .desktop-banner{
+            display:none !important;
+        }
+        .mobile-banner {
+            display: block !important;
+        }
+        .banner_header{
+			font-size:28px;
+            font-family: commuters-sans;
+			font-wight:600;
+        }
+        .banner_msg p {
+            text-align: center;
+            font-family: 'Avenir LT Std';
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0px;
+            color: #222222;
+            opacity: 1;
+            margin: 20px auto;
+            width:100%;
+			ling-height:24px;
+        }
+.site-footer .footer-top {
+            display: block !important;
+        }
+        .site-footer h1.service-title {
+            margin: 0;
+            display: none;
+        }
+        
+        .site-footer .dp-new-footer {
+            
+            display: none;
+        }
+        .site-footer .col-footer {
+            padding-right: 18px;
+            padding-left: 18px;
+            text-align: center;
+            display: flow-root;
+        }
+      }
+    {% endstyle %}

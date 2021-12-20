@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="dp-unite-hub">DAILY PAPER <BR> UNITE HUB</div>
+    {% section 'unite-heading2' %}
+    {% section 'unite-sections2' %}
+    <div class="unite-product">
+        <div class="freeshipping">Free shipping on all European orders over €99</div>
+        <div class="securepayments">Secured Payment Methods &nbsp; <img
+                src="https://cdn.shopify.com/s/files/1/0617/1881/files/paymentsmethods.jpg?69550"></div>
+        {% section 'unite-collection2' %}
+    </div>
+</div>
+{% if settings.enable_quick_view %}
+{% include 'quick-view-template' %}
+{% endif %}
+<script>
+    var body = document.body;
+    body.classList.add("template-index");
+</script>

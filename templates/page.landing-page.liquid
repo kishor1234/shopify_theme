@@ -1,0 +1,20 @@
+{%- section 'landing-page' -%}
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 4,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+{%- section 'mobile-landing-page-v2' -%}

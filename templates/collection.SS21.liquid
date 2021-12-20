@@ -1,0 +1,197 @@
+<div id="fullpage" class="landing-desktop-section"> 
+ 
+ <p style="text-align: center;">
+  
+  <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/Palm-WebHALF_2048x2048.jpg?v=1620637463" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0617/1881/files/Palm_600x600.jpg?v=1620045919">
+  </p>
+<p><br></p>
+  
+ <p style="center;margin-left: 30px;margin-right: 30px;text-align: center;font-weight: bold;font-size: 20px;">   
+ SPRING SUMMER 2021 COLLECTION, CAPTURING CULTURAL PAST, PRESENT AND FUTURE 
+ 
+   <br>
+   </p>
+<p style="text-align: center;font-size: 14px;margin-left: 30px;margin-right: 30px;">  
+The Royal, The Activist, and The Warrior stand as beacons of cultural past, present, and future, carrying our ancestors' wisdom into present times and the future days. Through a sensory experience of the SS21 collection, we explore how the prosperous pre-colonial history influenced a diverse and modern diaspora and why this prominent past is pivotal for the growth of a strong community. The collection presents soft color palettes, custom-developed materials and a unique blend of contemporary and classic silhouettes.  
+  
+  </p>
+  
+  {%- assign Slider = "Desktop" -%}
+
+<div id="section_Resort_C" class="index-section section">   
+    <div class="landing-product-list">
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["ss21-carousel"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Resort-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+      <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ Slider }}').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 4,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+
+  <p style="text-align: center;">
+  <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/Activist2-WebFULL_2048x2048.jpg?v=1620643359" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0617/1881/files/Activist2-WebFULL_2048x2048.jpg?v=1620643359">
+  </p>
+ 
+   <p style="text-align: center;">
+<img src="https://cdn.shopify.com/s/files/1/0617/1881/files/WarriorRising-WebFULL_2048x2048.jpg?v=1620643424" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0617/1881/files/WarriorRising-WebFULL_2048x2048.jpg?v=1620643424"> 
+  </p>
+ 
+  
+ 
+  
+  
+</div>
+
+
+<div id="mobile-fullpage" class="landing-mobile-section">
+  <p style="margin-top: 60px;text-align: center;"></p>
+
+  
+
+
+  <p style="margin-top: 60px;text-align: center;">
+    <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/Palm_600x600.jpg?v=1620045919" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0617/1881/files/Palm_600x600.jpg?v=1620045919">
+
+</p>
+<p><br></p>
+  
+
+
+  
+     <p style="text-align: center;margin-left: 30px;margin-right: 30px;text-align: center;"><strong>SPRING SUMMER 2021 COLLECTION, CAPTURING CULTURAL PAST, PRESENT AND FUTURE </strong></p>
+<p style="text-align: center;font-size: 12px;margin-left: 30px;margin-right: 30px;">  
+The Royal, The Activist, and The Warrior stand as beacons of cultural past, present, and future, carrying our ancestors' wisdom into present times and the future days. Through a sensory experience of the SS21 collection, we explore how the prosperous pre-colonial history influenced a diverse and modern diaspora and why this prominent past is pivotal for the growth of a strong community. The collection presents soft color palettes, custom-developed materials and a unique blend of contemporary and classic silhouettes.
+  </p>   
+  <p><br></p>
+
+  <div style="padding:125% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/544993020?title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+  
+  
+
+   
+  
+
+  
+ 
+  
+    
+  
+  
+
+
+
+  
+  {%- assign Slider = "mobile" -%}
+
+  <div id="section_Resort_C" class="index-section section">   
+    <div class="landing-product-list">
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["ss21-carousel"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Resort-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+  
+  
+      <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ Slider }}').slick({
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 2,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+<p><br></p>
+  
+  
+<p style="text-align: center;">
+<img src="https://cdn.shopify.com/s/files/1/0617/1881/files/RenduRisingSpike-WebHALF0062_600x600.jpg?v=1620637481"  alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0617/1881/files/RenduLevitating-WebFULL0062_600x600.jpg?v=1620053908">
+  
+   
+  </p>
+  
+<p style="text-align: center;">
+  
+  <img src="https://cdn.shopify.com/s/files/1/0617/1881/files/Activist2-WebHALF_600x600.jpg?v=1620637789" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0617/1881/files/RenduWebFULL_600x600.jpg?v=1620054269">
+  
+  </p>
+  
+</div>
+
+
+
+
+{%- section 'collection-template' -%}

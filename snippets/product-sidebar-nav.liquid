@@ -1,0 +1,66 @@
+<h2 class="servicesidebar"><a class="currentshop" href="/collections/all"><span class="arrow">/</span>Go back to shop</a></h2>
+<br>
+<h2 class="servicesidebar">Categories</h2>
+<ul class="service-sidebar-links">
+  {% for link in linklists.collections-menu.links %}
+  	{% assign i = forloop.index | downcase %}
+    {% assign cat = link.title | downcase %}
+    <li {% if linklists[link.handle] != empty %}class="dropdown {% if settings.display_megamenu and items_list contains cat %}mega-menu{% endif %}"{% endif %}>
+      <a href="{{ link.url }}" class="{% if link.active %}current{% endif %}">
+        <span>
+          {% if settings.enable_multilang %}
+          <span class="lang1">{{ link.title | split: '|' | first }}</span>
+          <span class="lang2">{{ link.title | split: '|' | last }}</span>
+          {% else %}
+          {{ link.title | split: '|' | first }}
+          {% endif %}
+        </span>
+        {% if linklists[link.handle] != empty and settings.show_dropdown_arrow %}<span class="icon-dropdown"></span>{% endif %}
+      </a> 	
+  </li>
+  {% endfor %}
+</ul>
+<br>
+<h2 class="servicesidebar"><a class="currentfaq" href="/pages/faq">FAQ</a></h2>
+<br>
+<h2 class="servicesidebar">Service</h2>
+<ul class="service-sidebar-links">
+  {% for link in linklists.service-menu.links %}
+  	{% assign i = forloop.index | downcase %}
+    {% assign cat = link.title | downcase %}
+    <li {% if linklists[link.handle] != empty %}class="dropdown {% if settings.display_megamenu and items_list contains cat %}mega-menu{% endif %}"{% endif %}>
+      <a href="{{ link.url }}" class="{% if link.active %}current{% endif %}">
+        <span>
+          {% if settings.enable_multilang %}
+          <span class="lang1">{{ link.title | split: '|' | first }}</span>
+          <span class="lang2">{{ link.title | split: '|' | last }}</span>
+          {% else %}
+          {{ link.title | split: '|' | first }}
+          {% endif %}
+        </span>
+        {% if linklists[link.handle] != empty and settings.show_dropdown_arrow %}<span class="icon-dropdown"></span>{% endif %}
+      </a> 	
+  </li>
+  {% endfor %}
+</ul>
+<br>
+<h2 class="servicesidebar">Stay Connected</h2>
+<ul class="service-sidebar-links">
+  {% for link in linklists.stay-connected-menu.links %}
+  	{% assign i = forloop.index | downcase %}
+    {% assign cat = link.title | downcase %}
+    <li {% if linklists[link.handle] != empty %}class="dropdown {% if settings.display_megamenu and items_list contains cat %}mega-menu{% endif %}"{% endif %}>
+      <a href="{{ link.url }}" class="{% if link.active %}current{% endif %}">
+        <span>
+          {% if settings.enable_multilang %}
+          <span class="lang1">{{ link.title | split: '|' | first }}</span>
+          <span class="lang2">{{ link.title | split: '|' | last }}</span>
+          {% else %}
+          {{ link.title | split: '|' | first }}
+          {% endif %}
+        </span>
+        {% if linklists[link.handle] != empty and settings.show_dropdown_arrow %}<span class="icon-dropdown"></span>{% endif %}
+      </a> 	
+  </li>
+  {% endfor %}
+</ul>

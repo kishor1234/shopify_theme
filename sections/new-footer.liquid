@@ -1,0 +1,655 @@
+
+<div data-section-type="footer" style="margin-top:30px;" id="footer">
+  {% if section.blocks != blank %}
+    <div class="container footer-div">
+      <div class="row" style="padding-top:30px;" data-num-blocks="{{ section.blocks.size }}">
+        {% for block in section.blocks %}
+          
+          {% case block.type %}
+          {% comment %} {% when '@app' %}
+            <div class="section-footer__row__col">
+              
+              {% render block %}
+            </div> {% endcomment %}
+
+          {% when 'menu' %}
+            <div class="col-lg-3 desk-right" role="navigation" aria-label="{{ 'layout.footer.navigation_aria_label' | t | escape }}" {{ block.shopify_attributes }}>
+              <div id="desktop">
+                {% if block.settings.title != blank %}
+                  {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
+                  <h6  data-collapse="#{{- block.settings.title | escape -}}" class="section-footer__title{% if title_word_count < 4 %} no-wrap{% endif %}">
+                    {{- block.settings.title | escape -}}
+                   
+                  </h6>
+                {% endif %}
+  
+                {% if block.settings.menu != blank %}
+                  <ul id="{{- block.settings.title | escape -}}" class="section-footer__menu-block__menu" {{ block.shopify_attributes }}>
+                    {% for link in linklists[block.settings.menu].links %}
+                    {% unless link.title == "Internships" or link.title == "Unite"%}
+                      <li>
+                        <a href="{{ link.url }}" {% if link.title.size < 25 %}class="no-wrap"{% endif %}>
+                          {{- link.title -}}
+                        </a>
+                      </li>
+                    {% endunless %}
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+              <div id="mobile">
+                
+                <div class="accordion-container">
+                  {% if block.settings.title != blank %}
+                    {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
+                    <h6 id='mobile-only-view' data-collapse="#{{- block.settings.title | escape -}}" class="section-footer__title{% if title_word_count < 4 %} no-wrap{% endif %} accordion-toggle">
+                      {{- block.settings.title | escape -}}
+                      <span id="downar">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18.823" height="11.412" viewBox="0 0 18.823 11.412">
+                          <path id="Path_679" data-name="Path 679" d="M1042,1432l9,8-9,8" transform="translate(1449.412 -1040.588) rotate(90)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" opacity="0.5"/>
+                        </svg>
+    
+                      </span>
+                    </h6>
+                  {% endif %}
+                  <div class="accordion-content">
+                    {% if block.settings.menu != blank %}
+                      <ul id="{{- block.settings.title | escape -}}" class="section-footer__menu-block__menu" {{ block.shopify_attributes }}>
+                        {% for link in linklists[block.settings.menu].links %}
+                          {% unless link.title == "Internships" or link.title == "Unite"%}
+                            <li>
+                              <a href="{{ link.url }}" {% if link.title.size < 25 %}class="no-wrap"{% endif %}>
+                                {{- link.title -}}
+                              </a>
+                            </li>
+                          {% endunless %}
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                  
+                </div>
+                
+  
+               
+              </div>
+            </div>
+
+          {% when 'text' %}
+            <div class="col-lg-3" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
+                <h6 class="section-footer__title{% if title_word_count < 4 %} no-wrap{% endif %}">
+                  {{- block.settings.title | escape -}}
+                </h6>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <div class="section-footer__text">
+                  {{- block.settings.text -}}
+                </div>
+              {% endif %}
+
+              {% if block.settings.image != blank %}
+                <span class="section-footer__text-block__image">
+                  {%- capture double_image_width -%}{{ block.settings.image_width | times: 2 }}x{%- endcapture -%}
+                  <div class="rimage-outer-wrapper" style="width: {{ block.settings.image_width }}px">
+                    <div class="rimage-wrapper lazyload--placeholder" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%">
+                      <img class="rimage__image lazyload fade-in" data-src="{{ block.settings.image | img_url: double_image_width }}" alt="{{ shop.name | escape }}" />
+                    </div>
+                  </div>
+                </span>
+              {% endif %}
+
+              {% if block.settings.show_social_icons != blank %}
+                <div class="section-footer__text-block__social">
+                  {%comment%}
+                  {% capture icon_size %}{% if block.settings.soc_icons_large %}x46{% else %}x30{% endif %}{% endcapture %}
+                  {% capture container_class %}{% if block.settings.soc_icons_large %}social-links--large{% else %}{% endif %}{% endcapture %}
+                  {% render 'social-icons', icon_setting: settings.social_custom_icon, icon_size: icon_size, container_class: container_class %}
+                    {%endcomment%}  
+                   <h1 class="service-title social">
+                      <a href="https://www.instagram.com/dailypaper/" target="_self" onclick="window.open(this.href,'_blank');return false;">
+                        <svg enable-background="new 0 0 512 512" width="16" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m352 0h-192c-88.352 0-160 71.648-160 160v192c0 88.352 71.648 160 160 160h192c88.352 0 160-71.648 160-160v-192c0-88.352-71.648-160-160-160zm112 352c0 61.76-50.24 112-112 112h-192c-61.76 0-112-50.24-112-112v-192c0-61.76 50.24-112 112-112h192c61.76 0 112 50.24 112 112z"></path><path d="m256 128c-70.688 0-128 57.312-128 128s57.312 128 128 128 128-57.312 128-128-57.312-128-128-128zm0 208c-44.096 0-80-35.904-80-80 0-44.128 35.904-80 80-80s80 35.872 80 80c0 44.096-35.904 80-80 80z"></path><circle cx="393.6" cy="118.4" r="17.056"></circle></svg></a>
+                      <a href="https://www.facebook.com/Dailypaper/" target="_self" onclick="window.open(this.href,'_blank');return false;"> 
+                        <svg enable-background="new 0 0 24 24" width="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m15.997 3.985h2.191v-3.816c-.378-.052-1.678-.169-3.192-.169-3.159 0-5.323 1.987-5.323 5.639v3.361h-3.486v4.266h3.486v10.734h4.274v-10.733h3.345l.531-4.266h-3.877v-2.939c.001-1.233.333-2.077 2.051-2.077z"></path></svg></a>
+                      <a href="https://www.youtube.com/channel/UCa4TSxPJEZB9NGxhnm1uWjQ" target="_self" onclick="window.open(this.href,'_blank');return false;">
+                        <svg viewBox="0 -62 512.00199 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m334.808594 170.992188-113.113282-61.890626c-6.503906-3.558593-14.191406-3.425781-20.566406.351563-6.378906 3.78125-10.183594 10.460937-10.183594 17.875v122.71875c0 7.378906 3.78125 14.046875 10.117188 17.832031 3.308594 1.976563 6.976562 2.96875 10.652344 2.96875 3.367187 0 6.742187-.832031 9.847656-2.503906l113.117188-60.824219c6.714843-3.613281 10.90625-10.59375 10.9375-18.222656.027343-7.628906-4.113282-14.640625-10.808594-18.304687zm-113.859375 63.617187v-91.71875l84.539062 46.257813zm0 0"></path><path d="m508.234375 91.527344-.023437-.234375c-.433594-4.121094-4.75-40.777344-22.570313-59.421875-20.597656-21.929688-43.949219-24.59375-55.179687-25.871094-.929688-.105469-1.78125-.203125-2.542969-.304688l-.894531-.09375c-67.6875-4.921874-169.910157-5.5937495-170.933594-5.59765575l-.089844-.00390625-.089844.00390625c-1.023437.00390625-103.246094.67578175-171.542968 5.59765575l-.902344.09375c-.726563.097657-1.527344.1875-2.398438.289063-11.101562 1.28125-34.203125 3.949219-54.859375 26.671875-16.972656 18.445312-21.878906 54.316406-22.382812 58.347656l-.058594.523438c-.152344 1.714844-3.765625 42.539062-3.765625 83.523437v38.3125c0 40.984375 3.613281 81.808594 3.765625 83.527344l.027344.257813c.433593 4.054687 4.746093 40.039062 22.484375 58.691406 19.367187 21.195312 43.855468 24 57.027344 25.507812 2.082031.238282 3.875.441406 5.097656.65625l1.183594.164063c39.082031 3.71875 161.617187 5.550781 166.8125 5.625l.15625.003906.15625-.003906c1.023437-.003907 103.242187-.675781 170.929687-5.597657l.894531-.09375c.855469-.113281 1.816406-.214843 2.871094-.324218 11.039062-1.171875 34.015625-3.605469 54.386719-26.019532 16.972656-18.449218 21.882812-54.320312 22.382812-58.347656l.058594-.523437c.152344-1.71875 3.769531-42.539063 3.769531-83.523438v-38.3125c-.003906-40.984375-3.617187-81.804687-3.769531-83.523437zm-26.238281 121.835937c0 37.933594-3.3125 77-3.625 80.585938-1.273438 9.878906-6.449219 32.574219-14.71875 41.5625-12.75 14.027343-25.847656 15.417969-35.410156 16.429687-1.15625.121094-2.226563.238282-3.195313.359375-65.46875 4.734375-163.832031 5.460938-168.363281 5.488281-5.082032-.074218-125.824219-1.921874-163.714844-5.441406-1.941406-.316406-4.039062-.558594-6.25-.808594-11.214844-1.285156-26.566406-3.042968-38.371094-16.027343l-.277344-.296875c-8.125-8.464844-13.152343-29.6875-14.429687-41.148438-.238281-2.710937-3.636719-42.238281-3.636719-80.703125v-38.3125c0-37.890625 3.304688-76.914062 3.625-80.574219 1.519532-11.636718 6.792969-32.957031 14.71875-41.574218 13.140625-14.453125 26.996094-16.054688 36.160156-17.113282.875-.101562 1.691407-.195312 2.445313-.292968 66.421875-4.757813 165.492187-5.464844 169.046875-5.492188 3.554688.023438 102.589844.734375 168.421875 5.492188.808594.101562 1.691406.203125 2.640625.3125 9.425781 1.074218 23.671875 2.699218 36.746094 16.644531l.121094.128906c8.125 8.464844 13.152343 30.058594 14.429687 41.75.226563 2.558594 3.636719 42.171875 3.636719 80.71875zm0 0"></path></svg>
+                      </a>
+                      <a href="https://www.twitter.com/dailypaper" target="_self" onclick="window.open(this.href,'_blank');return false;">
+                        <svg width="16" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m512 97.248c-19.04 8.352-39.328 13.888-60.48 16.576 21.76-12.992 38.368-33.408 46.176-58.016-20.288 12.096-42.688 20.64-66.56 25.408-19.264-20.512-46.72-33.216-76.672-33.216-58.112 0-104.896 47.168-104.896 104.992 0 8.32.704 16.32 2.432 23.936-87.264-4.256-164.48-46.08-216.352-109.792-9.056 15.712-14.368 33.696-14.368 53.056 0 36.352 18.72 68.576 46.624 87.232-16.864-.32-33.408-5.216-47.424-12.928v1.152c0 51.008 36.384 93.376 84.096 103.136-8.544 2.336-17.856 3.456-27.52 3.456-6.72 0-13.504-.384-19.872-1.792 13.6 41.568 52.192 72.128 98.08 73.12-35.712 27.936-81.056 44.768-130.144 44.768-8.608 0-16.864-.384-25.12-1.44 46.496 29.984 101.6 47.104 161.024 47.104 193.152 0 298.752-160 298.752-298.688 0-4.64-.16-9.12-.384-13.568 20.832-14.784 38.336-33.248 52.608-54.496z"></path></svg></a>
+                    </h1>
+              </div>
+              {% endif %}
+            </div>
+
+          {% when 'newsletter' %}
+            <div class="col-lg-3" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                {%- assign title_word_count = block.settings.title | split: ' ' | size -%}
+                <h6 class="section-footer__title{% if title_word_count < 4 %} no-wrap{% endif %}">
+                  {{- block.settings.title | escape -}}
+                </h6>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <div class="section-footer__text">
+                  {{ block.settings.text }}
+                </div>
+              {% endif %}
+
+              <div class="signup-form">
+                {% form 'customer', id: 'footer_newsletter_signup' %}
+                  {% if form.posted_successfully? %}
+                    <div class="section-footer__newsletter-block__message signup-form__response signup-form__response--success">
+                      <h6>{{ 'layout.signup.post_success' | t }}</h6>
+                    </div>
+                  {% else %}
+                    {% if form.errors %}
+                      {% for field in form.errors %}
+                        <p class="section-footer__newsletter-block__message--error signup-form__response signup-form__response--error">
+                          {{ field | capitalize }} - {{ form.errors.messages[field] }}
+                        </p>
+                      {% endfor %}
+                    {% endif %}
+                    <input type="hidden" name="contact[tags]" value="prospect,newsletter"/>
+                    <p id="new-para">
+                      <input type="email"
+                        id="signup_email"
+                        placeholder="Enter your email address"
+                        class="signup-form__email"
+                        value=""
+                        name="contact[email]"
+                        aria-label="{{ 'layout.signup.input_label' | t | escape }}" />
+                        <button class="button signup-form__button" id="newbutton" type="submit">
+                         Join
+                        </button>
+                    </p>
+                    
+                  {% endif %}
+                {% endform %}
+                <div id="payment_method_icon">
+                  {% if section.settings.show_payment_icons %}
+                    
+                      {% for type in shop.enabled_payment_types %}
+                        {{ type | payment_type_svg_tag: class: 'section-footer__payment-icon' }}
+                      {% endfor %}
+                   
+          
+                  {% endif %}
+                </div>
+              </div>
+              
+
+              {% if block.settings.show_social_icons != blank %}
+                <div class="section-footer__newsletter-block__social">
+                  {% capture icon_size %}{% if block.settings.soc_icons_large %}x46{% else %}x30{% endif %}{% endcapture %}
+                  {% capture container_class %}{% if block.settings.soc_icons_large %}social-links--large{% else %}{% endif %}{% endcapture %}
+                  {% render 'social-icons', icon_setting: settings.social_custom_icon, icon_size: icon_size, container_class: container_class %}
+                </div>
+              {% endif %}
+            </div>
+
+          {% endcase %}
+        {% endfor %}
+        
+      </div>
+    </div>
+  {% endif %}
+ 
+  {%- assign showing_localization = false -%}
+  {%- if section.settings.show_locale_selector and shop.published_locales.size > 1 -%}{%- assign showing_localization = true -%}{%- endif -%}
+  {%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}{%- assign showing_localization = true -%}{%- endif -%}
+
+</div>
+<div class="container footer-div">
+  <div class="row">
+    <div class="col-lg-4" id="mobile">
+      <div class="mobile-payment-icon">
+      {% if section.settings.show_payment_icons %}
+                    
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag: class: 'section-footer__payment-icon' }}
+        {% endfor %}
+     
+
+    {% endif %}
+    </div>
+  </div>
+    <div class="col-lg-4" id="mobile">
+      <p class="footer-text">Daily Paper Holding B.V. is the holder of several Daily Paper® trademarks. These trademarks may not be used by third parties without permission of Daily Paper Holding B.V.</p>
+    </div>
+    <div class="col-lg-12" id="desktop">
+      <p class="footer-text-desktop">Daily Paper Holding B.V. is the holder of several Daily Paper® trademarks. These trademarks may not be used by third parties without permission of Daily Paper Holding B.V.</p>
+    </div>
+    <div class="col-lg-4 social-desk" id="desktop" data-call="{{ template }}">
+     
+       <ul class="d">
+        <li><a href="https://www.facebook.com/Dailypaper/"><svg xmlns="http://www.w3.org/2000/svg" width="15.206" height="15.206" viewbox="0 0 15.206 15.206"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M15.206,7.6a7.6,7.6,0,1,0-7.6,7.6c.045,0,.089,0,.134,0V9.287H6.1v-1.9H7.737v-1.4a2.287,2.287,0,0,1,2.441-2.51,13.269,13.269,0,0,1,1.464.074v1.7h-1c-.787,0-.941.374-.941.924V7.38h1.886l-.247,1.9H9.7v5.628A7.606,7.606,0,0,0,15.206,7.6Z"></path></svg></a></li>
+        <li><a href="https://www.instagram.com/dailypaper/"><svg xmlns="http://www.w3.org/2000/svg" width="15.265" height="15.265" viewbox="0 0 15.265 15.265"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M209.922,208.461A1.461,1.461,0,1,1,208.461,207,1.461,1.461,0,0,1,209.922,208.461Zm0,0" transform="translate(-200.829 -200.829)"></path><path class="a" d="M142.494,136.5a1.451,1.451,0,0,0-.832-.832,2.424,2.424,0,0,0-.814-.151c-.462-.021-.6-.026-1.771-.026s-1.309,0-1.771.026a2.426,2.426,0,0,0-.814.151,1.452,1.452,0,0,0-.832.832,2.426,2.426,0,0,0-.151.814c-.021.462-.026.6-.026,1.771s0,1.309.026,1.771a2.425,2.425,0,0,0,.151.814,1.451,1.451,0,0,0,.832.832,2.421,2.421,0,0,0,.814.151c.462.021.6.026,1.771.026s1.309,0,1.771-.026a2.421,2.421,0,0,0,.814-.151,1.451,1.451,0,0,0,.832-.832,2.427,2.427,0,0,0,.151-.814c.021-.462.025-.6.025-1.771s0-1.309-.025-1.771A2.422,2.422,0,0,0,142.494,136.5Zm-3.416,4.835a2.25,2.25,0,1,1,2.25-2.25A2.25,2.25,0,0,1,139.078,141.332Zm2.339-4.064a.526.526,0,1,1,.526-.526A.526.526,0,0,1,141.417,137.268Zm0,0" transform="translate(-131.445 -131.449)"></path><path class="a" d="M7.632,0a7.632,7.632,0,1,0,7.632,7.632A7.633,7.633,0,0,0,7.632,0Zm4.356,9.439a3.215,3.215,0,0,1-.2,1.064A2.241,2.241,0,0,1,10.5,11.785a3.218,3.218,0,0,1-1.064.2c-.467.021-.617.026-1.807.026s-1.34-.005-1.807-.026a3.218,3.218,0,0,1-1.064-.2A2.241,2.241,0,0,1,3.48,10.5a3.215,3.215,0,0,1-.2-1.064c-.022-.467-.027-.617-.027-1.807s.005-1.34.026-1.807a3.216,3.216,0,0,1,.2-1.064A2.242,2.242,0,0,1,4.762,3.48a3.218,3.218,0,0,1,1.064-.2c.467-.021.617-.026,1.807-.026s1.34.005,1.807.027a3.219,3.219,0,0,1,1.064.2,2.242,2.242,0,0,1,1.282,1.282,3.215,3.215,0,0,1,.2,1.064c.021.467.026.617.026,1.807S12.01,8.972,11.988,9.439Zm0,0" transform="translate(0 0)"></path></svg></a></li>
+        <li><a href="https://www.twitter.com/dailypaper"><svg xmlns="http://www.w3.org/2000/svg" width="15.206" height="15.206" viewbox="0 0 15.206 15.206"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M7.6,0a7.6,7.6,0,1,0,7.6,7.6A7.6,7.6,0,0,0,7.6,0Zm3.472,5.928q.005.112,0,.226a4.932,4.932,0,0,1-4.965,4.965h0a4.94,4.94,0,0,1-2.675-.784,3.55,3.55,0,0,0,.416.024,3.5,3.5,0,0,0,2.168-.747A1.747,1.747,0,0,1,4.393,8.4a1.739,1.739,0,0,0,.788-.03,1.746,1.746,0,0,1-1.4-1.711c0-.008,0-.015,0-.022a1.733,1.733,0,0,0,.79.218,1.747,1.747,0,0,1-.54-2.33,4.955,4.955,0,0,0,3.6,1.823A1.746,1.746,0,0,1,10.6,4.758a3.5,3.5,0,0,0,1.108-.424,1.752,1.752,0,0,1-.767.965,3.481,3.481,0,0,0,1-.275,3.547,3.547,0,0,1-.87.9Zm0,0"></path></svg></a></li>
+        <li><a href="https://www.youtube.com/channel/UCa4TSxPJEZB9NGxhnm1uWjQ"><svg xmlns="http://www.w3.org/2000/svg" width="15.206" height="15.206" viewbox="0 0 15.206 15.206"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M224.113,210.888l2.473-1.424-2.473-1.424Zm0,0" transform="translate(-217.457 -201.86)"></path><path class="a" d="M7.6,0a7.6,7.6,0,1,0,7.6,7.6A7.6,7.6,0,0,0,7.6,0Zm4.751,7.611a12.549,12.549,0,0,1-.2,2.286,1.191,1.191,0,0,1-.838.837,28.9,28.9,0,0,1-3.718.2,27.864,27.864,0,0,1-3.718-.2,1.191,1.191,0,0,1-.838-.838,12.494,12.494,0,0,1-.2-2.285,12.541,12.541,0,0,1,.2-2.285,1.215,1.215,0,0,1,.838-.845,28.9,28.9,0,0,1,3.718-.2,27.8,27.8,0,0,1,3.718.2,1.191,1.191,0,0,1,.838.838,11.909,11.909,0,0,1,.2,2.293Zm0,0"></path></svg></a></li>
+        </ul>
+     
+    </div>
+    <div class="col-lg-4" id="mobile" data-call="{{ template }}">
+      <div class="mobile-payment-icon">
+        <span>
+          <center>
+             <ul class="d">
+        <li><a href="https://www.facebook.com/Dailypaper/"><svg xmlns="http://www.w3.org/2000/svg" width="15.206" height="15.206" viewbox="0 0 15.206 15.206"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M15.206,7.6a7.6,7.6,0,1,0-7.6,7.6c.045,0,.089,0,.134,0V9.287H6.1v-1.9H7.737v-1.4a2.287,2.287,0,0,1,2.441-2.51,13.269,13.269,0,0,1,1.464.074v1.7h-1c-.787,0-.941.374-.941.924V7.38h1.886l-.247,1.9H9.7v5.628A7.606,7.606,0,0,0,15.206,7.6Z"></path></svg></a></li>
+        <li><a href="https://www.instagram.com/dailypaper/"><svg xmlns="http://www.w3.org/2000/svg" width="15.265" height="15.265" viewbox="0 0 15.265 15.265"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M209.922,208.461A1.461,1.461,0,1,1,208.461,207,1.461,1.461,0,0,1,209.922,208.461Zm0,0" transform="translate(-200.829 -200.829)"></path><path class="a" d="M142.494,136.5a1.451,1.451,0,0,0-.832-.832,2.424,2.424,0,0,0-.814-.151c-.462-.021-.6-.026-1.771-.026s-1.309,0-1.771.026a2.426,2.426,0,0,0-.814.151,1.452,1.452,0,0,0-.832.832,2.426,2.426,0,0,0-.151.814c-.021.462-.026.6-.026,1.771s0,1.309.026,1.771a2.425,2.425,0,0,0,.151.814,1.451,1.451,0,0,0,.832.832,2.421,2.421,0,0,0,.814.151c.462.021.6.026,1.771.026s1.309,0,1.771-.026a2.421,2.421,0,0,0,.814-.151,1.451,1.451,0,0,0,.832-.832,2.427,2.427,0,0,0,.151-.814c.021-.462.025-.6.025-1.771s0-1.309-.025-1.771A2.422,2.422,0,0,0,142.494,136.5Zm-3.416,4.835a2.25,2.25,0,1,1,2.25-2.25A2.25,2.25,0,0,1,139.078,141.332Zm2.339-4.064a.526.526,0,1,1,.526-.526A.526.526,0,0,1,141.417,137.268Zm0,0" transform="translate(-131.445 -131.449)"></path><path class="a" d="M7.632,0a7.632,7.632,0,1,0,7.632,7.632A7.633,7.633,0,0,0,7.632,0Zm4.356,9.439a3.215,3.215,0,0,1-.2,1.064A2.241,2.241,0,0,1,10.5,11.785a3.218,3.218,0,0,1-1.064.2c-.467.021-.617.026-1.807.026s-1.34-.005-1.807-.026a3.218,3.218,0,0,1-1.064-.2A2.241,2.241,0,0,1,3.48,10.5a3.215,3.215,0,0,1-.2-1.064c-.022-.467-.027-.617-.027-1.807s.005-1.34.026-1.807a3.216,3.216,0,0,1,.2-1.064A2.242,2.242,0,0,1,4.762,3.48a3.218,3.218,0,0,1,1.064-.2c.467-.021.617-.026,1.807-.026s1.34.005,1.807.027a3.219,3.219,0,0,1,1.064.2,2.242,2.242,0,0,1,1.282,1.282,3.215,3.215,0,0,1,.2,1.064c.021.467.026.617.026,1.807S12.01,8.972,11.988,9.439Zm0,0" transform="translate(0 0)"></path></svg></a></li>
+        <li><a href="https://www.twitter.com/dailypaper"><svg xmlns="http://www.w3.org/2000/svg" width="15.206" height="15.206" viewbox="0 0 15.206 15.206"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M7.6,0a7.6,7.6,0,1,0,7.6,7.6A7.6,7.6,0,0,0,7.6,0Zm3.472,5.928q.005.112,0,.226a4.932,4.932,0,0,1-4.965,4.965h0a4.94,4.94,0,0,1-2.675-.784,3.55,3.55,0,0,0,.416.024,3.5,3.5,0,0,0,2.168-.747A1.747,1.747,0,0,1,4.393,8.4a1.739,1.739,0,0,0,.788-.03,1.746,1.746,0,0,1-1.4-1.711c0-.008,0-.015,0-.022a1.733,1.733,0,0,0,.79.218,1.747,1.747,0,0,1-.54-2.33,4.955,4.955,0,0,0,3.6,1.823A1.746,1.746,0,0,1,10.6,4.758a3.5,3.5,0,0,0,1.108-.424,1.752,1.752,0,0,1-.767.965,3.481,3.481,0,0,0,1-.275,3.547,3.547,0,0,1-.87.9Zm0,0"></path></svg></a></li>
+        <li><a href="https://www.youtube.com/channel/UCa4TSxPJEZB9NGxhnm1uWjQ"><svg xmlns="http://www.w3.org/2000/svg" width="15.206" height="15.206" viewbox="0 0 15.206 15.206"><defs>
+        <style><!--
+        .a{fill:#fff;}
+        --></style>
+        </defs><path class="a" d="M224.113,210.888l2.473-1.424-2.473-1.424Zm0,0" transform="translate(-217.457 -201.86)"></path><path class="a" d="M7.6,0a7.6,7.6,0,1,0,7.6,7.6A7.6,7.6,0,0,0,7.6,0Zm4.751,7.611a12.549,12.549,0,0,1-.2,2.286,1.191,1.191,0,0,1-.838.837,28.9,28.9,0,0,1-3.718.2,27.864,27.864,0,0,1-3.718-.2,1.191,1.191,0,0,1-.838-.838,12.494,12.494,0,0,1-.2-2.285,12.541,12.541,0,0,1,.2-2.285,1.215,1.215,0,0,1,.838-.845,28.9,28.9,0,0,1,3.718-.2,27.8,27.8,0,0,1,3.718.2,1.191,1.191,0,0,1,.838.838,11.909,11.909,0,0,1,.2,2.293Zm0,0"></path></svg></a></li>
+        </ul>
+          </center>
+        </span>
+      </div>
+    </div>
+    
+   
+    
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    
+    
+    $('.accordion-toggle').on('click', function(event){
+        event.preventDefault();
+        // create accordion variables
+        var accordion = $(this);
+        var accordionContent = accordion.next('.accordion-content');
+        
+        // toggle accordion link open class
+        accordion.toggleClass("open");
+        // toggle accordion content
+        accordionContent.slideToggle(250);
+        
+    });
+    
+    
+});
+</script>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "class": "section-footer",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "lower_menu",
+        "label": "Lower footer menu"
+      },
+      {
+        "type": "header",
+        "content": "Social media links",
+        "info": "These are shown inside text and newsletter blocks. Add to the footer and enable inside."
+      },
+      {
+        "type": "header",
+        "content": "Payment methods"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show payment icons",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Language selector",
+        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_locale_selector",
+        "label": "Show language selector",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Currency selector",
+        "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_currency_selector",
+        "label": "Show currency selector",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "@app"
+      },
+      {
+        "type": "menu",
+        "name": "Links",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Quick links"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu",
+            "info": "This menu won't show dropdown items",
+            "default": "footer"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text and social media",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your store"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Share store details, promotions, or brand content with your customers.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "image_width",
+            "min": 30,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Footer image width",
+            "default": 100
+          },
+          {
+            "type": "checkbox",
+            "id": "show_social_icons",
+            "label": "Show social media links",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "soc_icons_large",
+            "label": "Use large social media icons",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "newsletter",
+        "limit": 1,
+        "name": "Newsletter",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Newsletter"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Sign up for exclusive offers, original stories, activism awareness, events and more.</p>"
+          },
+          {
+            "type": "paragraph",
+            "content": "Customers who subscribe will have their email address added to the “accepts marketing” [customer list](/admin/customers?query=&accepts_marketing=1)"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_social_icons",
+            "label": "Show social media links",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "soc_icons_large",
+            "label": "Use large social media icons",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  #ftr {
+    position: fixed;
+    bottom: 0px;
+    width: 100% !important;
+    background: #FFF !important;
+    /* margin-top: 67px !important; */
+    padding-top: 20px;
+}
+
+  
+  ul.d li {
+    list-style: none;
+     
+    display: contents;
+   
+}
+li a svg {
+  height: 20px;
+  width: 20px;
+  margin-left:10px;
+}
+  h6.section-footer__title.no-wrap {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.section-footer__text {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+ul {
+padding: 0px!important;
+}
+  button#newbutton {
+    width: 20%;
+    background: #000;
+    color:#FFF;
+}
+input#signup_email {
+  width:80%;
+  border-color: #000;
+  border-right: none;
+}
+p#new-para {
+  width: 100% !important;
+  display: inline-flex;
+  margin-bottom: 10px;
+}
+.footer-div {
+  margin: auto;
+}
+.col-lg-3 {
+width: 100%;
+padding-left: 60px;
+/* margin: auto 2%; */
+}
+.social-links a svg {
+  color:#000;
+  width: 26px;
+  height: 26px;
+  vertical-align: top;
+}
+#pagefooter a:hover {
+  opacity: 1;
+}
+
+/* .header-logo {
+  padding: 2px 0 0 4px;
+} */
+.prod-main {
+    margin: auto;
+}
+
+span#downar {
+  float: right;
+}
+div#mobile {
+  display: none;
+}
+div#desktop{
+  display:block;
+}
+.mobile-payment-icon {
+  display: none;
+  
+  }
+  p.footer-text-desktop {
+    float: left;
+    margin-left: 50px;
+    width: 100%;
+    font-size: 10px;
+    display: flex;
+}
+@media only screen and (max-width: 767px) {
+  ul.d {
+    margin-top: 20px;
+  }
+  .row {
+    width: 100%;
+    display: block !important; 
+}
+  .open span#downar {
+    transform: rotateZ(360deg);
+}
+span#downar {
+  transform: rotateZ(270deg);
+  float: right;
+}
+  li a svg {
+    height: 25px;
+    width: 25px;
+}
+  .social-mobile {
+  width: 480px;
+  /* position: absolute; */
+  /* display: grid; */
+  /* margin-left: 90px; */
+  margin-top: 30px;
+}
+  .footer-text{
+    text-align:center;
+    margin:40px 20px;
+  }
+  .mobile-payment-icon {
+    display: block !important;
+    text-align: center;
+    margin: auto 18%;
+}
+  div#mobile{
+    display: block !important;
+  }
+  div#desktop{
+    display:none !important;
+  }
+  span#downar svg {
+    /* margin-bottom: 6px; */
+    height: 9px;
+    width: 16px;
+    /*-webkit-transform:rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);*/
+  }
+  div#payment_method_icon {
+    display: none;
+}
+  .col-lg-3 {
+    width: 100%;
+    margin-bottom:30px;
+    padding-left: 10px !important;
+    /* margin: auto 2%; */
+  }
+  h6#mobile-only-view {
+    border-bottom: 1px #000 solid;
+  }
+  .accordion-container {
+    margin: 0 0 10px;
+  }
+  .accordion-toggle {
+    position: relative;
+    display: block;
+    padding: 10px;
+    font-weight: 300;
+    text-decoration: none;
+  }
+  .accordion-toggle.open,.accordion-toggle:hover {
+    
+  }
+  .accordion-toggle span.toggle-icon {
+    position: absolute;
+    top: 9px;
+    right: 20px;
+  }
+  .accordion-content {
+    display: none;
+    padding: 20px;
+    overflow: auto;
+  }
+  .section-footer__row--blocks .section-footer__row__col:not(:last-child) {
+    margin-bottom: 4px; 
+}
+input#signup_email {
+  height: 54px;
+  /* border-right: none; */
+  border-color: #000;
+  border-right: none;
+  font-size: 14px !important;
+}
+}
+
+</style>

@@ -1,0 +1,342 @@
+{%- comment %}<locksmith:c0ab>{% endcomment -%}
+  {%- include 'locksmith' -%}
+{%- comment %}</locksmith:c0ab>{% endcomment -%}
+
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js template-{{ template.suffix }}" lang="en" >
+<!--<![endif]--> 
+<head>
+{% include 'kiwiSizing' %}
+  {% include 'dp-gtm-and-kiwiSizing' %}
+  <!-- Anti-flicker snippet (recommended)  -->
+  <style>
+    .async-hide { 
+      opacity: 0 !important
+    }
+     div#shopify-section-desktop-banner {
+    position: fixed !important;
+    z-index: 9;
+    width: 100%;
+    top: 0;
+}
+    .coll_middle {
+    
+    margin-top: 30px;
+}
+  </style>
+  <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',4000,
+    {'GTM-T37JPGN':true});</script>
+  <link rel="dns-prefetch" href="https://cdn.shopify.com">
+  <link rel="dns-prefetch" href="https://in.hotjar.com">
+  <link rel="dns-prefetch" href="https://vars.hotjar.com">
+  <link rel="dns-prefetch" href="https://script.hotjar.com">
+  <link rel="dns-prefetch" href="https://static.hotjar.com">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+  <link rel="dns-prefetch" href="https://consentcdn.cookiebot.com">
+  <link rel="dns-prefetch" href="https://connect.facebook.net">
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <!-- Title and description ================================================== -->
+  <title>
+    {{ page_title }}{% if current_tags %} &ndash; tagged
+    "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page
+    {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+  {% if page_description %}
+  {%- comment %}<locksmith:b1d1>{% endcomment -%}
+    {%- capture var %}{% render 'locksmith-variables', variable: 'transparent', hiding_scope: 'resource' %}{% endcapture %}{% if var == 'true' %}<meta name="description" content="{{ page_description | escape }}">{% endif -%}
+    {%- comment %}original: <meta name="description" content="{{ page_description | escape }}">{%- endcomment %}
+  {%- comment %}</locksmith:b1d1>{% endcomment -%}
+  {% endif %}
+  <!-- Product meta ================================================== -->
+  {% include 'fp-twitter-card-tags' %}
+  <!-- Helpers ================================================== -->
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ 'favicon-dp-new.png' | asset_url }}" type="image/x-icon" />
+  {% include 'header-includes' %}
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+  
+  <script>
+     $(document).ready(function(){
+  $('.template-product .selectize-dropdown-content .variant-title-wc').click(function(e) {
+    console.log('yyyy');
+    e.preventDefault();
+    return false;
+  });
+     });
+  </script>
+  
+  <!--[if lt IE 9]>
+{{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+
+<![endif]-->
+  {%- if template contains 'customers' -%}
+    {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+    {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+  {%- endif -%}
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () {
+        (h.hj.q = h.hj.q || []).push(arguments)
+      };
+      h._hjSettings = {
+        hjid: 1258270,
+        hjsv: 6
+      };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script');
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+  {% comment %}
+  {% include 'weglot-includes' %}
+  {% endcomment %}
+    <meta name="google-site-verification" content="OkmQmt54ZrDbox1mv2UqxCO1D3qi4vk0onmUIFcmrmI" />
+
+  {% render 'weglot_hreftags' %}
+{% render 'weglot_switcher' %}
+  {{ 'screen.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'slick.js' | asset_url | script_tag }}
+  {% include 'back-in-stock-helper' %}
+
+<!-- Start of Littledata - Fix Google Analytics Script-->
+{% include 'LittledataLayer' %}
+<meta name="facebook-domain-verification" content="v3bnxxjhssuor7wqvfk6gtphajvueg" />
+<!-- End of Littledata - Fix Google Analytics Script -->
+</head>
+<!-- BEGIN OF BODY TAGor page.handle contains 'subscribe' -->
+{%- if page.handle contains 'unite'  or page.handle contains 'newsletter' -%}
+  <body class="{% if collection.handle contains 'sale' %}page-template-subscribe{% else %}page-template-{{ template.suffix }}{% endif %}">
+    <div class="wrapper-container">
+      {% section 'blogs-header' %}
+    </div>
+    <main class="main-content {% if template contains 'index' or template contains 'contact' %}{% else %}container{% endif %} {% if template contains 'page.landing-blocks' or template contains 'blog' or template contains 'article' %}header-transparent{% endif %}" role="main">
+      {{ content_for_layout }}
+    </main>
+  
+<!-- Back in Stock helper snippet -->
+{% render 'back-in-stock-helper' %}
+<!-- End Back in Stock helper snippet -->
+</body>
+{% else %}
+<body b id="{{ page_title | handle }}"
+  class="{% if collection.handle contains 'sale' %}template-sale{% endif %} {% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" data-template="{{ template }}">
+  
+  {%unless settings.sale_theme == "default" %}
+  <style>
+    @media only screen and (max-width: 768px) {
+      .hide-dp-mobile {
+        display:none;
+      }
+    }
+  </style>
+  <a href="/collections/sale">
+  <div class="dp-banner">
+    <div class="dp-banner--text">
+      <p>
+        {%- if settings.sale_theme == "11-theme" -%}
+        {%- if collection.handle contains "sale" -%}
+          Early Access Live Now
+          {%- else -%}
+          {{ settings.sale_bar_11 }} 
+         {%- if settings.sale_countdown_position_11 == "Front-top" -%}
+         <span id="countdown-top"></span>
+          {%- endif -%}
+          {%endif%}
+        {%- elsif settings.sale_theme == "12-theme" -%}
+          {{ settings.sale_bar_12 }}
+          {%- if settings.sale_countdown_position_12 == "Front-top" -%}
+          <span id="countdown-top"></span>
+          {%- endif -%}
+        {%- else -%} 
+          {{ settings.announce_welcome_text }} 
+        {%endif%}
+      </p>
+    </div>
+  </div>
+  </a>
+<script>// <![CDATA[
+  var end = new Date(' {%if settings.sale_theme == "11-theme" %} {{ settings.sale_countdown_11 }} {%elsif settings.sale_theme == "12-theme" %} {{settings.sale_countdown_12}} {%endif%}');
+  var _second = 1000;
+    var _minute = _second * 60;
+    var _hour = _minute * 60;
+    var _day = _hour;
+    var timer;
+    function showRemaining() {
+        var now = new Date();
+        var distance = end - now;
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById('countdown-top').innerHTML = 'ended';
+            return;
+        }
+        var days = Math.floor(distance / _day);
+        var hours = Math.floor((distance % _day) / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+        document.getElementById('countdown-top').innerHTML = days + ':';
+        document.getElementById('countdown-top').innerHTML += minutes + ':';
+        document.getElementById('countdown-top').innerHTML += seconds;
+    }
+    timer = setInterval(showRemaining, 1000);
+// ]]></script>
+  {%endunless%}
+  
+    
+      {%if settings.sale_theme == "default" %}
+         {% section 'desktop-banner' %}
+  {%endif%}
+  
+  <h1 class="mobile-logo" style="top:0px;">
+    {%- if template contains 'unite' -%}
+      <img src="{{ 'Unite-Newsletter-black-logo.png' | file_img_url: 'master' }}" style="width:150px !important;margin-top:-15px;">
+    {%- else -%}
+      {%- if settings.brand_type == 'image' -%}
+      <a href="/">
+        {{ 'logo-2---black.png' | file_img_url: 'master' | img_tag: shop.name }}
+      </a>
+      {%- elsif settings.brand_text != "" -%}
+      <a class="logo-title" href="/">{{ settings.brand_text }}</a>
+      {%- else -%}
+      <a class="logo-title" href="/">{{shop.name}}</a>
+      {%- endif -%}
+    {%- endif -%}
+  </h1>
+  <!-- END MOBILE LOGO HEADER -->
+  <nav class="wc-test cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <div class="gf-menu-device-wrapper">
+      <div class="gf-menu-device-container">        
+        <ul class="lang-block wc_lang_list">    
+          <li class="lang-select-wc"><span class="lang-select-text-wc">EN</span> <span class="lang-select-arrow-wc"></span></li>
+          <div class="lang-wc">
+            
+        <li><a href="#Weglot-en">EN</a></li>
+        <li><a href="#Weglot-de">DE</a></li>
+          </div>
+      </ul>
+      </div>
+      
+    </div>
+  </nav>
+  {%comment%} PAGE CONTENT {%endcomment%}
+  <div class="wrapper-container">
+    {% if template contains 'page.landing-blocks' or template contains 'blog' or template contains 'article' %}
+      {% section 'blogs-header' %}
+    {% else %}
+      {% include 'header' %}
+    {% endif %}
+    <div class="quick-view"></div>
+    <main
+      class="main-content {% if template contains 'index' or template contains 'contact' %}{% else %}container{% endif %} {% if template contains 'page.landing-blocks' or template contains 'blog' or template contains 'article' %}header-transparent{% endif %}"
+      role="main">
+      {{ content_for_layout }}
+    </main>
+    {% include 'footer-dp' %}
+    {% section 'new-footer' %}
+    {% if settings.enable_quick_view %}
+    {% include 'quick-view-template' %}
+    {% endif %}
+    {% include 'footer_scripts' %}
+    {% include 'newsletter' %}
+    <div id="back-top" style="display: none;"><a class="nav_up" href="#top">Back to top</a></div>
+  </div>
+  {% include 'sweettooth-widgets' %}
+  <script>
+    jQuery('a[href^="http"]').not('a[href^="{{ shop.url }}"]').attr('target', '_self');
+    $('.shopify-currency-form select').on('change', function () {
+      $(this)
+        .parents('form')
+        .submit();
+    });
+  </script>
+  
+  {% if template != "cart" %} {% assign pageurl = content_for_header| split:'"pageurl":"' | last | split:'"' | first %}
+  {% assign Shopdomain = pageurl | split : "\/" | first %}
+  {% include 'mlveda-optionselection' %}{% endif %}
+  <!--Claaip-->
+ {% include 'ip-geolocation' %}
+  <!-- DEFER SCRIPTS-->
+   
+
+<script async type="text/javascript" 
+src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RKMFab"></script>
+
+<!-- css for all badges text-transform to capitalize by kishor -->
+  {% style %}
+  .section {
+    margin-bottom: 2% !important;
+}
+  .coll-top-bar.fixed{
+  	position:inherit !important;
+  }
+  .product-comingsoon-label {
+  text-transform: lowercase;
+  }
+  .product-comingsoon-label:first-letter,
+  .product-comingsoon-label:first-line {
+    text-transform: capitalize;
+  }
+  
+  a#onetrust-accept-btn-handler-black {
+    background: #000 !important;
+    color: #FFF !important;
+    width: 100% !important;
+    
+    padding: 10px !important;
+    display: table !important;
+    border: 1px solid #000 !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    transform: none !important;
+    border-radius: initial !important;
+    position: inherit !important;
+    }
+
+
+    a#onetrust-accept-btn-handler-white {
+    background: #FFF;
+    color: #000;
+    width: 100%;
+    padding: 10px;
+    display: table;
+    border: 1px solid #000;
+    font-size: 12px;
+    font-weight: 400;
+    }
+  div#shopify-section-desktop-banner {
+    position: relative;
+    z-index: 9;
+}
+
+  @media only screen and (max-width: 600px) {
+   
+    .footer-top .col-1 {
+    background: #fff;
+    margin-top: 13px !important;
+}
+}
+  @media only screen and (max-width: 767px) {
+  .mobile-clock {
+    bottom:90px
+  }
+}
+
+  {% endstyle %}
+  <!--end--> 
+  <script async="" type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=MViDJp"></script>
+</body>
+{%endif%}
+</html>

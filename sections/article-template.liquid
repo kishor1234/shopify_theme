@@ -1,0 +1,255 @@
+{% if article.image != blank %}
+  <section class="banner-images blog-home-landing">
+    <div class="banner-image-content article-img-size" style="background-image: url('{{ article.image | img_url: 'master' }}');">
+      
+      <div class="banner-content-area wc-content-position banner-size">
+        <h1 class="article__title">{{ article.title }}</h1>
+      </div>
+      
+      <div class="blog-content banner-blog-position">
+        <p class="blog__title">{{ blog.title }}</p>
+      </div>
+      
+      
+        {% if section.settings.arrow_down != blank %}
+          <div class="blog-arrow-down wc-content-position">
+            {% comment %}<img src="{{ section.settings.arrow_down | img_url: 'master' }}" class="img-fluid arrow--down" alt="{{ section.settings.arrow_down.alt }}">{% endcomment %}
+            <span class="arrow--down">{{ section.settings.arrow_down }}</span>
+          </div>
+        {% endif %}
+      
+      {% if section.settings.text-content != blank  %}
+        <div class="wc-arrow-content wc-content-position article-tc-position">
+          <div class="wc-content-area" style=" display:none;">{{ section.settings.text-content }}</div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+<section class="article-content-area">
+  {% if section.settings.show_share_buttons %}
+    {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+  {% endif %}
+  <div class="art-container">
+    <div class="art-create_date">
+      {{ article.published_at | time_tag: format: 'date' }}
+    </div>
+    <div class="art-title">
+      <h1 class="title">{{ article.title }}</h1>
+    </div>
+    <div class="art-content-area">
+      <div class="content-area">{{ article.content }}</div>
+    </div>
+    {%- if blog.next_article -%}
+      <div class="art-nex-article">
+        <a href="{{ blog.next_article }}" class="pagination-btn">{{ section.settings.next-page-label }} {{ blog.title }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="article-related-colobration blog-home-landing">
+  <div class="related-container">
+    
+      <div class="blog-categories-area">
+
+        <div class="blog-container">
+          <div class="blog-title-area row">
+            <div class="col-md-6 col-12 blog-space">
+              <h3 class="categories-title">more in {{ blog.title }}</h3>
+            </div>
+            <div class="col-md-6 text-right blog-space mediam-small-hide">
+              <a href="{{ blog.url }}" class="categories-link">more {{ blog.title }}</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row blog-cat__sections">
+          {%- assign blog-url = blog.url | remove: '/blogs/' -%}
+          {%- assign current_url = article.url -%}
+          
+          {%- for article in blogs[blog-url].articles limit: 3 -%}
+            {%- assign all_url = article.url -%}
+            <div class="col-md-4 blog-space">
+              
+              <div class="article">
+                {% if article.image %}
+                <div class="blog-img">
+                  <a href="{{ article.url }}" class="d-inline-block w-100">
+                    <img src="{{ article | img_url: '1024x1024' }}" alt="" class="img-fluid w-100">
+                  </a>
+                </div>
+                {% endif %}
+                <div class="blog-details">
+                  <div class="art-contains">
+                    <a href="{{ article.url }}" class="blog-title">{{ article.title }}</a>
+                    <div class="blog-content">{{ article.content | strip_html | truncatewords: '17' }}</div>
+                  </div>
+                </div>
+                <a href="{{ blog.url }}" class="art-type">{{ blog.title }}</a>
+              </div>
+
+              {% comment %}
+              <div class="article">
+                {% if article.image %}
+                <div class="blog-img">
+                  <a href="{{ article.url }}" class="d-inline-block w-100">
+                    <img src="{{ article | img_url: '1024x1024' }}" alt="" class="img-fluid w-100">
+                  </a>
+                </div>
+                {% endif %}
+                <div class="blog-details match">
+                  <a href="{{ article.url }}" class="blog-title">{{ article.title }}</a>
+                  <div class="blog-content">{{ article.content | strip_html | truncatewords: '17' }}</div>
+                  <a href="{{ blog.url }}" class="art-type">{{ blog.title }}</a>
+                </div>
+              </div>
+              {% endcomment %}
+
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Article template",
+	"class": "article-template-index",
+    "settings": [
+	  {
+		"type": "header",
+		"content": "Banner Section"
+	  },
+	  {
+		"type": "color",
+		"id": "bg_color",
+		"label": "Background Color",
+		"default": "#000"
+	  },
+	  {
+		"type": "range",
+		"id": "bg_opacity",
+		"label": "Background Opacity",
+		"min": 0,
+		"max": 10,
+		"step": 1,
+		"default": 4
+	  },
+	  {
+		"type": "header",
+		"content": "Banner Content"
+	  },
+	  {
+		"type": "textarea",
+		"id": "arrow_down",
+		"label": "Arrow Down"
+	  },
+	  {
+		"type": "richtext",
+		"id": "text-content",
+		"label": "Content"
+	  },
+	  {
+		"type": "header",
+		"content": "pagination label"
+	  },
+	  {
+		"type": "text",
+		"id": "next-page-label",
+		"label": "Pagination Button Label",
+		"default": "next article in"
+	  },
+	  {
+		"type": "header",
+		"content": "Social Content"
+	  },
+	  {
+		"type": "checkbox",
+		"id": "show_share_buttons",
+		"label": "Show Share Button",
+		"default": true
+   	  },
+	  {
+		"type": "text",
+		"id": "label",
+		"label": "Social Sharing Label",
+		"default": "Share"
+	  },
+	  {
+		"type": "checkbox",
+		"id": "share_facebook",
+		"label": "Share Facebook",
+		"default": true
+	  },
+	  {
+		"type": "checkbox",
+		"id": "share_google",
+		"label": "Share Google",
+		"default": true
+	  },
+	  {
+		"type": "checkbox",
+		"id": "share_linkedin",
+		"label": "Share Linkedin",
+		"default": true
+	  },
+	  {
+		"type": "checkbox",
+		"id": "share_twitter",
+		"label": "Share Twitter",
+		"default": true
+	  }
+	]
+  }
+{% endschema %}
+
+<style>
+  .article-template-index .banner-image-content:before {background-color: {{ section.settings.bg_color }}; opacity: 0.{{ section.settings.bg_opacity }}; }
+</style>
+
+<script>
+  $('.blog-arrow-down').click(function() {
+    $(this).parents('.banner-image-content').find('.wc-content-area').addClass('active');
+    $(this).parents('.banner-image-content').find('.blog-arrow-down').addClass('dnone');
+  });
+  
+  function MatchHeight() {
+    //$('.match').matchHeight({});
+    //$('.blog-img').matchHeight({});
+  }
+
+  //Functions that run when all HTML is loaded
+  $(document).ready(function() {
+    MatchHeight(); 
+  });
+  
+  /*if ($(window).width() >= 576) {
+    var section_height = $('.article-content-area').height();
+    // console.log(section_height);
+    var banner_height = $('.banner-images').height();
+    $(window).scroll(function () {
+
+      var scroll = $(this).scrollTop();
+      if (scroll >= banner_height) {
+        //$('.social-sharing').addClass('dblock');
+        $('.social-sharing').removeClass('dnone');
+      }
+      if (scroll <= banner_height) {
+        //$('.social-sharing').removeClass('dblock');
+        $('.social-sharing').addClass('dnone');
+      }
+
+      if (scroll >= section_height) {
+        //$('.social-sharing').removeClass('dblock');
+        $('.social-sharing').addClass('dnone');
+      }
+
+    });
+  }*/
+  
+</script>

@@ -1,0 +1,115 @@
+<style>
+  @media only screen and (max-width: 768px) {
+  .footer-index .footer-top { display: block; }
+  .template-index .site-footer { margin-top: 0; }
+  .footer-index { margin-top: 40px; }
+  .index .site-footer .footer-content {display: block!important; justify-content: space-between;
+    flex-shrink: 0; flex-grow: 1; }
+  .index .site-footer .col-footer {text-align: center; }
+  .index a.signup-link { display: block; margin-top: 16px; }
+  .index .col-footer ul { text-align: center; }
+  .index .site-footer .footer-content li { margin-left: 28px; line-height: 24px; }
+}
+</style>
+<div class="desktop-only">  
+  {{ content_for_index }}
+  {% include 'homepage-responsive-image' %}   
+</div>
+
+<div class="row mobile-row">
+  {% comment %}<div class="mobile-text">{% include 'homepage-textslider' %}</div>{% endcomment %}
+  {%unless settings.sale_theme == "default" %}
+
+    <div class="mobile-slider">
+    <div class="dp-blackfriday-container" style="height:500px;">
+    <a href="/collections/sale">
+      {%if settings.sale_hero_image_mobile%}
+      <img class="lazy blur" src="{{ settings.sale_hero_image_mobile | img_url: 'master' }}" data-src="{{ settings.sale_hero_image_mobile | img_url: 'master' }}"  alt="Homepage">
+      {%endif%}
+
+      <span class="dp-blackfriday-text" style="text-align:center;margin-top:-50px;">  
+         {%if settings.sale_theme == "11-theme" %} 
+
+              {{ settings.sale_text_11 }}   
+            
+              <BR><BR> 
+
+              {%unless settings.sale_countdown_position_11 == "none" %}
+              <span style="color:#fff;font-size:14px;text-transform: lowercase;" id="countdown-m"></span> 
+              {%endunless%}
+              
+          {%elsif settings.sale_theme == "12-theme" %} 
+          
+              {{ settings.sale_text_12 }} 
+                
+          {%endif%}
+
+        <br>
+        </span></a>
+         
+      </div>
+  </div>
+
+  <script>// <![CDATA[
+    var end = new Date(' {%if settings.sale_theme == "11-theme" %} {{ settings.sale_countdown_11 }} {%elsif settings.sale_theme == "12-theme" %} {{settings.sale_countdown_12}} {%endif%}');
+  
+    var _second = 1000;
+      var _minute = _second * 60;
+      var _hour = _minute * 60;
+      var _day = _hour;
+      var timer;
+  
+      function showRemaining() {
+          var now = new Date();
+          var distance = end - now;
+          if (distance < 0) {
+  
+              clearInterval(timer);
+              document.getElementById('countdown-m').innerHTML = 'ended';
+  
+              return;
+          }
+          var days = Math.floor(distance / _day);
+          var hours = Math.floor((distance % _day) / _hour);
+          var minutes = Math.floor((distance % _hour) / _minute);
+          var seconds = Math.floor((distance % _minute) / _second);
+  
+          document.getElementById('countdown-m').innerHTML = days + ':';
+          document.getElementById('countdown-m').innerHTML += minutes + ':';
+          document.getElementById('countdown-m').innerHTML += seconds;
+      }
+  
+      timer = setInterval(showRemaining, 1000);
+  // ]]></script>
+
+    <div class="mobile-block-text">
+      <h2>UP TO 50% OFF</h2>
+      <p>Enjoy a selection of essentials and collaborations, alongside pieces from our past and present collections, at up to 50% off. Offers available for a limited time only.</p>
+      
+      {%if settings.sale_theme == "12-theme" %}
+      <div class="block-rowbutton"><a href="/collections/sale-men">Shop Men</a></div>
+      <div class="block-rowbutton"><a href="/collections/sale-women">Shop Women</a></div>
+      {%endif%}
+    </div> 
+
+    {%endunless%}
+        {% section 'mobile-sections' %}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 4,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+</div>
+       {% comment %} {% section 'new-footer' %} {% endcomment %}

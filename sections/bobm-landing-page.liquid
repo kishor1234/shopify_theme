@@ -1,0 +1,176 @@
+
+
+{%- for block in section.blocks -%}
+  {%- if block.type == 'collections' -%}
+  
+    <div class="">
+      
+      <div class="">
+        <div class="">
+          {%- assign collection = collections["bob-marley-capsule-collection"] -%}
+
+      
+
+          
+     
+     
+            {%- include 'product-landing-grid' -%}
+     
+      
+
+      </div>
+      </div>
+    </div>
+
+
+
+  {%- endif -%}
+  {%- endfor -%}
+
+<script>
+  $(document).ready(function(){
+    
+  });
+</script>
+{%- comment -%}
+
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Landing Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Section"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image",
+     "label": "Image"
+    },
+    {
+     "type": "image_picker",
+     "id": "col-collection-image-mobile",
+     "label": "Image Mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-text",
+      "name": "Image Text",
+      "settings": [
+    {
+      "type": "color",
+      "id": "bgcolor_02",
+      "label": "Background color",
+      "default": "#f2f2f2",
+      "info":"Background color if no image is selected"
+    },       
+		{
+          "type": "image_picker",
+          "id": "image_01",
+          "label": "Image"
+        },
+		{
+          "type": "image_picker",
+          "id": "image_01_mobile",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "select",
+          "id": "text_color_02",
+          "label": "Text Color",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title_02",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "desc_02",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "btn_title_02",
+          "label": "Button Heading"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "btn_bg_color_02",
+          "label": "Button Background Color",
+          "default": "black",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "collections",
+      "name": "Collections",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "show_product",
+          "label": "No of Product display"
+        }
+      ]
+    },
+    {
+      "type": "Slider",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        }
+      ]
+    }
+  ]
+} 
+{% endschema %}
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,147 @@
+<div id="fullpage" class="landing-desktop-section"> 
+
+<p style="text-align: center;"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/2021_DailyPaper_SS21_03_830_3_2048x2048.jpg?v=1618240709" alt="" /></p>
+<p><br></p>
+ <p style="text-align: center;font-weight: bold;font-size: 20px;">   
+  SS21 RESORT LINE BRINGS A FRESH TAKE TO SPRINGTIME-READY STAPLES <br>
+   </p>
+<p style="text-align: center;font-size: 14px;margin-left: 30px;margin-right: 30px;">  
+Featuring shapes and details inspired by African flags, the continent’s cuisine, and a range of newly designed summer gear. The mid-season Resort line is part of the main Spring / Summer 2021 collection and tailored towards the warmer months ahead. The line presents a colorful range of unisex essential sets, multicoloured items, summer accessories and sporty styles in a variety of easy wearing shapes.
+  </p>
+<p><br></p>
+<p style="text-align: center;margin-left: 5px;margin-right: 5px;"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/2021_DailyPaper_SS21_03_1430_3A.jpg?v=1618318631" alt="" /></p>
+{%- assign Slider = "Desktop" -%}
+
+<div id="section_Resort_C" class="index-section section">   
+    <div class="landing-product-list">
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["ss21-resort-carousel"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Resort-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+      <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ Slider }}').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 4,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+  
+<p><br></p>
+<p style="text-align: center;5px;margin-right: 5px;margin-left: 5px;"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/2021_DailyPaper_SS21_02_045_4_2048x2048.jpg?v=1618240664" alt="" /></p>
+
+</div>
+
+
+<div id="mobile-fullpage" class="landing-mobile-section">
+
+<p style="margin-top: 60px;text-align: center;"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/2021_DailyPaper_SS21_03_830_3_2048x2048.jpg?v=1618240709" alt="" /></p>
+<p><br></p>
+ <p style="center;margin-left: 30px;margin-right: 30px;text-align: center;font-weight: bold;font-size: 20px;">   
+  SS21 RESORT LINE BRINGS A FRESH TAKE TO SPRINGTIME-READY STAPLES <br>
+   </p>
+<p style="text-align: center;font-size: 14px;margin-left: 30px;margin-right: 30px;">  
+Featuring shapes and details inspired by African flags, the continent’s cuisine, and a range of newly designed summer gear. The mid-season Resort line is part of the main Spring / Summer 2021 collection and tailored towards the warmer months ahead. The line presents a colorful range of unisex essential sets, multicoloured items, summer accessories and sporty styles in a variety of easy wearing shapes.
+  </p>
+  
+  {%- assign Slider = "mobile" -%}
+
+  <div id="section_Resort_C" class="index-section section">   
+    <div class="landing-product-list">
+
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ Slider }}">
+ 
+              {%- assign collection = collections["ss21-resort-carousel"] -%}
+      {%- assign prod_limit = "20" -%}
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'Resort-product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+  
+  
+      <script>
+      $( document ).ready(function() {
+        $('.wc-landing-prod-list-slider-{{ Slider }}').slick({
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          speed: 1000,
+          autoplay: false,
+          autoplaySpeed: 5000,
+          fade: false,
+          arrows: true,
+          dots: false,
+          slide: 'li',
+          focusOnSelect: true,
+          infinite: true,
+          });
+      });
+    </script>
+{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+<script>
+  $(document).ready(function() {
+     var owl = $('.mobile-slider');
+      owl.owlCarousel({ 
+      navigation: true,
+      items : 2,
+ 	  itemsDesktop : [1200,1],
+      itemsTablet: [767,1],
+      itemsTabletSmall: [721,1],
+      autoplay:true,
+    	autoplayTimeout:1000,
+        loop:true,
+    });
+	owl.trigger('owl.play',3000);    
+    $('.mobile-slider').owlCarousel('refresh');
+  });
+</script>
+<p><br></p>
+<p style="text-align: center;"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/2021_DailyPaper_SS21_03_1430_3A.jpg?v=1618318631" alt="" /></p>
+  
+<p></p>
+<p style="text-align: center;"><img src="https://cdn.shopify.com/s/files/1/0507/8201/1597/files/2021_DailyPaper_SS21_02_045_4_2048x2048.jpg?v=1618240664" alt="" /></p>
+
+
+</div>
+
+
+
+
+{%- section 'collection-template' -%}

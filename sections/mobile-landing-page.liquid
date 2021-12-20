@@ -1,0 +1,260 @@
+<div id="mobile-fullpage" class="landing-mobile-section">
+{% for block in section.blocks %}  
+  {%- if block.type == 'image' -%}
+<div class="more-view-wrapper section{% if forloop.index == 1 %} active{% endif %}" style="margin-top:0" id="wc-section{{ forloop.index }}">  
+  <div class="mobile-slider">
+    {%- if block.settings.image_01 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_01 }}">
+        <img class="lazy blur" src="{{ block.settings.image_01 | img_url: 'master' }}" data-src="{{ block.settings.image_01 | img_url: 'master' }}"  alt="image_01">
+      </a>  
+      {%- if block.settings.btn_link_01 != blank and block.settings.btn_text_01 != blank -%}
+      <a href="{{ block.settings.btn_link_01 }}" class="btn {{ block.settings.button_color_01 }}">{{ block.settings.btn_text_01 }}</a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_02 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_02 }}">
+        <img class="lazy blur" src="{{ block.settings.image_02 | img_url: 'master' }}" data-src="{{ block.settings.image_02 | img_url: 'master' }}"  alt="image_02">
+      </a>  
+      {%- if block.settings.btn_link_02 != blank and block.settings.btn_text_02 != blank -%}
+      <a href="{{ block.settings.btn_link_02 }}" class="btn {{ block.settings.button_color_02 }}">{{ block.settings.btn_text_02 }}</a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_03 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_03 }}">
+        <img class="lazy blur" src="{{ block.settings.image_03 | img_url: 'master' }}" data-src="{{ block.settings.image_03 | img_url: 'master' }}"  alt="image_03">
+      </a>  
+      {%- if block.settings.btn_link_03 != blank and block.settings.btn_text_03 != blank -%}
+      <a href="{{ block.settings.btn_link_03 }}" class="btn {{ block.settings.button_color_03 }}">{{ block.settings.btn_text_03 }}</a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_04 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_04 }}">
+        <img class="lazy blur" src="{{ block.settings.image_04 | img_url: 'master' }}" data-src="{{ block.settings.image_04 | img_url: 'master' }}"  alt="image_04">
+      </a>  
+      {%- if block.settings.btn_link_04 != blank and block.settings.btn_text_04 != blank -%}
+      <a href="{{ block.settings.btn_link_04 }}" class="btn {{ block.settings.button_color_04 }}">{{ block.settings.btn_text_04 }}</a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+     {%- if block.settings.image_05 != blank -%}
+    <div>
+      <a href="{{ block.settings.btn_link_05 }}">
+        <img class="lazy blur" src="{{ block.settings.image_05 | img_url: 'master' }}" data-src="{{ block.settings.image_05 | img_url: 'master' }}"  alt="image_05">
+      </a>  
+      {%- if block.settings.btn_link_05 != blank and block.settings.btn_text_05 != blank -%}
+      <a href="{{ block.settings.btn_link_05 }}" class="btn {{ block.settings.button_color_05 }}">{{ block.settings.btn_text_05 }}</a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    
+  </div>
+</div>
+  {%- elsif block.type == 'collections' -%}
+  <div id="section{{ forloop.index }}" class="index-section section {% if forloop.index == 1 %} active{% endif %}">   
+    <div class="landing-product-list">
+      {%- assign collection = collections[block.settings.collection] -%}
+      {%- assign prod_limit = block.settings.show_product -%}
+      <ul class="landing-product-list-slider products-grid wc-landing-prod-list-slider-{{ forloop.index }}">
+        {%- for product in collection.products limit: prod_limit -%}
+        {%- include 'product-landing-grid' -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+  {%- endif -%}
+{%endfor%}
+   
+</div>
+
+
+
+{% schema %}
+ {
+  "name": "Mobile Landing Sections",
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_01",
+          "label": "Image 01"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_01",
+          "label": "Button Text 01"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_01",
+          "label": "Button Link 01"
+        },
+        {
+          "type": "select",
+          "id": "button_color_01",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 01"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_02",
+          "label": "Image 02"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_02",
+          "label": "Button Text 02"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_02",
+          "label": "Button Link 02"
+        },
+        {
+          "type": "select",
+          "id": "button_color_02",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 02"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_03",
+          "label": "Image 03"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_03",
+          "label": "Button Text 03"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_03",
+          "label": "Button Link 03"
+        },
+        {
+          "type": "select",
+          "id": "button_color_03",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 03"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_04",
+          "label": "Image 04"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_04",
+          "label": "Button Text 04"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_04",
+          "label": "Button Link 04"
+        },
+        {
+          "type": "select",
+          "id": "button_color_04",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 04"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_05",
+          "label": "Image 05"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_05",
+          "label": "Button Text 05"
+        },
+        {
+          "type": "url",
+          "id": "btn_link_05",
+          "label": "Button Link 05"
+        },
+        {
+          "type": "select",
+          "id": "button_color_05",
+          "options": [
+            {
+             "value": "white",
+             "label": "White"
+            },
+            {
+             "value": "black",
+             "label": "Black"
+            }
+          ],
+          "label": "Button Color 05"
+        }
+      ]
+    },
+    {
+      "type": "collections",
+      "name": "Collections",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "show_product",
+          "label": "No of Product display"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
