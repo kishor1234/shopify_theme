@@ -49,7 +49,7 @@ The Royal, The Activist, and The Warrior stand as beacons of cultural past, pres
           });
       });
     </script>
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -156,7 +156,7 @@ The Royal, The Activist, and The Warrior stand as beacons of cultural past, pres
           });
       });
     </script>
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -194,4 +194,16 @@ The Royal, The Activist, and The Warrior stand as beacons of cultural past, pres
 
 
 
-{%- section 'collection-template' -%}
+{%- section 'collection-template' -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 2147..2199
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 5836..5888
+{%- endcomment -%}

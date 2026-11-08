@@ -249,7 +249,7 @@
           {%- if linklists[childlink.handle] != empty and settings.show_dropdown_arrow -%}<span class="icon-dropdown"></span>{%- endif -%}
         </a>
         <ul class="site-nav-dropdown">
-          {%- for childlink2 in linklists.[childlink.handle].links -%}
+          {%- for childlink2 in linklists[childlink.handle].links -%}
           <li {% if linklists[childlink2.handle] != empty %}class="dropdown"{% endif %}>
             <a href="{{ childlink2.url }}" class="{% if childlink2.active %}current{% endif %}">
               <span>
@@ -263,7 +263,7 @@
               {%- if linklists[childlink2.handle] != empty and settings.show_dropdown_arrow -%}<span class="icon-dropdown"></span>{%- endif -%}
             </a>
             <ul class="site-nav-dropdown">
-              {%- for childlink3 in linklists.[childlink2.handle].links -%}
+              {%- for childlink3 in linklists[childlink2.handle].links -%}
               <li>
                 <a href="{{ childlink3.url }}" class="{% if link.active %}current{% endif %}">
                   <span>
@@ -290,4 +290,16 @@
   
     {%- endif -%}
   {%- endfor -%}
-</ul>
+</ul>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- for childlink2 in linklists.[childlink.handle].links -%}"
+  to: "{%- for childlink2 in linklists[childlink.handle].links -%}"
+  position: 11170..11229
+- from: "{%- for childlink3 in linklists.[childlink2.handle].links -%}"
+  to: "{%- for childlink3 in linklists[childlink2.handle].links -%}"
+  position: 12022..12082
+{%- endcomment -%}

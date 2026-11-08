@@ -12,7 +12,7 @@
           {% endif %}
           <ul>
             {% assign footerCol1 = settings.footer_column_1_title | handleize %}
-            {% for link in linklists.[footerCol1].links %}
+            {% for link in linklists[footerCol1].links %}
               {% if settings.enable_multilang %}
                 <li class="lang1">{{ link.title | split: '|' | first | link_to: link.url }}</li>
                 <li class="lang2">{{ link.title | split: '|' | last | link_to: link.url }}</li>
@@ -33,7 +33,7 @@
           {% endif %}
           <ul>
             {% assign footerCol2 = settings.footer_column_2_title | handleize %}
-            {% for link in linklists.[footerCol2].links %}
+            {% for link in linklists[footerCol2].links %}
               {% if settings.enable_multilang %}
                 <li class="lang1">{{ link.title | split: '|' | first | link_to: link.url }}</li>
                 <li class="lang2">{{ link.title | split: '|' | last | link_to: link.url }}</li>
@@ -54,7 +54,7 @@
           {% endif %}
           <ul>
             {% assign footerCol3 = settings.footer_column_3_title | handleize %}
-            {% for link in linklists.[footerCol3].links %}
+            {% for link in linklists[footerCol3].links %}
               {% if settings.enable_multilang %}
                 <li class="lang1">{{ link.title | split: '|' | first | link_to: link.url }}</li>
                 <li class="lang2">{{ link.title | split: '|' | last | link_to: link.url }}</li>
@@ -90,4 +90,19 @@
     </div>
   </div>
 </footer>
-{% include 'message-modal' %}
+{% include 'message-modal' %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% for link in linklists.[footerCol1].links %}"
+  to: "{% for link in linklists[footerCol1].links %}"
+  position: 734..779
+- from: "{% for link in linklists.[footerCol2].links %}"
+  to: "{% for link in linklists[footerCol2].links %}"
+  position: 1848..1893
+- from: "{% for link in linklists.[footerCol3].links %}"
+  to: "{% for link in linklists[footerCol3].links %}"
+  position: 2962..3007
+{%- endcomment -%}

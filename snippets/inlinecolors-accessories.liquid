@@ -137,7 +137,7 @@
     {% else %}<span class="productcolors mint-green"></span> 
     {% endif %}</a>
   {% endif %} 
-  {% if product.title contains "Komono"  and product.type == "Sunglasses" product.tag contains "KOMONO" %}
+  {% if product.title contains "Komono" and product.type == "Sunglasses" %}
   <a href="/collections/daily-paper-x-komono/products/daily-paper-x-komono-racing-red-kenyatta-sunglasses">
     {% if product.title contains "Red" %}<span class="productcolors red currentcolor"></span>
     {% else %}<span class="productcolors red"></span> 
@@ -700,3 +700,14 @@
   </script>
   {%endif%}
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{% if product.title contains "Komono"  and product.type == "Sunglasses" product.tag
+    contains "KOMONO" %}'
+  to: '{% if product.title contains "Komono" and product.type == "Sunglasses" %}'
+  position: 8026..8099
+{% endcomment %}

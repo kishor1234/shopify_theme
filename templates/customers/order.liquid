@@ -6,7 +6,7 @@
         <div class="account-title"><h1 {% if settings.enable_multilang %}data-translate="customer.orders.order_number"{%endif%}>{{ 'customer.orders.order_number' | t }}</h1></div>
         <p><a href="/account" {% if settings.enable_multilang %}data-translate="customer.account.return"{%endif%}>{{ 'customer.account.return' | t }}</a></p>
 
-        {% assign created_date = order.created_at | date: "%B %d, %Y %Ih%M%p%}
+        {% assign created_date = order.created_at | date | B: Y %}
         <p {% if settings.enable_multilang %}data-translate="customer.order.date|date:{{created_date}}"{%endif%}>{{ 'customer.order.date' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
 
         {% if order.cancelled %}
@@ -137,4 +137,13 @@
       </div>
     </div>
   </div>
-</div>
+</div>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{% assign created_date = order.created_at | date: "%B %d, %Y %Ih%M%p%}'
+  to: "{% assign created_date = order.created_at | date | B: Y %}"
+  position: 516..574
+{%- endcomment -%}

@@ -48,7 +48,7 @@
           });
       });
     </script>
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -126,7 +126,7 @@
           });
       });
     </script>
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -198,4 +198,16 @@
 </script>
 
 {% comment %}
-{%- section 'collection-template' -%}{% endcomment %}
+{%- section 'collection-template' -%}{% endcomment %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 1805..1857
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 4389..4441
+{%- endcomment -%}

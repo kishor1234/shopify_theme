@@ -7,7 +7,7 @@
 {%- assign sold_out = false -%}
 {%- endif -%}
 {%- assign delayTime = 0 | times : forloop.index -%}
-{%- if item.title "Kids" -%}
+{%- if item.title -%}
 {%- unless image.alt contains "Packshot" -%}            
 {%- assign index = 0 -%}
 {%- assign found_image = false -%}
@@ -76,3 +76,13 @@
 
 
 
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{%- if item.title "Kids" -%}'
+  to: "{%- if item.title -%}"
+  position: 286..307
+{% endcomment %}

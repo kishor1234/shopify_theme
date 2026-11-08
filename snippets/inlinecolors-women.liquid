@@ -608,7 +608,7 @@
 
   {% endif %}
 
-  {% if product.title contains "Frack" and product.type == "Women Jackets" product.tags contains "SS20" %}
+  {% if product.title contains "Frack" and product.type == "Women Jackets" %}
 
   <a href="/products/kentucky-blue-frack-tape-jacket">
     {% if product.title contains "Blue" %}<span class="productcolors baby-blue currentcolor"></span>
@@ -1653,4 +1653,14 @@
 
   {% endif %}
   {%endunless%}
-</div>
+</div>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{% if product.title contains "Frack" and product.type == "Women Jackets"
+    product.tags contains "SS20" %}'
+  to: '{% if product.title contains "Frack" and product.type == "Women Jackets" %}'
+  position: 28220..28295
+{%- endcomment -%}

@@ -16,7 +16,7 @@
   {% else %}
   <div class="widget-product">
     <div class="products-grid">
-	  {% for product in collections.[settings.featured_product_list_collection].products limit:settings.featured_product_limit_all %}
+	  {% for product in collections[settings.featured_product_list_collection].products limit: settings.featured_product_limit_all %}
         {% include 'product-grid-item-sidebar' %}	  
   	  {% endfor %}
     </div> 
@@ -30,4 +30,15 @@ jQuery(document).ready(function() {
     navigation : true
   });
 });
-</script>
+</script>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% for product in collections.[settings.featured_product_list_collection].products
+    limit:settings.featured_product_limit_all %}"
+  to: "{% for product in collections[settings.featured_product_list_collection].products
+    limit: settings.featured_product_limit_all %}"
+  position: 791..918
+{%- endcomment -%}

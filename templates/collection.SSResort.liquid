@@ -43,7 +43,7 @@ Featuring shapes and details inspired by African flags, the continent’s cuisin
           });
       });
     </script>
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -114,7 +114,7 @@ Featuring shapes and details inspired by African flags, the continent’s cuisin
           });
       });
     </script>
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -144,4 +144,16 @@ Featuring shapes and details inspired by African flags, the continent’s cuisin
 
 
 
-{%- section 'collection-template' -%}
+{%- section 'collection-template' -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 2068..2120
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 4700..4752
+{%- endcomment -%}

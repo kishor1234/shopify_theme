@@ -95,7 +95,7 @@ ul {
   {%if settings.sale_hero_image_desktop == blank %}
     background: {{ settings.sale_background_color }};
   {%else%}
-  background-image: url('{{ settings.sale_hero_image_desktop | img_url 'master' }}');
+  background-image: url('{{ settings.sale_hero_image_desktop | img_url }}');
   {%endif%}
   width: 100%;
   height: 100vh;
@@ -8557,3 +8557,13 @@ span.money {
 /*     color: red !important; */
 }
 
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ settings.sale_hero_image_desktop | img_url 'master' }}"
+  to: "{{ settings.sale_hero_image_desktop | img_url }}"
+  position: 1568..1616
+{% endcomment %}

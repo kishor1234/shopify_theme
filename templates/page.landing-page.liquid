@@ -1,5 +1,5 @@
 {%- section 'landing-page' -%}
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -17,4 +17,13 @@
     $('.mobile-slider').owlCarousel('refresh');
   });
 </script>
-{%- section 'mobile-landing-page-v2' -%}
+{%- section 'mobile-landing-page-v2' -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 31..83
+{%- endcomment -%}

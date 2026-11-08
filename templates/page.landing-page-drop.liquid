@@ -1,5 +1,5 @@
 {%- section 'international-womensday-landing' -%}
-{{ 'owl.carousel.min.js' | asset_url | script_tag | }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
 <script>
   $(document).ready(function() {
      var owl = $('.mobile-slider');
@@ -17,4 +17,13 @@
     $('.mobile-slider').owlCarousel('refresh');
   });
 </script>
-{%- section 'mobile-landing-page' -%}
+{%- section 'mobile-landing-page' -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'owl.carousel.min.js' | asset_url | script_tag | }}"
+  to: "{{ 'owl.carousel.min.js' | asset_url | script_tag }}"
+  position: 50..102
+{%- endcomment -%}
